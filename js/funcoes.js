@@ -1,8 +1,7 @@
-
-//Função de cálculo da curva de equilibrio para misturas ideais
+//Função de cálculo da curva de equilibrio líquido-vapor para misturas ideais
 function curvaeq_ideal() {
 
-  //Definição das constantes de Antoine para cada componente
+  //Definição das constantes de Antoine para cada componente de acordo com o banco de dados
   for (i = 0; i <= data.componentes.length; i++) {
     if (data.componentes[i] == componente1) {
       j1 = i
@@ -53,6 +52,7 @@ function curvaeq_ideal() {
     P2sat.push(Math.exp(A2 - B2 / (temperaturas[i] + C2)))
   }
 
+  // Cálculo dos pares x,y da curva ELV e da volatilidade relativa
   for (var i = 0; i <= 100; i++) {
     if (P1sat <= P2sat) {
       xvolatil.push((pressao - P2sat[i]) / (P1sat[i] - P2sat[i]))

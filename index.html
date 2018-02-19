@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
   <meta charset="UTF-8">
   <title>Destilação Binária</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -10,12 +11,14 @@
   <link type="text/css" rel="stylesheet" href="css/index.css" />
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
 </head>
 
 <body>
   <!-- Barra de navegação -->
   <nav class="cyan darken-4">
     <div class="nav-wrapper">
+
       <a href="#!" class="brand-logo">Logo</a>
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
@@ -31,17 +34,18 @@
         <li><a href="mobile.html">Exemplo Não Ideal</a></li>
       </ul>
     </div>
+
   </nav>
 
   <!-- Conteúdo da página -->
-
-
   <div class="row">
-    <!-- card da esquerda -->
+    <!-- Card da esquerda -->
     <div class="col offset-m1 m5 s12">
+
       <div class="card grey lighten-4">
         <div class="card-content">
           <span class="center-align card-title">Entrada de Dados</span>
+
           <!-- Caixa de Rolagem 1 -->
           <div class="input-field col s12">
             <!-- <select onchange = addcomp1() id="select_componentes"> -->
@@ -49,6 +53,7 @@
             </select>
             <label>Componente 1</label>
           </div>
+
           <!-- Caixa de Rolagem 2 -->
           <div class="input-field col s12">
             <!-- <select onchange = addcomp2() id="select_componentes2"> -->
@@ -56,11 +61,11 @@
             </select>
             <label>Componente 2</label>
           </div>
-          <!-- Caixas de Input -->
+
+          <!-- Caixas de Input e Labels -->
           <div class="row col m12 s12">
             <label>Composição molar:</label>
           </div>
-
 
           <div class="row">
 
@@ -78,13 +83,10 @@
               <input placeholder="Ex. 0.42" id="input_compfundo" type="number" class="validate">
               <label for="first_name">Fundo</label>
             </div>
-          </div>
-          <div class="row horizontal_line">
 
-            <!-- <div class="input-field col m6 s12">
-              <input placeholder="Ex. 1.4" id="razao_refluxo" type="number" class="validate">
-              <label for="first_name">Razão de Refluxo</label>
-            </div> -->
+          </div>
+
+          <div class="row horizontal_line">
 
             <!-- Caixas de marcação -->
             <form class="rb_form" action="#">
@@ -99,7 +101,6 @@
               </p>
             </form>
 
-
             <div class="input-field col m6 s12">
               <!-- <select onchange = addcomp3() id="select_atividade"> -->
               <select id="select_atividade">
@@ -107,8 +108,8 @@
               <label>Método de cálculo da atividade:</label>
             </div>
 
-
           </div>
+
           <div class="row  horizontal_line">
             <!-- Caixa de rolagem dos métodos de cálculo de atividade -->
             <form class="rb_form" action="#">
@@ -122,6 +123,7 @@
                 <label for="metodo2">Ponchon-Savarit</label>
               </p>
             </form>
+
             <div class="input-field col m6 s12">
               <!-- <select onchange = addcomp3() id="select_atividade"> -->
               <select id="select_entalpia">
@@ -131,24 +133,29 @@
 
           </div>
 
-
-
-          <!-- Calcular -->
+          <!-- Botão para calcular -->
           <button class="btn waves-effect cyan darken-4" type="submit" name="action">Calcular
-    <i class="material-icons right">send</i>
-  </button>
+            <i class="material-icons right">send</i>
+          </button>
 
         </div>
+
       </div>
+
     </div>
-    <!-- card da direita -->
+
+    <!-- Card da direita -->
     <div class="col m5 s12">
+
       <div class="card grey lighten-4">
+
         <div class="card-content">
           <span class="center-align card-title">Resultado da Simulação</span>
+
           <div class="chart-container">
             <canvas id="myChart" height="250px"></canvas>
           </div>
+
           <div class="row">
             <form class="range_container" action="#">
               <p class="range-field">
@@ -156,44 +163,52 @@
                 <input type="range" id="range_element" min="0" step="0.1" max="100" />
               </p>
             </form>
-            
             <p class="h6 col m6 s12">Número de estágios: <span id="num_estagios"></span></p>
             <p class="h6 col m6 s12">Prato de alimentação: <span id="prato_alimentacao"></span></p>
           </div>
 
         </div>
+
       </div>
+
     </div>
 
   </div>
 
   <div class="row">
+
     <div class="col offset-m1 m10 s12">
+
       <div class="card grey lighten-4">
+
         <div class="card-content">
           <span class="center-align card-title">Composição dos Estágios</span>
+
           <div class="resultados row">
             <p class="h6 col m6 s12">Talvez uma tabela: <span id="comp_estagios"></span></p>
           </div>
+
         </div>
+
       </div>
+
     </div>
+
   </div>
 
-
-
-
   <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+  <!-- link do materialize (estilização) -->
   <script type="text/javascript" src="js/materialize.min.js"></script>
-    <script type="text/javascript"  src="json/bancodedados.json"></script>
+  <!-- link do banco de dados -->
+  <script type="text/javascript" src="json/bancodedados.json"></script>
+  <!-- link das funções que são chamadas no código principal -->
   <script src="js/funcoes.js"></script>
+  <!-- link do código principal -->
   <script src="js/destilacao.js"></script>
-
-  <!-- link do código lindo que eu to fazendo -->
-  <script src="js/Chart.bundle.min.js"></script>
   <!-- link da biblioteca do chart -->
-  <script src="js/chart_control.js"></script>
+  <script src="js/Chart.bundle.min.js"></script>
   <!-- link do  arquivo de controle do chart -->
+  <script src="js/chart_control.js"></script>
 
 </body>
 
