@@ -1,7 +1,8 @@
  // arquivo de controle do chart
-
+function gerar_grafico(){
  //declaração da variável do chart
  var ctx = document.getElementById("myChart");
+
 
  //criação das variáveis contendo os dados do gráfico
  var linha_aux = []
@@ -65,3 +66,4 @@
    }
 
  });
+}

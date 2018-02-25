@@ -92,12 +92,12 @@
             <form class="rb_form" action="#">
               <label>Tipo de mistura:</label>
               <p>
-                <input name="group1" type="radio" id="tipodemistura1" />
-                <label for="tipodemistura1">Mistura Ideal</label>
+                <input name="grupo1" type="radio" value = "Mistura Ideal" id="tipo_mistura1" />
+                <label for="tipo_mistura1">Mistura Ideal</label>
               </p>
               <p>
-                <input name="group1" type="radio" id="tipodemistura2" />
-                <label for="tipodemistura2">Mistura Não Ideal</label>
+                <input name="grupo1" type="radio" value = "Mistura Não Ideal" id="tipo_mistura2" />
+                <label for="tipo_mistura2">Mistura Não Ideal</label>
               </p>
             </form>
 
@@ -115,11 +115,11 @@
             <form class="rb_form" action="#">
               <label>Método gráfico:</label>
               <p>
-                <input name="group2" type="radio" id="metodo1" />
+                <input name="grupo2" type="radio" id="metodo1" />
                 <label for="metodo1">McCabe-Thiele</label>
               </p>
               <p>
-                <input name="group2" type="radio" id="metodo2" />
+                <input name="grupo2" type="radio" id="metodo2" />
                 <label for="metodo2">Ponchon-Savarit</label>
               </p>
             </form>
@@ -134,7 +134,7 @@
           </div>
 
           <!-- Botão para calcular -->
-          <button class="btn waves-effect cyan darken-4" type="submit" name="action">Calcular
+          <button class="btn waves-effect cyan darken-4" type="submit" name="action" onclick=botao_calcular() >Calcular
             <i class="material-icons right">send</i>
           </button>
 
@@ -203,12 +203,13 @@
   <script type="text/javascript" src="json/bancodedados.json"></script>
   <!-- link das funções que são chamadas no código principal -->
   <script src="js/funcoes.js"></script>
+  <!-- link do  arquivo de controle do chart -->
+  <script src="js/chart_control.js"></script>
   <!-- link do código principal -->
   <script src="js/destilacao.js"></script>
   <!-- link da biblioteca do chart -->
   <script src="js/Chart.bundle.min.js"></script>
-  <!-- link do  arquivo de controle do chart -->
-  <script src="js/chart_control.js"></script>
+
 
 </body>
 
