@@ -3,7 +3,12 @@ $(".button-collapse").sideNav();
 $(document).ready(function() {
   $('select').material_select();
 });
+$("#tipo_mistura1").attr("checked", false)
+$("#tipo_mistura2").attr("checked", false)
+$("#metodo1").attr("checked", false)
+$("#metodo2").attr("checked", false)
 
+metodos_atividade = []
 
 //Inserindo dados na caixa de rolagem do componentes 1 e 2
 select_componentes = document.getElementById("select_componentes")
@@ -34,18 +39,18 @@ for (i = 0; i < data.componentes.length; i++) {
   select_componentes2.add(opt, select_componentes2.options[i + 1])
 }
 
-select_atividade = document.getElementById("select_atividade")
-var opt3 = document.createElement("option")
+select_atividade = document.getElementById("select_atividade");
+var opt3 = document.createElement("option");
 opt3.value = 0;
 opt3.text = 'Escolha uma opção';
-opt3.selected = 'selected'
-opt3.disabled = 'disabled'
-select_atividade.add(opt3, select_atividade.options[0])
+opt3.selected = 'selected';
+opt3.disabled = 'disabled';
+select_atividade.add(opt3, select_atividade.options[0]);
 for (i = 0; i < data.metodos_atividade.length; i++) {
-  var opt = document.createElement("option")
-  opt.value = i
-  opt.text = data.metodos_atividade[i]
-  select_atividade.add(opt, select_atividade.options[i + 1])
+  var opt = document.createElement("option");
+  opt.value = i;
+  opt.text = data.metodos_atividade[i];
+  select_atividade.add(opt, select_atividade.options[i + 1]);
 }
 
 // Iniciando a programação dos cálculos com a declaração das variáveis
@@ -55,36 +60,41 @@ var P1sat = Array()
 var P2sat = Array()
 var xvolatil = Array()
 var yvolatil = Array()
-var alfa = Array()
+var alfa_ideal = Array()
 var A1, A2, B1, B2, C1, C2
-var tipo_mistura, metodo_atividade, componente1, componente2
+var tipo_mistura, metodo_atividade, metodo_grafico, componente1, componente2
 var aux2 = Array()
+var aux3 = Array()
+var metodos_atividade = Array()
 
 //link dos comandos de cálculo com o botão
 function botao_calcular() {
+  if (componente1 == componente2) {
+    alert("Por favor, escolha dois componentes distintos.")
+  } else {
+    //inserção dos valores das variáveis a partir dos elementos de input
+    componente1 = data.componentes[document.getElementById("select_componentes").value]
+    componente2 = data.componentes[document.getElementById("select_componentes2").value]
 
-  //inserção dos valores das variáveis a partir dos elementos de input
-  componente1 = data.componentes[document.getElementById("select_componentes").value]
-  componente2 = data.componentes[document.getElementById("select_componentes2").value]
-  metodo_atividade = data.metodos_atividade[document.getElementById("select_atividade").value]
+    aux2 = document.getElementsByName("grupo1")
 
-  aux2 = document.getElementsByName("grupo1")
-  for (var i = 0; i < aux2.length; i++) {
-    if (aux2[i].checked == true) {
-      tipo_mistura = aux2[i].value
+    for (var i = 0; i < aux2.length; i++) {
+      if (aux2[i].checked == true) {
+        tipo_mistura = aux2[i].value
+      }
     }
+
+    metodo_atividade = metodos_atividade[document.getElementById("novo_select").value]
+    //chamando a função de cálculo da curva de ELV
+    if (tipo_mistura == "Mistura Ideal") {
+      curvaeq_ideal()
+    }
+
+    if (tipo_mistura == "Mistura Não Ideal") {
+
+      curvaeq_naoideal()
+    }
+
+    gerar_grafico()
   }
-
-  // mistura = componente1 + " e " + componente2
-
-  //chamando a função de cálculo da curva de ELV
-  if (tipo_mistura == "Mistura Ideal") {
-    curvaeq_ideal()
-  }
-
-  if (tipo_mistura == "Mistura Não Ideal") {
-    curvaeq_naoideal()
-  }
-
-  gerar_grafico()
 }

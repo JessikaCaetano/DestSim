@@ -1,4 +1,10 @@
 /* Caracterização de elementos gráficos de acordo com a classe ou tipo */
+
+.disabledDiv {
+pointer-events: none;
+opacity: 0.4;
+}
+
 .row {
   width: 100%;
 }

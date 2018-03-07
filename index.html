@@ -15,6 +15,7 @@
 </head>
 
 <body>
+
   <!-- Barra de navegação -->
   <nav class="cyan darken-4">
     <div class="nav-wrapper">
@@ -48,16 +49,14 @@
 
           <!-- Caixa de Rolagem 1 -->
           <div class="input-field col s12">
-            <!-- <select onchange = addcomp1() id="select_componentes"> -->
-            <select id="select_componentes">
+            <select onchange=add_comp1() id="select_componentes">
             </select>
             <label>Componente 1</label>
           </div>
 
           <!-- Caixa de Rolagem 2 -->
           <div class="input-field col s12">
-            <!-- <select onchange = addcomp2() id="select_componentes2"> -->
-            <select id="select_componentes2">
+            <select onchange=add_comp2() id="select_componentes2">
             </select>
             <label>Componente 2</label>
           </div>
@@ -92,21 +91,37 @@
             <form class="rb_form" action="#">
               <label>Tipo de mistura:</label>
               <p>
-                <input name="grupo1" type="radio" value = "Mistura Ideal" id="tipo_mistura1" />
+                <input name="grupo1" type="radio" value="Mistura Ideal" id="tipo_mistura1" onclick='disableSelect()' />
                 <label for="tipo_mistura1">Mistura Ideal</label>
               </p>
               <p>
-                <input name="grupo1" type="radio" value = "Mistura Não Ideal" id="tipo_mistura2" />
+                <input name="grupo1" type="radio" value="Mistura Não Ideal" id="tipo_mistura2" onclick='disableSelect()' />
                 <label for="tipo_mistura2">Mistura Não Ideal</label>
               </p>
             </form>
 
-            <div class="input-field col m6 s12">
-              <!-- <select onchange = addcomp3() id="select_atividade"> -->
+            <div class="input-field col m6 s12" id="div_select">
               <select id="select_atividade">
             </select>
               <label>Método de cálculo da atividade:</label>
             </div>
+
+            <script>
+              function disableSelect() {
+                aux2 = document.getElementsByName("grupo1")
+                for (var i = 0; i < aux2.length; i++) {
+                  if (aux2[i].checked == true) {
+                    tipo_mistura = aux2[i].value
+                  }
+                }
+
+                if (tipo_mistura == "Mistura Ideal") {
+                  document.getElementById("div_select").classList.add("disabledDiv");
+                } else {
+                  document.getElementById("div_select").className = "input-field col m6 s12"
+                }
+              }
+            </script>
 
           </div>
 
@@ -115,26 +130,42 @@
             <form class="rb_form" action="#">
               <label>Método gráfico:</label>
               <p>
-                <input name="grupo2" type="radio" id="metodo1" />
+                <input name="grupo2" type="radio" id="metodo1" value="McCabe-Thiele" onclick='disableSelect2()'/>
                 <label for="metodo1">McCabe-Thiele</label>
               </p>
               <p>
-                <input name="grupo2" type="radio" id="metodo2" />
+                <input name="grupo2" type="radio" id="metodo2" value="Ponchon-Savarit" onclick='disableSelect2()'/>
                 <label for="metodo2">Ponchon-Savarit</label>
               </p>
             </form>
 
-            <div class="input-field col m6 s12">
-              <!-- <select onchange = addcomp3() id="select_atividade"> -->
+            <div class="input-field col m6 s12" id=div_select2>
               <select id="select_entalpia">
             </select>
               <label>Método de cálculo da entalpia:</label>
             </div>
 
+            <script>
+              function disableSelect2() {
+                aux3 = document.getElementsByName("grupo2")
+                for (var i = 0; i < aux3.length; i++) {
+                  if (aux3[i].checked == true) {
+                    metodo_grafico = aux3[i].value
+                  }
+                }
+
+                if (metodo_grafico == "McCabe-Thiele") {
+                  document.getElementById("div_select2").classList.add("disabledDiv");
+                } else {
+                  document.getElementById("div_select2").className = "input-field col m6 s12"
+                }
+              }
+            </script>
+
           </div>
 
           <!-- Botão para calcular -->
-          <button class="btn waves-effect cyan darken-4" type="submit" name="action" onclick=botao_calcular() >Calcular
+          <button class="btn waves-effect cyan darken-4" type="submit" name="action" onclick=botao_calcular()>Calcular
             <i class="material-icons right">send</i>
           </button>
 
@@ -196,6 +227,8 @@
 
   </div>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- link do jquery -->
   <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
   <!-- link do materialize (estilização) -->
   <script type="text/javascript" src="js/materialize.min.js"></script>
