@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <title>Destilação Binária</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!--Import materialize.css-->
+  <!--Importar materialize.css-->
   <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
   <link type="text/css" rel="stylesheet" href="css/index.css" />
   <!--Let browser know website is optimized for mobile-->
@@ -44,6 +44,7 @@
     <div class="col offset-m1 m5 s12">
 
       <div class="card grey lighten-4">
+
         <div class="card-content">
           <span class="center-align card-title">Entrada de Dados</span>
 
@@ -68,6 +69,7 @@
 
           <div class="row">
 
+            <!-- Inputs das composições de alimentação, topo e fundo -->
             <div class="input-field col m4 s12">
               <input placeholder="Ex. 0.42" id="input_compalimentacao" type="number" class="validate">
               <label for="first_name">Alimentação</label>
@@ -87,7 +89,7 @@
 
           <div class="row horizontal_line">
 
-            <!-- Caixas de marcação -->
+            <!-- Botões de seleção do tipo de mistura-->
             <form class="rb_form" action="#">
               <label>Tipo de mistura:</label>
               <p>
@@ -100,6 +102,7 @@
               </p>
             </form>
 
+            <!-- Caixas de rolagem do método de cálculo de atividade-->
             <div class="input-field col m6 s12" id="div_select">
               <select id="select_atividade">
             </select>
@@ -107,12 +110,16 @@
             </div>
 
             <script>
+              // Função para desabilitar caixa de rolagem do método de atividade caso a mistura seja ideal
               function disableSelect() {
+
                 aux2 = document.getElementsByName("grupo1")
                 for (var i = 0; i < aux2.length; i++) {
+
                   if (aux2[i].checked == true) {
                     tipo_mistura = aux2[i].value
                   }
+
                 }
 
                 if (tipo_mistura == "Mistura Ideal") {
@@ -120,38 +127,45 @@
                 } else {
                   document.getElementById("div_select").className = "input-field col m6 s12"
                 }
+
               }
             </script>
 
           </div>
 
           <div class="row  horizontal_line">
-            <!-- Caixa de rolagem dos métodos de cálculo de atividade -->
+
+            <!-- Botões de seleção do método gráfico -->
             <form class="rb_form" action="#">
               <label>Método gráfico:</label>
               <p>
-                <input name="grupo2" type="radio" id="metodo1" value="McCabe-Thiele" onclick='disableSelect2()'/>
+                <input name="grupo2" type="radio" id="metodo1" value="McCabe-Thiele" onclick='disableSelect2()' />
                 <label for="metodo1">McCabe-Thiele</label>
               </p>
               <p>
-                <input name="grupo2" type="radio" id="metodo2" value="Ponchon-Savarit" onclick='disableSelect2()'/>
+                <input name="grupo2" type="radio" id="metodo2" value="Ponchon-Savarit" onclick='disableSelect2()' />
                 <label for="metodo2">Ponchon-Savarit</label>
               </p>
             </form>
 
+            <!-- Caixas de rolagem do método de cálculo de entalpia residual da fase vapor-->
             <div class="input-field col m6 s12" id=div_select2>
               <select id="select_entalpia">
             </select>
-              <label>Método de cálculo da entalpia:</label>
+              <label>Método de cálculo da entalpia residual:</label>
             </div>
 
             <script>
+              // Função para desabilitar caixa de rolagem do método de entalpia caso o método gráfico seja McCabe-Thiele
               function disableSelect2() {
                 aux3 = document.getElementsByName("grupo2")
+
                 for (var i = 0; i < aux3.length; i++) {
+
                   if (aux3[i].checked == true) {
                     metodo_grafico = aux3[i].value
                   }
+
                 }
 
                 if (metodo_grafico == "McCabe-Thiele") {
@@ -159,6 +173,7 @@
                 } else {
                   document.getElementById("div_select2").className = "input-field col m6 s12"
                 }
+
               }
             </script>
 
@@ -181,19 +196,24 @@
       <div class="card grey lighten-4">
 
         <div class="card-content">
+          <!-- Título do card da direita -->
           <span class="center-align card-title">Resultado da Simulação</span>
 
-          <div class="chart-container">
+          <!-- canvas que contém o gráfico -->
+          <div id="div_chart" class="chart-container">
             <canvas id="myChart" height="250px"></canvas>
           </div>
 
           <div class="row">
+
+            <!-- Slider da razão de refluxo -->
             <form class="range_container" action="#">
               <p class="range-field">
                 <label for="range_element">Razão de refluxo:</label>
                 <input type="range" id="range_element" min="0" step="0.1" max="100" />
               </p>
             </form>
+
             <p class="h6 col m6 s12">Número de estágios: <span id="num_estagios"></span></p>
             <p class="h6 col m6 s12">Prato de alimentação: <span id="prato_alimentacao"></span></p>
           </div>
@@ -213,6 +233,7 @@
       <div class="card grey lighten-4">
 
         <div class="card-content">
+          <!-- Resultados da composição de cada estágio -->
           <span class="center-align card-title">Composição dos Estágios</span>
 
           <div class="resultados row">
