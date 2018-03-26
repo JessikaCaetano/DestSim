@@ -17,14 +17,11 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
- .horizontal_line{
-   display: inline-flex;
- }
-
  .rb_form{
    margin-left: 2%;
    line-height  : 0.95em;
  }
+
 
 
  .range_container{
@@ -35,4 +32,17 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 
  input[type="range"] {
     border: none;
+}
+
+#div_switch{
+  text-align: right;
+}
+
+
+#label_composicao{
+  line-height: 22.5px;
+}
+
+canvas{
+  min-height: 200px;
 }
