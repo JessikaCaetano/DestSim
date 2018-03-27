@@ -94,26 +94,26 @@
      data: {
        datasets: [{
            label: 'Curva de Equilíbrio',
-           backgroundColor: '#006064',
+           backgroundColor: '#546e7a',
            showLine: true,
            fill: false,
            data: curva_eq,
-           borderColor: '#006064',
+           borderColor: '#546e7a',
            borderWidth: 2,
            pointRadius: 0.1
          },
          {
            label: "z",
-           backgroundColor: '#4DB6AC',
+           backgroundColor: '#90a4ae',
            showLine: true,
            fill: false,
            data: linha_aux,
-           borderColor: '#4DB6AC',
+           borderColor: '#90a4ae',
            borderWidth: 2,
            pointRadius: 0.1
          },
          {
-           label: "z",
+           label: "Retas de Retificação e Esgotamento",
            backgroundColor: '#b0bec5',
            showLine: true,
            fill: false,
@@ -133,22 +133,22 @@
            pointRadius: 0.1
          },
          {
-           label: "z",
-           backgroundColor: '#78909c',
+           label: "Reta de Alimentação",
+           backgroundColor: '#00838f',
            showLine: true,
            fill: false,
            data: alimentacao,
-           borderColor: '#78909c',
+           borderColor: '#00838f',
            borderWidth: 2,
            pointRadius: 0.1
          },
          {
            label: "Estágios",
-           backgroundColor: '#78909c',
+           backgroundColor: '#4db6ac',
            showLine: true,
            fill: false,
            data: degraus,
-           borderColor: '#78909c',
+           borderColor: '#4db6ac',
            borderWidth: 2,
            pointRadius: 0.1
          }
@@ -162,7 +162,8 @@
            // Remover legenda de alguns datasets
            filter: function(item, myLineChart) {
              return !item.text.includes("z");
-           }
+           },
+           boxWidth: 20
          }
        },
        animation: {

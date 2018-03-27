@@ -1,73 +1,60 @@
 // Função de adição dos componentes à caixa de rolagem do componete 1
 function add_comp1() {
 
+  c1_added = true;
+
   // Limpeza do vetor dos métodos de atividade e adição dos componentes às barras de rolagem
   metodos_atividade = [];
   componente1 = data.componentes[document.getElementById("select_componentes").value];
-  componente2 = data.componentes[document.getElementById("select_componentes2").value];
 
-  j6 = -1;
-  j7 = -1;
-  j8 = -1;
+  if (c2_added == true) {
 
-  // Organização dos componentes de acordo com o banco de dados de misturas de cada método não ideal
-  for (i = 0; i < data.misturas_vl.length; i++) {
-
-    if (data.misturas_vl[i] == componente1 + " e " + componente2) {
-      j6 = i;
-    } else if (data.misturas_vl[i] == componente2 + " e " + componente1) {
-      j6 = i;
-    }
+    componente2 = data.componentes[document.getElementById("select_componentes2").value];
+    add_atividade();
 
   }
-
-  for (i = 0; i < data.misturas_NRTL.length; i++) {
-
-    if (data.misturas_NRTL[i] == componente1 + " e " + componente2) {
-      j7 = i;
-    } else if (data.misturas_NRTL[i] == componente2 + " e " + componente1) {
-      j7 = i;
-    }
-
-  }
-
-  for (i = 0; i < data.misturas_Wilson.length; i++) {
-
-    if (data.misturas_Wilson[i] == componente1 + " e " + componente2) {
-      j8 = i;
-    } else if (data.misturas_Wilson[i] == componente2 + " e " + componente1) {
-      j8 = i;
-    }
-
-  }
-
-  // Determinação dos métodos disponíveis para cada mistura
-  if (j6 >= 0) {
-    metodos_atividade.push("Van Laar");
-  }
-  if (j7 >= 0) {
-    metodos_atividade.push("NRTL");
-  }
-  if (j8 >= 0) {
-    metodos_atividade.push("Wilson");
-    }
-  metodos_atividade.push("UNIFAC");
-
-  add_atividade();
 
 }
 
 // Função de adição dos componentes à caixa de rolagem do componete 2
 function add_comp2() {
 
+  c2_added = true;
+
   // limpeza do vetor dos métodos de atividade e adição dos componentes às barras de rolagem
   metodos_atividade = [];
+
+  componente2 = data.componentes[document.getElementById("select_componentes2").value];
+
+  if (c1_added == true) {
+
+    componente1 = data.componentes[document.getElementById("select_componentes").value];
+    add_atividade();
+
+  }
+
+}
+
+// Função de adição dos métodos de cálculo de atividade à caixa de rolagem
+function add_atividade() {
+
+  // Habilitação das caixas de input das composições
+  document.getElementById("div_composicoes").className = "row"
+
+  // Definição das massas molares dos componentes
+  for (var i = 0; i < data.componentes.length; i++) {
+
+    if (data.componentes[i] == componente1) {
+      M1 = data.massa_molar[i];
+    } else if (data.componentes[i] == componente2) {
+      M2 = data.massa_molar[i];
+    }
+
+  }
+
   j6 = -1;
   j7 = -1;
   j8 = -1;
-
-  componente1 = data.componentes[document.getElementById("select_componentes").value];
-  componente2 = data.componentes[document.getElementById("select_componentes2").value];
 
   // Organização dos componentes de acordo com o banco de dados de misturas de cada método não ideal
   for (i = 0; i < data.misturas_vl.length; i++) {
@@ -112,17 +99,11 @@ function add_comp2() {
   }
   metodos_atividade.push("UNIFAC");
 
-  add_atividade();
-
-}
-
-// Função de adição dos métodos de cálculo de atividade à caixa de rolagem
-function add_atividade() {
-
   // Limpeza da div que contém os métodos de atividade criação de um novo elemento select
   $("#div_select").empty();
   novo_select = document.createElement("select");
   novo_select.setAttribute("id", "novo_select");
+  novo_select.setAttribute("onchange", "add_metodo()");
   div_select.appendChild(novo_select);
 
   // Adição dos métodos disponíveis ao novo elemento select criado
@@ -143,6 +124,79 @@ function add_atividade() {
   $("#div_select").append('<label>Método de cálculo da atividade:</label>');
 
   $('select').material_select();
+}
+
+// Funções de definição do método de cálculo de atividade e de entalpia
+function add_metodo() {
+
+  metodo_added = true;
+  metodo_atividade = metodos_atividade[document.getElementById("novo_select").value];
+
+}
+
+function add_metodo_entalpia() {
+
+  metodo_entalpia_added = true;
+  metodo_entalpia = data.metodos_entalpia[document.getElementById("select_entalpia").value];
+
+}
+
+// Chamada das funções de conversão
+function converter() {
+
+  // Definição dos valores inseridos e verificação da posição do switch
+  tipo_composicao = document.getElementById("switch").checked;
+  xF = document.getElementById("input_alimentacao").value;
+  xD = document.getElementById("input_topo").value;
+  xB = document.getElementById("input_fundo").value;
+
+  // Chamada das funções de conversão caso necessário
+  if (tipo_composicao == true) {
+
+    if (xF) {
+      mol_to_mass(parseFloat(xF));
+      document.getElementById("input_alimentacao").value = x_massico.toFixed(2);
+    }
+    if (xD) {
+      mol_to_mass(parseFloat(xD));
+      document.getElementById("input_topo").value = x_massico.toFixed(2);
+    }
+    if (xB) {
+      mol_to_mass(parseFloat(xB));
+      document.getElementById("input_fundo").value = x_massico.toFixed(2);
+    }
+
+  } else {
+
+    if (xF) {
+      mass_to_mol(parseFloat(xF))
+      document.getElementById("input_alimentacao").value = x_molar.toFixed(2);
+    }
+    if (xD) {
+      mass_to_mol(parseFloat(xD))
+      document.getElementById("input_topo").value = x_molar.toFixed(2);
+    }
+    if (xB) {
+      mass_to_mol(parseFloat(xB))
+      document.getElementById("input_fundo").value = x_molar.toFixed(2);
+    }
+
+  }
+
+}
+
+// Função de conversão de composição molar para mássica
+function mol_to_mass(value) {
+
+  x_massico = (value * M1) / (value * M1 + (1 - value) * M2);
+
+}
+
+// Função de conversão de composição mássica para molar
+function mass_to_mol(value) {
+
+  x_molar = (value / M1) / (value / M1 + (1 - value) / M2);
+
 }
 
 // Função de cálculo das temperaturas saturadas e vetor de temperaturas

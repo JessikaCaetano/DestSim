@@ -50,14 +50,14 @@
 
           <!-- Caixa de Rolagem 1 -->
           <div class="input-field col s12">
-            <select onchange=add_comp1() id="select_componentes">
+            <select onchange="add_comp1()" id="select_componentes">
             </select>
             <label>Componente 1</label>
           </div>
 
           <!-- Caixa de Rolagem 2 -->
           <div class="input-field col s12">
-            <select onchange=add_comp2() id="select_componentes2">
+            <select onchange="add_comp2()" id="select_componentes2">
             </select>
             <label>Componente 2</label>
           </div>
@@ -65,37 +65,50 @@
           <!-- Seleção de unidade de composição (mássica ou molar) -->
           <div class="row  m12 s12">
             <label id="label_composicao" class="col m6 s3">Composição:</label>
-            <div id='div_switch' class="switch col m6 s9">
+            <div id='div_switch' class="switch col m6 s9" onchange="converter()">
               <label>
                 Molar
-                <input type="checkbox">
-                <span class="lever grey  "></span>
+                <input id = "switch" type="checkbox">
+                <span class="lever grey"></span>
                 Mássica
               </label>
             </div>
           </div>
 
-          <div class="row">
+          <div class="row disabledDiv" id = "div_composicoes">
 
             <!-- Inputs das composições de alimentação, topo e fundo -->
             <div class="input-field col m4 s12">
-              <input placeholder="Ex. 0.42" id="input_compalimentacao" type="number" class="validate">
+              <input placeholder="Ex. 0.42" id="input_alimentacao" type="number" step="any" class="validate" value="">
               <label for="first_name">Alimentação</label>
             </div>
 
             <div class="input-field col m4 s6">
-              <input placeholder="Ex. 0.42" id="input_comptopo" type="number" class="validate">
+              <input placeholder="Ex. 0.42" id="input_topo" type="number" step="any" class="validate" value="">
               <label for="first_name">Topo</label>
             </div>
 
             <div class="input-field col m4 s6">
-              <input placeholder="Ex. 0.42" id="input_compfundo" type="number" class="validate">
+              <input placeholder="Ex. 0.42" id="input_fundo" type="number" step="any" class="validate" value="">
               <label for="first_name">Fundo</label>
             </div>
 
           </div>
 
           <div class="row">
+
+            <!-- Botões de seleção do método gráfico -->
+            <form class="rb_form col m6 s12" action="#">
+              <label>Método gráfico:</label>
+              <p>
+                <input name="grupo2" type="radio" id="metodo1" value="McCabe-Thiele" onclick='disableSelect()' />
+                <label for="metodo1">McCabe-Thiele</label>
+              </p>
+              <p>
+                <input name="grupo2" type="radio" id="metodo2" value="Ponchon-Savarit" onclick='disableSelect()' />
+                <label for="metodo2">Ponchon-Savarit</label>
+              </p>
+            </form>
 
             <!-- Botões de seleção do tipo de mistura-->
             <form class="rb_form col m6 s12" action="#">
@@ -107,19 +120,6 @@
               <p>
                 <input name="grupo1" type="radio" value="Mistura Não Ideal" id="tipo_mistura2" onclick='disableSelect()' />
                 <label for="tipo_mistura2">Mistura Não Ideal</label>
-              </p>
-            </form>
-
-            <!-- Botões de seleção do método gráfico -->
-            <form class="rb_form col m6 s12" action="#">
-              <label>Método gráfico:</label>
-              <p>
-                <input name="grupo2" type="radio" id="metodo1" value="McCabe-Thiele" onclick='disableSelect2()' />
-                <label for="metodo1">McCabe-Thiele</label>
-              </p>
-              <p>
-                <input name="grupo2" type="radio" id="metodo2" value="Ponchon-Savarit" onclick='disableSelect2()' />
-                <label for="metodo2">Ponchon-Savarit</label>
               </p>
             </form>
 
@@ -136,21 +136,31 @@
 
             <!-- Caixas de rolagem do método de cálculo de entalpia residual da fase vapor-->
             <div class="input-field col m6 s12" id=div_select2>
-              <select id="select_entalpia">
+              <select id="select_entalpia" onchange = "add_metodo_entalpia()">
             </select>
               <label>Método de cálculo da entalpia residual:</label>
             </div>
 
             <script>
-            
+
               // Função para desabilitar caixa de rolagem do método de atividade caso a mistura seja ideal
               function disableSelect() {
 
-                aux2 = document.getElementsByName("grupo1")
+                aux2 = document.getElementsByName("grupo1");
                 for (var i = 0; i < aux2.length; i++) {
 
                   if (aux2[i].checked == true) {
-                    tipo_mistura = aux2[i].value
+                    tipo_mistura = aux2[i].value;
+                  }
+
+                }
+
+                aux3 = document.getElementsByName("grupo2");
+
+                for (var i = 0; i < aux3.length; i++) {
+
+                  if (aux3[i].checked == true) {
+                    metodo_grafico = aux3[i].value;
                   }
 
                 }
@@ -158,32 +168,16 @@
                 if (tipo_mistura == "Mistura Ideal") {
                   document.getElementById("div_select").classList.add("disabledDiv");
                   document.getElementById("div_select2").classList.add("disabledDiv");
-                } else {
-                  document.getElementById("div_select").className = "input-field col m6 s12"
-                  document.getElementById("div_select2").className = "input-field col m6 s12"
+                } else if(tipo_mistura == "Mistura Não Ideal"){
+                  document.getElementById("div_select").className = "input-field col m6 s12";
+                  document.getElementById("div_select2").className = "input-field col m6 s12";
                 }
-
-              }
-
-              // Função para desabilitar caixa de rolagem do método de entalpia caso o método gráfico seja McCabe-Thiele
-              function disableSelect2() {
-                aux3 = document.getElementsByName("grupo2")
-
-                for (var i = 0; i < aux3.length; i++) {
-
-                  if (aux3[i].checked == true) {
-                    metodo_grafico = aux3[i].value
-                  }
-
-                }
-
                 if (metodo_grafico == "McCabe-Thiele") {
                   document.getElementById("div_select2").classList.add("disabledDiv");
-                } else {
-                  document.getElementById("div_select2").className = "input-field col m6 s12"
                 }
 
               }
+
             </script>
 
           </div>
@@ -192,6 +186,22 @@
           <button class="btn waves-effect cyan darken-4" type="submit" name="action" onclick=botao_calcular()>Calcular
             <i class="material-icons right">send</i>
           </button>
+
+          <!-- Botão do exemplo ideal -->
+          <button class="btn waves-effect cyan darken-4" type="submit" name="action" onclick=exemplo_ideal()>Ex. Ideal
+            <i class="material-icons right">send</i>
+          </button>
+
+          <!-- Botão do exemplo não ideal -->
+          <button class="btn waves-effect cyan darken-4" type="submit" name="action" onclick=exemplo_nideal()>Ex. Não Ideal
+            <i class="material-icons right">send</i>
+          </button>
+
+        </div>
+
+        <div>
+
+
 
         </div>
 
