@@ -34,8 +34,7 @@ var x_degrau = Array(),
   y_estagio = Array();
 var A1, A2, B1, B2, C1, C2, T1sat, T2sat, T1, P1sat, P2sat, atividade1, atividade2, x1, x2, qk1_total, qk2_total, rk1_total, rk2_total;
 var tipo_mistura, metodo_atividade, metodo_grafico, metodo_entalpia, componente1, componente2, estagio_alimentacao, atividade1, atividade2;
-var x1, x2, T1;
-var xF, xD, xB, Rd_min, Rd, yF, x_aux, y_aux, indice_comp;
+var xF, xD, xB, Rd_min, Rd, yF, x_aux, y_aux, indice_comp, compvolatil;
 var c_added_1 = false,
   c_added_2 = false,
   metodo_added = false,
@@ -214,6 +213,7 @@ function exemplo_ideal() {
   mudar_select("div_componentes2", componente2, "select_componentes2", data.componentes, "add_comp_2()");
   $("#div_componentes").append('<label>Componente 1:</label> ');
   $("#div_componentes2").append('<label>Componente 2:</label>');
+  document.getElementById("label_composicao").innerHTML ="Composição (Benzeno):";
 
   // Liberação dos campos de adição de composições
   document.getElementById("div_composicoes").className = "row";
@@ -270,6 +270,7 @@ function exemplo_nideal() {
   mudar_select("div_componentes2", componente2, "select_componentes2", data.componentes, "add_comp_2()");
   $("#div_componentes").append('<label>Componente 1:</label> ');
   $("#div_componentes2").append('<label>Componente 2:</label>');
+    document.getElementById("label_composicao").innerHTML ="Composição (Etanol):";
 
   // Liberação dos campos de adição de composições
   document.getElementById("div_composicoes").className = "row";

@@ -242,3 +242,64 @@ function composicao_estagios() {
   }
 
 }
+
+function calcular_compvolatil(){
+
+  // Definição dos valores das constantes de Antoine para os componentes escolhidos
+  for (i = 0; i <= data.componentes.length; i++) {
+
+    if (data.componentes[i] == componente1) {
+      j = i;
+    }
+
+  }
+
+  A1 = data.cte_antoineA[j];
+  B1 = data.cte_antoineB[j];
+  C1 = data.cte_antoineC[j];
+
+  for (i = 0; i <= data.componentes.length; i++) {
+
+    if (data.componentes[i] == componente2) {
+      j = i;
+    }
+
+  }
+
+  A2 = data.cte_antoineA[j];
+  B2 = data.cte_antoineB[j];
+  C2 = data.cte_antoineC[j];
+
+  //Cálculo das temperaturas de saturação
+  T1sat = B1 / (A1 - Math.log(pressao)) - C1;
+  T2sat = B2 / (A2 - Math.log(pressao)) - C2;
+
+  //Definição do componente mais volátil e do intervalo de temperaturas, incluindo adequação aos métodos gráficos
+  if (T1sat > T2sat) {
+
+    compvolatil = componente2;
+    aux = componente1;
+    componente1 = componente2;
+    componente2 = aux;
+
+    aux = T1sat;
+    T1sat = T2sat;
+    T2sat = aux;
+
+    aux = A1;
+    A1 = A2;
+    A2 = aux;
+
+    aux = B1;
+    B1 = B2;
+    B2 = aux;
+
+    aux = C1;
+    C1 = C2;
+    C2 = aux;
+
+  }else{
+    compvolatil = componente1;
+  }
+  
+}
