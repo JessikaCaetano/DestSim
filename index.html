@@ -23,10 +23,10 @@
       <a href="#!" class="brand-logo">Logo</a>
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
-        <li><a href="sass.html">Manual</a></li>
-        <li><a href="badges.html">Sobre os Métodos</a></li>
-        <li><a href="collapsible.html">Exemplo Ideal</a></li>
-        <li><a href="mobile.html">Exemplo Não Ideal</a></li>
+        <li><a href="sass.html">Início</a></li>
+        <li><a href="badges.html">Simulação</a></li>
+        <li><a href="collapsible.html">Manual</a></li>
+        <li><a href="mobile.html">Sobre os Métodos</a></li>
       </ul>
       <ul class="side-nav" id="mobile-demo">
         <li><a href="sass.html">Manual</a></li>
@@ -64,8 +64,8 @@
 
           <!-- Seleção de unidade de composição (mássica ou molar) -->
           <div class="row  m12 s12">
-            <label id="label_composicao" class="col m6 s3">Composição (Componente mais volátil):</label>
-            <div id='div_switch' class="switch col m6 s9" onchange="converter()">
+            <label id="label_composicao" class="col m6 s12">Composição (Componente mais volátil):</label>
+            <div id='div_switch' class="switch col m6 s12" onchange="converter()">
               <label>
                 Molar
                 <input id = "switch" type="checkbox">
@@ -165,20 +165,29 @@
 
           </div>
 
-          <!-- Botão para calcular -->
-          <button class="btn waves-effect cyan darken-4" type="submit" name="action" onclick=botao_calcular()>Calcular
+          <div class="row">
+            <div class="col m4 s8 offset-s2">
+              <!-- Botão para calcular -->
+              <a class=" btn-small waves-effect white-text cyan darken-4" onclick=botao_calcular()>Calcular
             <i class="material-icons right">send</i>
-          </button>
+          </a>
+            </div>
 
-          <!-- Botão do exemplo ideal -->
-          <button class="btn waves-effect cyan darken-4" type="submit" name="action" onclick=exemplo_ideal()>Ex. Ideal
+            <div class="col m4 s8 offset-s2">
+              <!-- Botão do exemplo ideal -->
+              <a class="waves-effect white-text waves-light btn-small cyan darken-4" onclick=exemplo_ideal()>Ex. Ideal
             <i class="material-icons right">send</i>
-          </button>
+          </a>
+            </div>
 
-          <!-- Botão do exemplo não ideal -->
-          <button class="btn waves-effect cyan darken-4" type="submit" name="action" onclick=exemplo_nideal()>Ex. Não Ideal
+            <div class="col m4 s8 offset-s2">
+              <!-- Botão do exemplo não ideal -->
+              <a class="waves-effect  white-text waves-light btn-small cyan darken-4" onclick=exemplo_nideal()>Ex. Não Ideal
             <i class="material-icons right">send</i>
-          </button>
+          </a>
+            </div>
+
+          </div>
 
         </div>
 
@@ -234,12 +243,40 @@
 
       <div class="card grey lighten-4">
 
-        <div class="card-content">
+        <div class="row card-content">
           <!-- Resultados da composição de cada estágio -->
           <span class="center-align card-title">Composição dos Estágios</span>
 
-          <div class="resultados row">
+          <div class="col m6 s12">
             <table id="tabela_composicoes">
+
+              <thead id="tabela1_head">
+                <tr>
+                  <th>Estágio</th>
+                  <th>x (fração molar)</th>
+                  <th>y (fração molar)</th>
+                </tr>
+              </thead>
+
+              <tbody id="tabela1_body">
+              </tbody>
+
+            </table>
+          </div>
+
+          <div class="col m6 s12">
+            <table id="tabela_composicoes2">
+
+              <thead id="tabela2_head">
+                <tr>
+                  <th>Estágio</th>
+                  <th>x (fração molar)</th>
+                  <th>y (fração molar)</th>
+                </tr>
+              </thead>
+
+              <tbody id="tabela2_body">
+              </tbody>
 
             </table>
           </div>

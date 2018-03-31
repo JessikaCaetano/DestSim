@@ -223,27 +223,26 @@ function composicao_estagios() {
 
   // Create an empty <tr> element and add it to the 1st position of the table:
   $("#tabela_composicoes tr").remove();
-  var linha_1 = tabela.insertRow(0);
-  var linha_2 = tabela.insertRow(1);
-  var linha_3 = tabela.insertRow(2);
-  var cell0 = linha_1.insertCell(0);
-  cell0.innerHTML = "Estágio:";
-  var cell0 = linha_2.insertCell(0);
-  cell0.innerHTML = "x (fração molar):";
-  var cell0 = linha_3.insertCell(0);
-  cell0.innerHTML = "y (fração molar):";
-  for (var i = 1; i <= x_estagio.length; i++) {
-    var cell1 = linha_1.insertCell(i);
-    cell1.innerHTML = i;
-    var cell2 = linha_2.insertCell(i);
-    cell2.innerHTML = x_estagio[i - 1].toFixed(2);
-    var cell3 = linha_3.insertCell(i);
-    cell3.innerHTML = y_estagio[i - 1].toFixed(2);
+  $("#tabela_composicoes2 tr").remove();
+
+  tabela1_head = document.getElementById("tabela1_head");
+  tabela1_head.innerHTML = tabela1_head.innerHTML + "<tr> <th>" + "Estágio" + "</th> <th>" + "x (fração molar)" + "</th> <th>" + "y (fração molar)" + "</th> </tr>";
+  tabela2_head = document.getElementById("tabela2_head");
+  tabela2_head.innerHTML = tabela2_head.innerHTML + "<tr> <th>" + "Estágio" + "</th> <th>" + "x (fração molar)" + "</th> <th>" + "y (fração molar)" + "</th> </tr>";
+
+  tabela1_body = document.getElementById("tabela1_body");
+  for (var i = 1; i <= Math.round(x_estagio.length / 2); i++) {
+    tabela1_body.innerHTML = tabela1_body.innerHTML + "<tr> <th>" + i + "</th> <th>" + x_estagio[i-1].toFixed(2) + "</th> <th>" + y_estagio[i-1].toFixed(2) + "</th> </tr>";
+  }
+
+  tabela2_body = document.getElementById("tabela2_body")
+  for (var i = Math.round(x_estagio.length / 2) + 1; i <= x_estagio.length; i++) {
+    tabela2_body.innerHTML = tabela2_body.innerHTML + "<tr> <th>" + i + "</th> <th>" + x_estagio[i-1].toFixed(2) + "</th> <th>" + y_estagio[i-1].toFixed(2) + "</th> </tr>"
   }
 
 }
 
-function calcular_compvolatil(){
+function calcular_compvolatil() {
 
   // Definição dos valores das constantes de Antoine para os componentes escolhidos
   for (i = 0; i <= data.componentes.length; i++) {
@@ -298,8 +297,8 @@ function calcular_compvolatil(){
     C1 = C2;
     C2 = aux;
 
-  }else{
+  } else {
     compvolatil = componente1;
   }
-  
+
 }
