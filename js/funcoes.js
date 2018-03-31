@@ -1,124 +1,72 @@
 // Função de adição dos componentes à caixa de rolagem do componete 1
-function add_comp1() {
+function add_comp_1() {
 
-  c1_added = true;
+  c_added_1 = true;
 
-  // Limpeza do vetor dos métodos de atividade e adição dos componentes às barras de rolagem
-  metodos_atividade = [];
-  componente1 = data.componentes[document.getElementById("select_componentes").value];
+  // Adição dos componentes a partir das barras de rolagem
+  componente1 = data.componentes[document.getElementById("select_componentes").value - 1];
 
-  if (c2_added == true) {
+  if (document.getElementById("select_componentes2").value != 0) {
+    componente2 = data.componentes[document.getElementById("select_componentes2").value - 1];
+  }
 
-    componente2 = data.componentes[document.getElementById("select_componentes2").value];
-    add_atividade();
+  if (componente2) {
+    c_added_2 == true;
+    add_atividade("Escolha uma opção");
 
   }
 
 }
 
 // Função de adição dos componentes à caixa de rolagem do componete 2
-function add_comp2() {
+function add_comp_2() {
 
-  c2_added = true;
+  c_added_2 = true;
 
-  // limpeza do vetor dos métodos de atividade e adição dos componentes às barras de rolagem
-  metodos_atividade = [];
+  // Adição dos componentes a partir das barras de rolagem
+  componente2 = data.componentes[document.getElementById("select_componentes2").value - 1];
 
-  componente2 = data.componentes[document.getElementById("select_componentes2").value];
+  if (document.getElementById("select_componentes").value != 0) {
+    componente1 = data.componentes[document.getElementById("select_componentes").value - 1];
+  }
 
-  if (c1_added == true) {
-
-    componente1 = data.componentes[document.getElementById("select_componentes").value];
-    add_atividade();
+  if (componente1) {
+    c_added_1 == true;
+    add_atividade("Escolha uma opção");
 
   }
 
 }
 
 // Função de adição dos métodos de cálculo de atividade à caixa de rolagem
-function add_atividade() {
+function add_atividade(componente) {
+
+  // Limpeza do vetor dos métodos de atividade
+  metodos_atividade = [];
 
   // Habilitação das caixas de input das composições
-  document.getElementById("div_composicoes").className = "row"
+  document.getElementById("div_composicoes").className = "row";
+  document.getElementById("div_select").className = "input-field col m6 s12";
 
   // Definição das massas molares dos componentes
-  for (var i = 0; i < data.componentes.length; i++) {
-
-    if (data.componentes[i] == componente1) {
-      M1 = data.massa_molar[i];
-    } else if (data.componentes[i] == componente2) {
-      M2 = data.massa_molar[i];
-    }
-
-  }
-
-  j6 = -1;
-  j7 = -1;
-  j8 = -1;
+  massa_molar(componente1, componente2);
 
   // Organização dos componentes de acordo com o banco de dados de misturas de cada método não ideal
-  for (i = 0; i < data.misturas_vl.length; i++) {
-
-    if (data.misturas_vl[i] == componente1 + " e " + componente2) {
-      j6 = i;
-    } else if (data.misturas_vl[i] == componente2 + " e " + componente1) {
-      j6 = i;
-    }
-
-  }
-
-  for (i = 0; i < data.misturas_NRTL.length; i++) {
-
-    if (data.misturas_NRTL[i] == componente1 + " e " + componente2) {
-      j7 = i;
-    } else if (data.misturas_NRTL[i] == componente2 + " e " + componente1) {
-      j7 = i;
-    }
-
-  }
-
-  for (i = 0; i < data.misturas_Wilson.length; i++) {
-
-    if (data.misturas_Wilson[i] == componente1 + " e " + componente2) {
-      j8 = i;
-    } else if (data.misturas_Wilson[i] == componente2 + " e " + componente1) {
-      j8 = i;
-    }
-
-  }
+  localizar_mistura(componente1, componente2);
 
   // Determinação dos métodos disponíveis para cada mistura
-  if (j6 >= 0) {
+  if (j1 >= 0) {
     metodos_atividade.push("Van Laar");
   }
-  if (j7 >= 0) {
+  if (j2 >= 0) {
     metodos_atividade.push("NRTL");
   }
-  if (j8 >= 0) {
+  if (j3 >= 0) {
     metodos_atividade.push("Wilson");
   }
   metodos_atividade.push("UNIFAC");
 
-  // Limpeza da div que contém os métodos de atividade criação de um novo elemento select
-  $("#div_select").empty();
-  novo_select = document.createElement("select");
-  novo_select.setAttribute("id", "novo_select");
-  novo_select.setAttribute("onchange", "add_metodo()");
-  div_select.appendChild(novo_select);
-
-  // Adição dos métodos disponíveis ao novo elemento select criado
-  var opt = document.createElement("option");
-  opt.value = 0;
-  opt.text = 'Escolha uma opção';
-  opt.selected = 'selected';
-  opt.disabled = 'disabled';
-  novo_select.add(opt, novo_select.options[0]);
-  for (i = 0; i < metodos_atividade.length; i++) {
-    var opt = document.createElement("option");
-    opt.value = i;
-    opt.text = metodos_atividade[i];
-    novo_select.add(opt, novo_select.options[i + 1]);
-  }
+  mudar_select("div_select", componente, "novo_select", metodos_atividade, "add_metodo()");
 
   // Adição da label à div
   $("#div_select").append('<label>Método de cálculo da atividade:</label>');
@@ -129,58 +77,12 @@ function add_atividade() {
 // Funções de definição do método de cálculo de atividade e de entalpia
 function add_metodo() {
 
-  metodo_added = true;
-  metodo_atividade = metodos_atividade[document.getElementById("novo_select").value];
-
-}
-
-function add_metodo_entalpia() {
-
-  metodo_entalpia_added = true;
-  metodo_entalpia = data.metodos_entalpia[document.getElementById("select_entalpia").value];
-
-}
-
-// Chamada das funções de conversão
-function converter() {
-
-  // Definição dos valores inseridos e verificação da posição do switch
-  tipo_composicao = document.getElementById("switch").checked;
-  xF = document.getElementById("input_alimentacao").value;
-  xD = document.getElementById("input_topo").value;
-  xB = document.getElementById("input_fundo").value;
-
-  // Chamada das funções de conversão caso necessário
-  if (tipo_composicao == true) {
-
-    if (xF) {
-      mol_to_mass(parseFloat(xF));
-      document.getElementById("input_alimentacao").value = x_massico.toFixed(2);
-    }
-    if (xD) {
-      mol_to_mass(parseFloat(xD));
-      document.getElementById("input_topo").value = x_massico.toFixed(2);
-    }
-    if (xB) {
-      mol_to_mass(parseFloat(xB));
-      document.getElementById("input_fundo").value = x_massico.toFixed(2);
-    }
-
-  } else {
-
-    if (xF) {
-      mass_to_mol(parseFloat(xF))
-      document.getElementById("input_alimentacao").value = x_molar.toFixed(2);
-    }
-    if (xD) {
-      mass_to_mol(parseFloat(xD))
-      document.getElementById("input_topo").value = x_molar.toFixed(2);
-    }
-    if (xB) {
-      mass_to_mol(parseFloat(xB))
-      document.getElementById("input_fundo").value = x_molar.toFixed(2);
-    }
-
+  metodo_added = false;
+  if (document.getElementById("novo_select").value != 0) {
+    metodo_atividade = metodos_atividade[document.getElementById("novo_select").value - 1];
+  }
+  if (metodo_atividade) {
+    metodo_added = true;
   }
 
 }
@@ -275,8 +177,8 @@ function Van_Laar() {
   // Definição dos parâmetros do método de acordo com o banco de dados
   A12 = [];
   A21 = [];
-  A12 = data.vl_A12[j3];
-  A21 = data.vl_A21[j3];
+  A12 = data.vl_A12[j1];
+  A21 = data.vl_A21[j1];
 
   // Cálculo das atividades
   atividade1 = Math.exp(A12 * Math.pow(((A21 * x2) / (A12 * x1 + A21 * x2)), 2));
@@ -289,9 +191,9 @@ function NRTL() {
   // Definição dos parâmetros do método de acordo com o banco de dados
   A12 = [];
   A21 = [];
-  A12 = data.NRTL_A12[j4];
-  A21 = data.NRTL_A21[j4];
-  alfa = data.NRTL_alfa[j4];
+  A12 = data.NRTL_A12[j2];
+  A21 = data.NRTL_A21[j2];
+  alfa = data.NRTL_alfa[j2];
   tau12 = A12 / (1.9872 * T1);
   tau21 = A21 / (1.9872 * T1);
   g12 = Math.exp(-alfa * tau12);
@@ -308,8 +210,8 @@ function Wilson() {
   // Definição dos parâmetros do método de acordo com o banco de dados
   A12 = [];
   A21 = [];
-  A12 = data.Wilson_A12[j5];
-  A21 = data.Wilson_A21[j5];
+  A12 = data.Wilson_A12[j3];
+  A21 = data.Wilson_A21[j3];
 
   for (var k = 0; k < data.componentes.length; k++) {
 
@@ -340,7 +242,7 @@ function Wilson() {
   ln_atividade1 = -Math.log(x1 + tau12 * x2) + x2 * (tau12 / (x1 + tau12 * x2) - tau21 / (x2 + x1 * tau21));
   atividade1 = Math.exp(ln_atividade1);
   ln_atividade2 = -Math.log(x2 + tau21 * x1) - x1 * (tau12 / (x1 + tau12 * x2) - tau21 / (x2 + x1 * tau21));
-  atividade2 = Math.exp(ln_atividade2); //Verificar se é - ou + aqui
+  atividade2 = Math.exp(ln_atividade2);
 
 }
 
@@ -611,46 +513,6 @@ function UNIFAC() {
 
 }
 
-function localizar_mistura() {
-
-  // Organização dos componentes de acordo com o método de cálculo de atividade escolhido
-  if (metodo_atividade == "Van Laar") {
-
-    for (i = 0; i < data.misturas_vl.length; i++) {
-
-      if (data.misturas_vl[i] == componente1 + " e " + componente2) {
-        j3 = i;
-      }
-
-    }
-
-  } else if (metodo_atividade == "NRTL") {
-
-    for (i = 0; i < data.misturas_NRTL.length; i++) {
-
-      if (data.misturas_NRTL[i] == componente1 + " e " + componente2) {
-        j4 = i;
-      }
-
-    }
-
-  } else if (metodo_atividade == "Wilson") {
-
-    for (i = 0; i < data.misturas_Wilson.length; i++) {
-
-      if (data.misturas_Wilson[i] == componente1 + " e " + componente2) {
-        j5 = i;
-      }
-
-    }
-
-  } else if (metodo_atividade == "UNIFAC") {
-
-    UNIFAC_propriedades();
-
-  }
-
-}
 //Função de cálculo da curva de equilibrio líquido-vapor para misturas ideais
 function curvaeq_ideal() {
 
@@ -704,7 +566,6 @@ function curvaeq_naoideal() {
 
   // Cálculo das temperaturas de saturação e localização da mistura no banco de dados dos métodos
   Antoine();
-  localizar_mistura();
 
   // Cálculo do vetor yvolatil, seguindo o método iterativo Bolha T
   for (i = 0; i < xvolatil.length; i++) {
@@ -715,17 +576,11 @@ function curvaeq_naoideal() {
     x1 = xvolatil[i];
     x2 = 1 - x1;
 
+    localizar_mistura(componente1, componente2);
+
     do {
 
-      if (metodo_atividade == "Van Laar") {
-        Van_Laar();
-      } else if (metodo_atividade == "NRTL") {
-        NRTL();
-      } else if (metodo_atividade == "Wilson") {
-        Wilson();
-      } else if (metodo_atividade == "UNIFAC") {
-        UNIFAC();
-      }
+      chamar_metodo_atividade()
 
       P1aux = pressao / (x1 * atividade1 + x2 * atividade2 * P2sat / P1sat);
       T2 = (B1 / (A1 - Math.log(P1aux)) - C1) + 273.15;
@@ -760,11 +615,16 @@ function curvaeq_naoideal() {
 
 }
 
+// Função de cálculo do McCabe-Thiele para misturas ideais
 function McCabe_Ideal() {
 
   // Limpeza de vetores
   x_degrau = [];
   y_degrau = [];
+
+  xD = parseFloat(xD)
+  xF = parseFloat(xF)
+  xB = parseFloat(xB)
 
   // Cálculo da volatilidade média
   marc = 0;
@@ -828,14 +688,23 @@ function McCabe_Ideal() {
   y_degrau.pop();
   y_degrau.push(x_aux);
 
+  // Resultados do número de pratos, prato de alimentação e composição de cada estágio
+  separar_resultados();
+  alterar_label();
+  composicao_estagios();
+
 }
 
+// Função de cálculo do McCabe-Thiele para misturas não ideais
 function McCabe_NIdeal() {
 
   // Limpeza de vetores
   x_degrau = [];
   y_degrau = [];
 
+  xD = parseFloat(xD)
+  xF = parseFloat(xF)
+  xB = parseFloat(xB)
   x1 = xF;
   x2 = 1 - xF;
 
@@ -846,17 +715,10 @@ function McCabe_NIdeal() {
   // Cálculo de yF e yK
   do {
 
-    if (metodo_atividade == "Van Laar") {
-      Van_Laar();
-    } else if (metodo_atividade == "NRTL") {
-      NRTL();
-    } else if (metodo_atividade == "Wilson") {
-      Wilson();
-    } else if (metodo_atividade == "UNIFAC") {
-      UNIFAC();
-    }
+    chamar_metodo_atividade();
 
     P1aux = pressao / (x1 * atividade1 + x2 * atividade2 * P2sat / P1sat);
+
     T2 = (B1 / (A1 - Math.log(P1aux)) - C1) + 273.15;
 
     if (T1 > T2) {
@@ -866,6 +728,8 @@ function McCabe_NIdeal() {
     }
 
     T1 = T2;
+
+
 
   } while (diferenca >= 0.001)
 
@@ -881,9 +745,10 @@ function McCabe_NIdeal() {
     Rd_min = -1 * (xD - yF) / (xF - yF);
   }
 
+
   // Definição do valor mínimo do slider
   var slider_Rd = document.getElementById("range_element");
-  slider_Rd.min = (Rd_min + 0.2).toFixed(1);
+  slider_Rd.min = (Rd_min + 0.3).toFixed(1);
   step_slider = (slider_Rd.max - slider_Rd.min) / 100;
   slider_Rd.step = step_slider.toFixed(1);
 
@@ -912,21 +777,15 @@ function McCabe_NIdeal() {
     x2 = x2 / xtotal;
 
     do {
-      if (metodo_atividade == "Van Laar") {
-        Van_Laar();
-      } else if (metodo_atividade == "NRTL") {
-        NRTL();
-      } else if (metodo_atividade == "Wilson") {
-        Wilson();
-      } else if (metodo_atividade == "UNIFAC") {
-        UNIFAC();
-      }
 
+      // Chamada do método de atividade e normalização do valor de x
+      chamar_metodo_atividade();
       x1 = y_aux * pressao / (atividade1 * P1sat);
       x2 = (1 - y_aux) * pressao / (atividade2 * P2sat);
       xtotal = x1 + x2;
       x1 = x1 / xtotal;
       x2 = x2 / xtotal;
+
       P1aux = pressao / (x1 * atividade1 + x2 * atividade2 * P2sat / P1sat);
       T2 = (B1 / (A1 - Math.log(P1aux)) - C1) + 273.15;
 
@@ -963,21 +822,15 @@ function McCabe_NIdeal() {
     x2 = x2 / xtotal;
 
     do {
-      if (metodo_atividade == "Van Laar") {
-        Van_Laar();
-      } else if (metodo_atividade == "NRTL") {
-        NRTL();
-      } else if (metodo_atividade == "Wilson") {
-        Wilson();
-      } else if (metodo_atividade == "UNIFAC") {
-        UNIFAC();
-      }
 
+      // Chamada do método de atividade e normalização do valor de x
+      chamar_metodo_atividade();
       x1 = y_aux * pressao / (atividade1 * P1sat);
       x2 = (1 - y_aux) * pressao / (atividade2 * P2sat);
       xtotal = x1 + x2;
       x1 = x1 / xtotal;
       x2 = x2 / xtotal;
+
       P1aux = pressao / (x1 * atividade1 + x2 * atividade2 * P2sat / P1sat);
       T2 = (B1 / (A1 - Math.log(P1aux)) - C1) + 273.15;
 
@@ -1000,6 +853,11 @@ function McCabe_NIdeal() {
 
   y_degrau.pop();
   y_degrau.push(x_aux);
+
+  // Resultados do número de pratos, prato de alimentação e composição de cada estágio
+  separar_resultados();
+  alterar_label();
+  composicao_estagios();
 
 }
 

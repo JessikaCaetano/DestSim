@@ -49,15 +49,15 @@
           <span class="center-align card-title">Entrada de Dados</span>
 
           <!-- Caixa de Rolagem 1 -->
-          <div class="input-field col s12">
-            <select onchange="add_comp1()" id="select_componentes">
+          <div class="input-field col s12" id="div_componentes">
+            <select onchange="add_comp_1()" id="select_componentes">
             </select>
             <label>Componente 1</label>
           </div>
 
           <!-- Caixa de Rolagem 2 -->
-          <div class="input-field col s12">
-            <select onchange="add_comp2()" id="select_componentes2">
+          <div class="input-field col s12" id="div_componentes2">
+            <select onchange="add_comp_2()" id="select_componentes2">
             </select>
             <label>Componente 2</label>
           </div>
@@ -75,7 +75,7 @@
             </div>
           </div>
 
-          <div class="row disabledDiv" id = "div_composicoes">
+          <div class="row disabledDiv" id="div_composicoes">
 
             <!-- Inputs das composições de alimentação, topo e fundo -->
             <div class="input-field col m4 s12">
@@ -128,47 +128,31 @@
           <div class="row">
 
             <!-- Caixas de rolagem do método de cálculo de atividade-->
-            <div class="input-field col m6 s12" id="div_select">
-              <select id="select_atividade">
+            <div class="disabledDiv input-field col m6 s12" id="div_select">
+              <select id="select_atividade" onchange="add_metodo()">
             </select>
               <label>Método de cálculo da atividade:</label>
             </div>
 
             <!-- Caixas de rolagem do método de cálculo de entalpia residual da fase vapor-->
-            <div class="input-field col m6 s12" id=div_select2>
-              <select id="select_entalpia" onchange = "add_metodo_entalpia()">
+            <div class="disabledDiv input-field col m6 s12" id=div_select2>
+              <select id="select_entalpia">
             </select>
               <label>Método de cálculo da entalpia residual:</label>
             </div>
 
             <script>
-
               // Função para desabilitar caixa de rolagem do método de atividade caso a mistura seja ideal
               function disableSelect() {
 
-                aux2 = document.getElementsByName("grupo1");
-                for (var i = 0; i < aux2.length; i++) {
+                tipo_mistura = valor_radio("grupo1");
 
-                  if (aux2[i].checked == true) {
-                    tipo_mistura = aux2[i].value;
-                  }
-
-                }
-
-                aux3 = document.getElementsByName("grupo2");
-
-                for (var i = 0; i < aux3.length; i++) {
-
-                  if (aux3[i].checked == true) {
-                    metodo_grafico = aux3[i].value;
-                  }
-
-                }
+                metodo_grafico = valor_radio("grupo2");
 
                 if (tipo_mistura == "Mistura Ideal") {
                   document.getElementById("div_select").classList.add("disabledDiv");
                   document.getElementById("div_select2").classList.add("disabledDiv");
-                } else if(tipo_mistura == "Mistura Não Ideal"){
+                } else if (tipo_mistura == "Mistura Não Ideal") {
                   document.getElementById("div_select").className = "input-field col m6 s12";
                   document.getElementById("div_select2").className = "input-field col m6 s12";
                 }
@@ -177,7 +161,6 @@
                 }
 
               }
-
             </script>
 
           </div>
@@ -256,7 +239,9 @@
           <span class="center-align card-title">Composição dos Estágios</span>
 
           <div class="resultados row">
-            <p class="h6 col m6 s12">Talvez uma tabela: <span id="comp_estagios"></span></p>
+            <table id="tabela_composicoes">
+
+            </table>
           </div>
 
         </div>
@@ -275,6 +260,7 @@
   <!-- link do banco de dados -->
   <script type="text/javascript" src="json/bancodedados.json"></script>
   <!-- link das funções que são chamadas no código principal -->
+  <script src="js/funcoes_auxiliares.js"></script>
   <script src="js/funcoes.js"></script>
   <!-- link do  arquivo de controle do chart -->
   <script src="js/chart_control.js"></script>

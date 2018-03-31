@@ -32,8 +32,6 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
    line-height  : 0.95em;
  }
 
-
-
  .range_container{
    margin-left: 2%;
    margin-right: 1%;
@@ -51,6 +49,25 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
 #label_composicao{
   line-height: 22.5px;
 }
+
+#tabela_composicoes{
+margin-top: 3%;
+font-size: 15px;
+
+}
+
+th, td {
+    border-bottom: 1px solid #b0bec5;
+    border-right: 1px dotted #b0bec5;
+    text-align: center;
+    vertical-align: center;
+}
+
+#tabela_composicoes tbody tr:first-child td {
+  background-color: #eeeeee;
+}
+
+td:nth-child(1) { font-weight: bold; }
 
 canvas{
   min-height: 200px;
