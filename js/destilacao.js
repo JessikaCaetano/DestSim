@@ -4,6 +4,10 @@ $(document).ready(function() {
   $('select').material_select();
 });
 
+$(document).ready(function() {
+  $('.collapsible').collapsible();
+});
+
 //Desmarcação dos radio buttons e switches quando atualizar a página
 limpar_checkboxes()
 
@@ -213,7 +217,7 @@ function exemplo_ideal() {
   mudar_select("div_componentes2", componente2, "select_componentes2", data.componentes, "add_comp_2()");
   $("#div_componentes").append('<label>Componente 1:</label> ');
   $("#div_componentes2").append('<label>Componente 2:</label>');
-  document.getElementById("label_composicao").innerHTML ="Composição (Benzeno):";
+  document.getElementById("label_composicao").innerHTML = "Composição (Benzeno):";
 
   // Liberação dos campos de adição de composições
   document.getElementById("div_composicoes").className = "row";
@@ -270,7 +274,7 @@ function exemplo_nideal() {
   mudar_select("div_componentes2", componente2, "select_componentes2", data.componentes, "add_comp_2()");
   $("#div_componentes").append('<label>Componente 1:</label> ');
   $("#div_componentes2").append('<label>Componente 2:</label>');
-    document.getElementById("label_composicao").innerHTML ="Composição (Etanol):";
+  document.getElementById("label_composicao").innerHTML = "Composição (Etanol):";
 
   // Liberação dos campos de adição de composições
   document.getElementById("div_composicoes").className = "row";

@@ -1,24 +1,49 @@
 /* Caracterização de elementos gráficos de acordo com a classe ou tipo */
 
-input[type="number"].valid:not(.browser-default){
+input[type="number"].valid:not(.browser-default) {
   border-bottom: 1px solid #9e9e9e;
   box-shadow: 0 1px 0 0 #9e9e9e;
 }
 
-.btn-small{
-  padding: 2% 4%;
-  border-radius: 3px;
+.btn-small {
+  padding: 2% 8%;
+  border-radius: 2px;
   margin-top: 2px;
 }
 
 .disabledDiv {
-pointer-events: none;
-opacity: 0.4;
+  pointer-events: none;
+  opacity: 0.4;
 }
 
-/* .row {
-  width: 100%;
-} */
+.collapsible{
+  margin: .5rem 0 0 0;
+}
+
+.collapsible-body {
+  padding: 2% 3%;
+  text-align: justify;
+  color: grey;
+}
+
+.collapsible-header {
+  padding: 1% 1%;
+  font-size: 14px;
+  color: grey;
+}
+
+.tiny{
+  margin-left: 8px;
+  line-height: 20px;
+}
+
+.resultado-1{
+  text-align: center;
+}
+
+.row-informativos {
+  padding: 2% 0;
+}
 
 input[type='number'] {
   -moz-appearance: textfield;
@@ -28,54 +53,55 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
 
- .rb_form{
-   margin-left: 2%;
-   line-height  : 0.95em;
- }
-
- .range_container{
-   margin-left: 2%;
-   margin-right: 1%;
- }
-
- input[type="range"] {
-    border: none;
+.rb_form {
+  margin-left: 2%;
+  line-height: 0.95em;
 }
 
-#div_switch{
+.range_container {
+  margin-left: 2%;
+  margin-right: 1%;
+}
+
+#range_element {
+  margin-bottom: 2%;
+}
+
+input[type="range"] {
+  border: none;
+}
+
+#div_switch {
   text-align: right;
 }
 
-
-#label_composicao{
+#label_composicao {
   line-height: 22.5px;
 }
 
-#tabela_composicoes{
-margin-top: 3%;
-font-size: 15px;
-
+#tabela_composicoes {
+  margin-top: 3%;
+  font-size: 15px;
 }
 
-#tabela_composicoes2{
-margin-top: 3%;
-font-size: 15px;
-
+#tabela_composicoes2 {
+  margin-top: 3%;
+  font-size: 15px;
 }
 
-thead th{
+thead th {
   font-weight: bold;
   background-color: #eeeeee;
 }
 
 th, td {
-    border-bottom: 1px solid #b0bec5;
-    border-right: 1px dotted #b0bec5;
-    text-align: center;
-    vertical-align: center;
-    font-weight: normal;
+  border-bottom: 1px solid #b0bec5;
+  border-right: 1px dotted #b0bec5;
+  text-align: center;
+  vertical-align: center;
+  font-weight: normal;
 }
 
-canvas{
+canvas {
   min-height: 200px;
 }
