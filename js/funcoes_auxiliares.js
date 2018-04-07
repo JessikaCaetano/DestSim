@@ -2,8 +2,6 @@ function limpar_checkboxes() {
 
   $("#tipo_mistura1").prop("checked", false);
   $("#tipo_mistura2").prop("checked", false);
-  $("#metodo1").prop("checked", false);
-  $("#metodo2").prop("checked", false);
   $("#switch").prop("checked", false);
 
 }

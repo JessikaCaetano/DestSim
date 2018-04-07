@@ -103,30 +103,24 @@
 
           <div class="row">
 
-            <!-- Botões de seleção do método gráfico -->
-            <form class="rb_form col m6 s12" action="#">
-              <label>Método gráfico:</label>
-              <p>
-                <input name="grupo2" type="radio" id="metodo1" value="McCabe-Thiele" onclick='disableSelect()' />
-                <label for="metodo1">McCabe-Thiele</label>
-              </p>
-              <p>
-                <input name="grupo2" type="radio" id="metodo2" value="Ponchon-Savarit" onclick='disableSelect()' />
-                <label for="metodo2">Ponchon-Savarit</label>
-              </p>
-            </form>
-
             <!-- Botões de seleção do tipo de mistura-->
-            <form class="rb_form col m6 s12" action="#">
+            <div class="col m12 s12">
               <label>Tipo de mistura:</label>
+            </div>
+
+            <form class="rb_form col m12 s12" action="#">
+              <div class="col m6 s6">
               <p>
                 <input name="grupo1" type="radio" value="Mistura Ideal" id="tipo_mistura1" onclick='disableSelect()' />
                 <label for="tipo_mistura1">Mistura Ideal</label>
               </p>
+              </div>
+              <div class="col m6 s6">
               <p>
                 <input name="grupo1" type="radio" value="Mistura Não Ideal" id="tipo_mistura2" onclick='disableSelect()' />
                 <label for="tipo_mistura2">Mistura Não Ideal</label>
               </p>
+              </div>
             </form>
 
           </div>
@@ -134,17 +128,10 @@
           <div class="row">
 
             <!-- Caixas de rolagem do método de cálculo de atividade-->
-            <div class="disabledDiv input-field col m6 s12" id="div_select">
+            <div class="disabledDiv input-field col m12 s12" id="div_select">
               <select id="select_atividade" onchange="add_metodo()">
             </select>
               <label>Método de cálculo da atividade:</label>
-            </div>
-
-            <!-- Caixas de rolagem do método de cálculo de entalpia residual da fase vapor-->
-            <div class="disabledDiv input-field col m6 s12" id=div_select2>
-              <select id="select_entalpia">
-            </select>
-              <label>Método de cálculo da entalpia residual:</label>
             </div>
 
             <script>
@@ -157,13 +144,8 @@
 
                 if (tipo_mistura == "Mistura Ideal") {
                   document.getElementById("div_select").classList.add("disabledDiv");
-                  document.getElementById("div_select2").classList.add("disabledDiv");
                 } else if (tipo_mistura == "Mistura Não Ideal") {
-                  document.getElementById("div_select").className = "input-field col m6 s12";
-                  document.getElementById("div_select2").className = "input-field col m6 s12";
-                }
-                if (metodo_grafico == "McCabe-Thiele") {
-                  document.getElementById("div_select2").classList.add("disabledDiv");
+                  document.getElementById("div_select").className = "input-field col m12 s12";
                 }
 
               }

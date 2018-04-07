@@ -15,8 +15,6 @@ limpar_checkboxes()
 criar_select("select_componentes", data.componentes, "Escolha uma opção");
 criar_select("select_componentes2", data.componentes, "Escolha uma opção");
 criar_select("select_atividade", data.metodos_atividade, "Escolha uma opção");
-criar_select("select_entalpia", data.metodos_entalpia, "Escolha uma opção");
-
 
 // Início da programação dos cálculos com a declaração das variáveis
 var pressao = 101.325;
@@ -37,7 +35,7 @@ var x_degrau = Array(),
   x_estagio = Array(),
   y_estagio = Array();
 var A1, A2, B1, B2, C1, C2, T1sat, T2sat, T1, P1sat, P2sat, atividade1, atividade2, x1, x2, qk1_total, qk2_total, rk1_total, rk2_total;
-var tipo_mistura, metodo_atividade, metodo_grafico, metodo_entalpia, componente1, componente2, estagio_alimentacao, atividade1, atividade2;
+var tipo_mistura, metodo_atividade, metodo_entalpia, componente1, componente2, estagio_alimentacao, atividade1, atividade2;
 var xF, xD, xB, Rd_min, Rd, yF, x_aux, y_aux, indice_comp, compvolatil;
 var c_added_1 = false,
   c_added_2 = false,
@@ -92,16 +90,10 @@ function botao_calcular() {
 
         }
 
-        //Inserção do método gráfico a partir da Check-Box
-        metodo_grafico = valor_radio("grupo2");
-
-        if (metodo_grafico == "McCabe-Thiele") {
-
           //Inserção do tipo de mistura a partir da Check-Box
           tipo_mistura = valor_radio("grupo1");
 
           document.getElementById("range_element").value = 10;
-          document.getElementById("div_select2").classList.add("disabledDiv");
 
           //Chamada da função de cálculo da curva de ELV e McCabe-Thiele de acordo com o tipo de mistura
           if (tipo_mistura == "Mistura Ideal") {
@@ -143,53 +135,7 @@ function botao_calcular() {
             alert("Por favor, defina o tipo da mistura escolhida.");
 
           }
-        } else if (metodo_grafico == "Ponchon-Savarit") {
 
-          alert("Em construção")
-
-          //Inserção do tipo de mistura a partir da Check-Box
-          tipo_mistura = valor_radio("grupo1");
-
-          document.getElementById('range_element').value = 10;
-
-          //Chamada da função de cálculo da curva de ELV de acordo com o tipo de mistura
-          if (tipo_mistura == "Mistura Ideal") {
-
-
-          } else if (tipo_mistura == "Mistura Não Ideal") {
-
-            // Verificaçãoda inserção do método de cálculo de atividade
-            add_metodo();
-
-            // Verificaçãoda inserção do método de cálculo de entalpia
-            metodo_added_entalpia = false;
-            if (document.getElementById("select_entalpia").value != 0) {
-              metodo_entalpia = data.metodos_entalpia[document.getElementById("select_entalpia").value - 1];
-            }
-
-            if (metodo_entalpia) {
-              metodo_added_entalpia = true;
-            }
-
-            if (metodo_added == true && metodo_entalpia_added == true) {
-
-            } else {
-
-              alert("Por favor, defina o método de cálculo dos coeficientes de atividade e da entalpia residual.")
-
-            }
-
-          } else {
-
-            alert("Por favor, defina o tipo da mistura escolhida.");
-
-          }
-
-        } else {
-
-          alert("Por favor, defina o método gráfico desejado.")
-
-        }
       } else {
 
         alert("Por favor, defina valores coerentes para as composições de alimentação, topo e fundo.")
@@ -243,15 +189,12 @@ function exemplo_ideal() {
   xB = x_molar;
 
   // Definição do método gráfico e tipo de mistura do exemplo
-  metodo_grafico = "McCabe-Thiele";
   tipo_mistura = "Mistura Ideal";
 
   // Marcação dos radio buttons e selects de acordo com especificações do exemplo
   $("#tipo_mistura1").prop("checked", true);
-  $("#metodo1").prop("checked", true);
   $("#switch").prop("checked", true);
   document.getElementById("div_select").classList.add("disabledDiv");
-  document.getElementById("div_select2").classList.add("disabledDiv");
   document.getElementById('range_element').value = 10;
 
   // Funções de cálculo do McCabe-Thiele
@@ -291,16 +234,12 @@ function exemplo_nideal() {
   document.getElementById("input_fundo").value = xB.toFixed(2);
 
   // Definição do método gráfico, tipo de mistura e método de atividade do exemplo
-  metodo_grafico = "McCabe-Thiele";
   tipo_mistura = "Mistura Não Ideal";
   metodo_atividade = "UNIFAC";
 
   // Marcação dos radio buttons e selects de acordo com especificações do exemplo
   $("#tipo_mistura2").prop("checked", true);
-  $("#metodo1").prop("checked", true);
-  $("#metodo1").prop("switch", false);
-  document.getElementById("div_select").className = "input-field col m6 s12";
-  document.getElementById("div_select2").classList.add("disabledDiv");
+  document.getElementById("div_select").className = "input-field col m12 s12";
   document.getElementById('range_element').value = 10;
 
   // Funções de cálculo do McCabe-Thiele
