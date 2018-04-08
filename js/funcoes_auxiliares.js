@@ -431,9 +431,11 @@ function mostrar_label() {
 function mostrar_label2() {
   if (label_info_on2 == false) {
     document.getElementById("label_info4").removeAttribute('hidden');
+    document.getElementById("label_info5").removeAttribute('hidden');
     label_info_on2 = true;
   } else if (label_info_on2 == true) {
     document.getElementById("label_info4").setAttribute('hidden', 'hidden');
+    document.getElementById("label_info5").setAttribute('hidden', 'hidden');
     label_info_on2 = false;
   }
   if (compvolatil) {
