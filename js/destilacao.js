@@ -4,12 +4,10 @@ $(document).ready(function() {
   $('select').material_select();
 });
 
-$(document).ready(function() {
-  $('.collapsible').collapsible();
-});
-
 //Desmarcação dos radio buttons e switches quando atualizar a página
-limpar_checkboxes()
+limpar_checkboxes();
+var label_info_on = false;
+var label_info_on2 = false;
 
 //Inserção dos dados na caixa de rolagem do componentes 1 e 2 e dos metodos de entalpia e atividade
 criar_select("select_componentes", data.componentes, "Escolha uma opção");
@@ -218,6 +216,7 @@ function exemplo_ideal() {
   $("#div_componentes").append('<label>Componente 1:</label> ');
   $("#div_componentes2").append('<label>Componente 2:</label>');
   document.getElementById("label_composicao").innerHTML = "Composição (Benzeno):";
+    document.getElementById("label_info4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Benzeno):";
 
   // Liberação dos campos de adição de composições
   document.getElementById("div_composicoes").className = "row";
@@ -275,6 +274,7 @@ function exemplo_nideal() {
   $("#div_componentes").append('<label>Componente 1:</label> ');
   $("#div_componentes2").append('<label>Componente 2:</label>');
   document.getElementById("label_composicao").innerHTML = "Composição (Etanol):";
+  document.getElementById("label_info4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Etanol):";
 
   // Liberação dos campos de adição de composições
   document.getElementById("div_composicoes").className = "row";

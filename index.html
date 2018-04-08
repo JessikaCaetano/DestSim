@@ -20,7 +20,7 @@
   <nav class="cyan darken-4">
     <div class="nav-wrapper">
 
-      <a href="#!" class="brand-logo">DestSim</a>
+      <a href="#!" class="brand-logo"> DestSim</a>
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
         <li><a href="sass.html">Início</a></li>
@@ -43,9 +43,9 @@
 
     <div class="col m1 s3">
 
-    <img class="responsive-img" src="Marca_UFG_cor_vertical-03.png">
+      <img class="responsive-img" src="Marca_UFG_cor_vertical-03.png">
 
-  </div>
+    </div>
     <!-- Card da esquerda -->
     <div class="col m5 s12">
 
@@ -231,29 +231,21 @@
               </p>
             </form>
 
-            <div>
-            <p class="resultado-1 h6 col m6 s12">Número de estágios: <span id="num_estagios"></span></p>
-            <p class="resultado-1 h6 col m6 s12">Prato de alimentação: <span id="prato_alimentacao"></span></p>
-          </div>
+            <div class="row-informativos col m12 s12">
 
-            <div>
-              <div class="row-informativos col m6 s12">
-              <ul class="collapsible">
-                <li>
-                  <div class="collapsible-header grey lighten-4"><i class="small material-icons">info_outline</i>Razão Mínima de Refluxo</div>
-                  <div class="collapsible-body grey lighten-4"><span>Quando a razão de refluxo tende a seu valor mínimo, o número de estágios tende a infinito.</span></div>
-                </li>
-              </ul>
-              </div>
+              <a class="btn-small waves-effect grey-text grey lighten-4 col m1 s1" onclick="mostrar_label()">
+                <i class="material-icons left">info_outline</i>
+              </a>
 
-            <div class="row-informativos col m6 s12">
-              <ul class="collapsible">
-                <li>
-                  <div class="collapsible-header grey lighten-4"><i class="small material-icons">info_outline</i>Retas Auxiliares</div>
-                  <div class="collapsible-body grey lighten-4"><span>As retas de Retificação, Esgotamento e Alimentação servem de auxílio para determinação do número de estágios e prato de alimentação.</span></div>
-                </li>
-              </ul>
+              <label id="label_info1" class="col m11 s11" hidden>Para a simulação considerou-se que a mistura entra na coluna como líquido saturado.</label>
+              <label id="label_info2" class="col offset-m1 m11 s11" hidden>Quando a razão de refluxo tende a seu valor mínimo, o número de estágios tende a infinito.</label>
+              <label id="label_info3" class="col offset-m1 m11 s11" hidden>Quando a razão de refluxo tende a um valor alto, obtém-se o número mínimo de pratos.</label>
+
             </div>
+
+            <div>
+              <p class="h6 col m6 s12">Número de estágios: <span id="num_estagios"></span></p>
+              <p class="h6 col m6 s12">Prato de alimentação: <span id="prato_alimentacao"></span></p>
             </div>
 
           </div>
@@ -275,6 +267,15 @@
         <div class="row card-content">
           <!-- Resultados da composição de cada estágio -->
           <span class="center-align card-title">Composição dos Estágios</span>
+
+          <div class="row-informativos col m12 s12">
+
+            <a class="btn-small waves-effect grey-text grey lighten-4 col m1 s1" onclick="mostrar_label2()">
+              <i class="material-icons left">info_outline</i>
+            </a>
+
+            <label id="label_info4" class="col m11 s11" hidden>As composições são dadas em relação ao componente mais volátil</label>
+          </div>
 
           <div class="col m6 s12">
             <table id="tabela_composicoes">
