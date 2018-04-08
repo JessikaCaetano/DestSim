@@ -55,9 +55,26 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
   margin-right: 1%;
 }
 
+#label_info1{
+  text-align: justify;
+}
+
+#label_info2{
+  text-align: justify;
+}
+
+#label_info3{
+  text-align: justify;
+}
+
+
 #label_info4{
   margin-top: 0.4%;
-  padding: 0 0;
+  text-align: justify;
+}
+
+#label_info5{
+  text-align: justify;
 }
 
 #range_element {

@@ -109,13 +109,13 @@
             </div>
 
             <form class="rb_form col m12 s12" action="#">
-              <div class="col m6 s6">
+              <div class="col m6 s12">
                 <p>
                   <input name="grupo1" type="radio" value="Mistura Ideal" id="tipo_mistura1" onclick='disableSelect()' />
                   <label for="tipo_mistura1">Mistura Ideal</label>
                 </p>
               </div>
-              <div class="col m6 s6">
+              <div class="col m6 s12">
                 <p>
                   <input name="grupo1" type="radio" value="Mistura Não Ideal" id="tipo_mistura2" onclick='disableSelect()' />
                   <label for="tipo_mistura2">Mistura Não Ideal</label>
@@ -215,13 +215,13 @@
 
             <div class="row-informativos col m12 s12">
 
-              <a class="btn-small waves-effect grey-text grey lighten-4 col m1 s1" onclick="mostrar_label()">
+              <a class="btn-small waves-effect grey-text grey lighten-4 col m1 s2" onclick="mostrar_label()">
                 <i class="material-icons left">info_outline</i>
               </a>
 
-              <label id="label_info1" class="col m11 s11" hidden>Para a simulação considerou-se que a mistura entra na coluna como líquido saturado.</label>
-              <label id="label_info2" class="col offset-m1 m11 s11" hidden>Quando a razão de refluxo tende a seu valor mínimo, o número de estágios tende a infinito.</label>
-              <label id="label_info3" class="col offset-m1 m11 s11" hidden>Quando a razão de refluxo tende a um valor alto, obtém-se o número mínimo de pratos.</label>
+              <label id="label_info1" class="col m11 s10" hidden>Para a simulação considerou-se que a mistura entra na coluna como líquido saturado.</label>
+              <label id="label_info2" class="col m12 s12" hidden>Quando a razão de refluxo tende a seu valor mínimo, o número de estágios tende a infinito.</label>
+              <label id="label_info3" class="col m12 s12" hidden>Quando a razão de refluxo tende a um valor alto, obtém-se o número mínimo de pratos.</label>
 
             </div>
 
@@ -252,11 +252,12 @@
 
           <div class="row-informativos col m12 s12">
 
-            <a class="btn-small waves-effect grey-text grey lighten-4 col m1 s1" onclick="mostrar_label2()">
+            <a class="btn-small waves-effect grey-text grey lighten-4 col m1 s2" onclick="mostrar_label2()">
               <i class="material-icons left">info_outline</i>
             </a>
 
-            <label id="label_info4" class="col m11 s11" hidden>As composições são dadas em relação ao componente mais volátil</label>
+            <label id="label_info4" class="col m11 s10" hidden>As composições são dadas em relação ao componente mais volátil.</label>
+            <label id="label_info5" class="col m11 s12" hidden>As composições dos estágios correspondem aos pontos onde os degraus tocam a cruva de equilíbrio.</label>
           </div>
 
           <div class="col m6 s12">
