@@ -419,11 +419,13 @@ function mostrar_label() {
     document.getElementById("label_info1").removeAttribute('hidden');
     document.getElementById("label_info2").removeAttribute('hidden');
     document.getElementById("label_info3").removeAttribute('hidden');
+    document.getElementById("label_info6").removeAttribute('hidden');
     label_info_on = true;
   } else if (label_info_on == true) {
     document.getElementById("label_info1").setAttribute('hidden', 'hidden');
     document.getElementById("label_info2").setAttribute('hidden', 'hidden');
     document.getElementById("label_info3").setAttribute('hidden', 'hidden');
+    document.getElementById("label_info6").setAttribute('hidden', 'hidden');
     label_info_on = false;
   }
 }
