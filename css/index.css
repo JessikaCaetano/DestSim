@@ -55,25 +55,7 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
   margin-right: 1%;
 }
 
-#label_info1{
-  text-align: justify;
-}
-
-#label_info2{
-  text-align: justify;
-}
-
-#label_info3{
-  text-align: justify;
-}
-
-
-#label_info4{
-  margin-top: 0.4%;
-  text-align: justify;
-}
-
-#label_info5{
+#label_info1, #label_info2, #label_info3, #label_info4, #label_info5, #label_info6{
   text-align: justify;
 }
 
@@ -93,12 +75,7 @@ input[type="range"] {
   line-height: 22.5px;
 }
 
-#tabela_composicoes {
-  margin-top: 3%;
-  font-size: 15px;
-}
-
-#tabela_composicoes2 {
+#tabela_composicoes, #tabela_composicoes2 {
   margin-top: 3%;
   font-size: 15px;
 }
