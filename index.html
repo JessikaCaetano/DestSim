@@ -106,21 +106,14 @@
             <!-- Botões de seleção do tipo de mistura-->
             <div class="col m12 s12">
               <label>Tipo de mistura:</label>
-            </div>
-
-            <form class="rb_form col m12 s12" action="#">
-              <div class="col m6 s12">
-                <p>
-                  <input name="grupo1" type="radio" value="Mistura Ideal" id="tipo_mistura1" onclick='disableSelect()' />
-                  <label for="tipo_mistura1">Mistura Ideal</label>
-                </p>
-              </div>
-              <div class="col m6 s12">
-                <p>
-                  <input name="grupo1" type="radio" value="Mistura Não Ideal" id="tipo_mistura2" onclick='disableSelect()' />
-                  <label for="tipo_mistura2">Mistura Não Ideal</label>
-                </p>
-              </div>
+              <p>
+                <input name="grupo1" type="radio" value="Mistura Ideal" id="tipo_mistura1" onclick='disableSelect()' />
+                <label for="tipo_mistura1">Mistura Ideal</label>
+              </p>
+              <p>
+                <input name="grupo1" type="radio" value="Mistura Não Ideal" id="tipo_mistura2" onclick='disableSelect()' />
+                <label for="tipo_mistura2">Mistura Não Ideal</label>
+              </p>
             </form>
 
           </div>
@@ -222,6 +215,7 @@
               <label id="label_info1" class="col m11 s10" hidden>Para a simulação considerou-se que a mistura entra na coluna como líquido saturado.</label>
               <label id="label_info2" class="col m12 s12" hidden>Quando a razão de refluxo tende a seu valor mínimo, o número de estágios tende a infinito.</label>
               <label id="label_info3" class="col m12 s12" hidden>Quando a razão de refluxo tende a um valor alto, obtém-se o número mínimo de pratos.</label>
+              <label id="label_info6" class="col m12 s12" hidden>Os pratos são enumerados de cima para baixo.</label>
 
             </div>
 

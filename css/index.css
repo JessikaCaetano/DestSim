@@ -73,10 +73,6 @@ input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
   text-align: justify;
 }
 
-#label_info5{
-  text-align: justify;
-}
-
 #range_element {
   margin-bottom: 2%;
 }
