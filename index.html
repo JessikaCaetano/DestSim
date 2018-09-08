@@ -9,7 +9,7 @@
   <!--Importar materialize.css-->
   <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
   <link type="text/css" rel="stylesheet" href="css/index.css" />
-  <!--Comuniar ao browser compatibilidade com celular-->
+  <!--Comunicar ao browser compatibilidade com celular-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 </head>
@@ -20,19 +20,21 @@
   <nav class="cyan darken-4">
     <div class="nav-wrapper">
 
-      <a href="#!" class="brand-logo"> DestSim</a>
-      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+      <a class="brand-logo"> DestSim</a>
+      <a data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
       <ul class="right hide-on-med-and-down">
-        <li><a href="sass.html">Início</a></li>
-        <li><a href="badges.html">Simulação</a></li>
-        <li><a href="collapsible.html">Manual</a></li>
-        <li><a href="mobile.html">Sobre os Métodos</a></li>
+        <li><a href="inicio.html">Início</a></li>
+        <li><a class="active" href="index.html">Simulação</a></li>
+        <li><a href="manual.html">Manual</a></li>
+        <li><a href="sobre_metodos.html">Sobre os Métodos</a></li>
       </ul>
       <ul class="side-nav" id="mobile-demo">
-        <li><a href="sass.html">Início</a></li>
-        <li><a href="badges.html">Simulação</a></li>
-        <li><a href="collapsible.html">Manual</a></li>
-        <li><a href="mobile.html">Sobre os Métodos</a></li>
+        <li><a href="inicio.html">Início</a></li>
+        <li><a class="active" href="index.html">Simulação</a></li>
+        <li><a href="manual.html">Manual</a></li>
+        <li><a href="sobre_metodos.html">Sobre os Métodos</a></li>
+
       </ul>
     </div>
 
@@ -41,7 +43,7 @@
   <!-- Conteúdo da página -->
   <div class="row">
 
-    <div class="col m1 s3">
+    <div class="col m1 s12 center">
 
       <img class="responsive-img" src="Marca_UFG_cor_vertical-03.png">
 
@@ -52,25 +54,28 @@
       <div class="card grey lighten-4">
 
         <div class="card-content">
+
           <span class="center-align card-title">Entrada de Dados</span>
 
           <!-- Caixa de Rolagem 1 -->
           <div class="input-field col s12" id="div_componentes">
             <select onchange="add_comp_1()" id="select_componentes">
             </select>
-            <label>Componente 1</label>
+            <label class="aux_label">Componente 1</label>
           </div>
 
           <!-- Caixa de Rolagem 2 -->
           <div class="input-field col s12" id="div_componentes2">
             <select onchange="add_comp_2()" id="select_componentes2">
             </select>
-            <label>Componente 2</label>
+            <label class="aux_label">Componente 2</label>
           </div>
 
           <!-- Seleção de unidade de composição (mássica ou molar) -->
           <div class="row  m12 s12">
+
             <label id="label_composicao" class="col m6 s12">Composição (Componente mais volátil):</label>
+
             <div id='div_switch' class="switch col m6 s12" onchange="converter()">
               <label>
                 Molar
@@ -79,6 +84,7 @@
                 Mássica
               </label>
             </div>
+
           </div>
 
           <div class="row disabledDiv" id="div_composicoes">
@@ -86,17 +92,17 @@
             <!-- Inputs das composições de alimentação, topo e fundo -->
             <div class="input-field col m4 s12">
               <input placeholder="Ex. 0.42" id="input_alimentacao" type="number" step="any" class="validate" value="">
-              <label for="first_name">Alimentação</label>
+              <label for="input_alimentacao">Alimentação</label>
             </div>
 
             <div class="input-field col m4 s6">
               <input placeholder="Ex. 0.42" id="input_topo" type="number" step="any" class="validate" value="">
-              <label for="first_name">Topo</label>
+              <label for="input_topo">Topo</label>
             </div>
 
             <div class="input-field col m4 s6">
               <input placeholder="Ex. 0.42" id="input_fundo" type="number" step="any" class="validate" value="">
-              <label for="first_name">Fundo</label>
+              <label for="input_fundo">Fundo</label>
             </div>
 
           </div>
@@ -214,7 +220,7 @@
 
         <div class="row card-content">
           <!-- Título do card da direita -->
-          <span class="center-align card-title">Resultado da Simulação</span>
+          <span class="center-align card-title">Resultados da Simulação</span>
 
           <!-- canvas que contém o gráfico -->
           <div id="div_chart" class="chart-container">
@@ -226,14 +232,14 @@
             <!-- Slider da razão de refluxo -->
             <form class="range_container" action="#">
               <p class="range-field">
-                <label for="range_element">Razão de refluxo:</label>
+                <label for="range_element">Razão de Refluxo:</label>
                 <input type="range" id="range_element" max="100" value=10 oninput="change_chart()" />
               </p>
             </form>
 
             <div class="row-informativos col m12 s12">
 
-              <a class="btn-small waves-effect grey-text grey lighten-4 col m1 s2" onclick="mostrar_label()">
+              <a class="btn-small waves-effect grey-text grey lighten-4 col m1 s1" onclick="mostrar_label()">
                 <i class="material-icons left">info_outline</i>
               </a>
 
@@ -271,7 +277,7 @@
 
           <div class="row-informativos col m12 s12">
 
-            <a class="btn-small waves-effect grey-text grey lighten-4 col m1 s2" onclick="mostrar_label2()">
+            <a class="btn-small waves-effect grey-text grey lighten-4 col m1 s1" onclick="mostrar_label2()">
               <i class="material-icons left">info_outline</i>
             </a>
 

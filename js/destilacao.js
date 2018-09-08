@@ -1,6 +1,6 @@
 // Bibliotecas
-$(".button-collapse").sideNav();
 $(document).ready(function() {
+  $(".button-collapse").sideNav();
   $('select').material_select();
 });
 
@@ -213,8 +213,8 @@ function exemplo_ideal() {
   componente2 = "Tolueno";
   mudar_select("div_componentes", componente1, "select_componentes", data.componentes, "add_comp_1()");
   mudar_select("div_componentes2", componente2, "select_componentes2", data.componentes, "add_comp_2()");
-  $("#div_componentes").append('<label>Componente 1:</label> ');
-  $("#div_componentes2").append('<label>Componente 2:</label>');
+  $("#div_componentes").append("<label class='aux_label'>Componente 1:</label>");
+  $("#div_componentes2").append("<label class='aux_label'>Componente 2:</label>");
   document.getElementById("label_composicao").innerHTML = "Composição (Benzeno):";
     document.getElementById("label_info4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Benzeno):";
 
@@ -271,8 +271,8 @@ function exemplo_nideal() {
   componente2 = "Água";
   mudar_select("div_componentes", componente1, "select_componentes", data.componentes, "add_comp_1()");
   mudar_select("div_componentes2", componente2, "select_componentes2", data.componentes, "add_comp_2()");
-  $("#div_componentes").append('<label>Componente 1:</label> ');
-  $("#div_componentes2").append('<label>Componente 2:</label>');
+  $("#div_componentes").append("<label class='aux_label'>Componente 1:</label>");
+  $("#div_componentes2").append("<label class='aux_label'>Componente 1:</label>");
   document.getElementById("label_composicao").innerHTML = "Composição (Etanol):";
   document.getElementById("label_info4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Etanol):";
 
