@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Destilação Binária</title>
+  <link href="fonts/material_icons.css" rel="stylesheet">
+  <!--Importar materialize.css-->
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+  <link type="text/css" rel="stylesheet" href="css/index.css" />
+  <!--Comunicar ao browser compatibilidade com celular-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+
+  <!-- Barra de navegação -->
+  <nav class="cyan darken-4">
+    <div class="nav-wrapper">
+
+      <a href="#!" class="brand-logo"> DestSim</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+      <ul class="right hide-on-med-and-down">
+        <li><a href="inicio.html">Início</a></li>
+        <li><a href="index.html">Simulação</a></li>
+        <li><a class="active" href="manual.html">Manual</a></li>
+        <li><a href="sobre_metodos.html">Sobre os Métodos</a></li>
+      </ul>
+      <ul class="side-nav" id="mobile-demo">
+        <li><a href="inicio.html">Início</a></li>
+        <li><a href="index.html">Simulação</a></li>
+        <li><a class="active" href="manual.html">Manual</a></li>
+        <li><a href="sobre_metodos.html">Sobre os Métodos</a></li>
+
+      </ul>
+    </div>
+
+  </nav>
+
+  <div class="row">
+
+    <div class="col m1 s12 center">
+
+      <img class="responsive-img" src="Marca_UFG_cor_vertical-03.png">
+
+    </div>
+    <!-- Card da esquerda -->
+    <div class="col m10 s12">
+
+      <div class="card grey lighten-4">
+
+        <div class="row card-content">
+
+          <div class="col m12">
+
+            <span class="center-align card-title">Manual</span>
+
+          </div>
+
+          <div class="col m12">
+
+            <p class="aux_p">Olá! Siga os seguintes passos para utilizar o DestSim:</p>
+            <br><p class="aux_p"><strong>1º</strong> Caso não tenha dados suficientes para realizar uma simulação específica, clique nos botões <em>Exemplo Ideal</em> ou <em>Exemplo Não Ideal</em> no card <em>Entrada de Dados</em>, que possibilitam observar algumas simulações pré-definidas, e pule para a 9ª etapa. Caso contrário, continue com as etapas abaixo.</p>
+            <p class="aux_p"><strong>2º</strong>  Escolha duas substâncias para serem os componentes da mistura nas seções <em>Componente 1</em> e <em>Componente 2</em>. Após esta etapa, os campos de composição serão liberados.</p>
+            <p class="aux_p"><strong>3º</strong>  Selecione, na seção <em>Composição</em>, a base (mássica ou molar) na qual estão os dados que você irá preencher nos campos de composição.</p>
+            <p class="aux_p"><strong>4º</strong>  Preencha, ainda na seção <em>Composição</em>, os dados referentes à composição da mistura nas correntes de alimentação, topo e fundo. Caso você queira comverter os dados preenchidos da base molar para mássica e vice-versa, basta alterar a base selecionada.</p>
+            <p class="aux_p"><strong>Importante:</strong> Os dados de composição devem se referir ao componente mais volátil da mistura, indicado na seção <em>Composição</em> após a escolha dos componentes da mesma.</p>
+            <p class="aux_p"><strong>5º</strong>  Selecione o método gráfico (McCabe-Thiele ou Ponchon-Savarit) que você deseja aplicar na seção <em>Método Gráfico</em>.</p>
+            <p class="aux_p"><strong>6º</strong>  Selecione como a mistura deve ser tratada (Ideal ou Não Ideal) na seção <em>Tipo de Mistura</em>. De acordo com as suas escolhas neste campo e no anterior, os campos de seleção de métodos de cálculo de atividade e/ou de entalpia residual podem ser liberados ou não, da seguinte forma:</p>
+            <p class="aux_p">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspMétodos de McCabe-Thiele e Ponchon-Savarit para Misturas Ideais --> Não utilizam coeficientes de atividade e propriedades residuais;</p>
+            <p class="aux_p">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspMétodo de McCabe-Thiele para Misturas Não Ideais --> Requer cálculo dos coeficientes de atividade, mas não de propriedades residuais;</p>
+            <p class="aux_p">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspMétodo de Ponchon-Savarit para Misturas Não Ideais --> Requer cálculo dos coeficientes de atividade e de propriedades residuais.</p>
+            <p class="aux_p"><strong>7º</strong>  Selecione o método que deverá ser utilizado para cálculo dos coeficientes de atividade e entalpia residual nos campos <em>Método de cálculo de atividade</em> e <em>Método de cálculo de entalpia residual</em>.</p>
+            <p class="aux_p"><strong>8º</strong>  Certifique-se de que todos os dados necessários foram inseridos e, então, clique no botão <em>Calcular</em>.</p>
+            <p class="aux_p"><strong>9º</strong>  Agora, você pode ver o gráfico do método aplicado no card <em>Resultados da Simulação</em>, e logo abaixo o número de estágios requerido e o prato de alimentação. Na seção <em>Razão de Refluxo</em>, altere o valor da razão de refluxo e se desejar observar a influência da mesma no método gráfico. No card <em>Composição dos Estágios</em>, uma tabela mostra a composição das fases líquida e vapor em cada estágio da destilação, em relação ao componente mais volátil.</p><br>
+
+          </div>
+
+          <div class="col m2 right">
+
+            <a class="waves-effect  white-text waves-light btn-small cyan darken-4" href="index.html">Começar<i class="tiny material-icons right">send</i></a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
