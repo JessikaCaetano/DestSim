@@ -1,113 +1,3 @@
-// Função de adição dos componentes à caixa de rolagem do componete 1
-function add_comp_1() {
-
-  c_added_1 = true;
-
-  // Adição dos componentes a partir das barras de rolagem
-  componente1 = data.componentes[document.getElementById("select_componentes").value - 1];
-
-  if (document.getElementById("select_componentes2").value != 0) {
-    componente2 = data.componentes[document.getElementById("select_componentes2").value - 1];
-  }
-
-  if (componente2) {
-
-    c_added_2 == true;
-    add_atividade("Escolha uma opção");
-    calcular_compvolatil();
-    document.getElementById("label_composicao").innerHTML ="Composição (" +compvolatil+ "):";
-    document.getElementById("label_info4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
-
-  }
-
-}
-
-// Função de adição dos componentes à caixa de rolagem do componete 2
-function add_comp_2() {
-
-  c_added_2 = true;
-
-  // Adição dos componentes a partir das barras de rolagem
-  componente2 = data.componentes[document.getElementById("select_componentes2").value - 1];
-
-  if (document.getElementById("select_componentes").value != 0) {
-    componente1 = data.componentes[document.getElementById("select_componentes").value - 1];
-  }
-
-  if (componente1) {
-
-    c_added_1 == true;
-    add_atividade("Escolha uma opção");
-    calcular_compvolatil();
-    document.getElementById("label_composicao").innerHTML ="Composição (" +compvolatil+ "):";
-    document.getElementById("label_info4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
-
-  }
-
-}
-
-// Função de adição dos métodos de cálculo de atividade à caixa de rolagem
-function add_atividade(componente) {
-
-  // Limpeza do vetor dos métodos de atividade
-  metodos_atividade = [];
-
-  // Habilitação das caixas de input das composições
-  document.getElementById("div_composicoes").className = "row";
-
-  // Definição das massas molares dos componentes
-  massa_molar(componente1, componente2);
-
-  // Organização dos componentes de acordo com o banco de dados de misturas de cada método não ideal
-  localizar_mistura(componente1, componente2);
-
-  // Determinação dos métodos disponíveis para cada mistura
-  if (j1 >= 0) {
-    metodos_atividade.push("Van Laar");
-  }
-  if (j2 >= 0) {
-    metodos_atividade.push("NRTL");
-  }
-  if (j3 >= 0) {
-    metodos_atividade.push("Wilson");
-  }
-  metodos_atividade.push("UNIFAC");
-
-  mudar_select("div_select", componente, "novo_select", metodos_atividade, "add_metodo()");
-
-  // Adição da label à div
-  $("#div_select").append('<label>Método de cálculo da atividade:</label>');
-
-  $('select').material_select();
-}
-
-// Funções de definição do método de cálculo de atividade e de entalpia
-function add_metodo() {
-
-  metodo_added = false;
-  if (document.getElementById("novo_select").value != 0) {
-    metodo_atividade = metodos_atividade[document.getElementById("novo_select").value - 1];
-  }
-  if (metodo_atividade) {
-    metodo_added = true;
-  }
-
-}
-
-// Função de conversão de composição molar para mássica
-function mol_to_mass(value) {
-
-  x_massico = (value * M1) / (value * M1 + (1 - value) * M2);
-
-}
-
-// Função de conversão de composição mássica para molar
-function mass_to_mol(value) {
-
-  x_molar = (value / M1) / (value / M1 + (1 - value) / M2);
-
-}
-
 // Função para limpar as checkboxes
 function limpar_checkboxes() {
 
@@ -119,6 +9,7 @@ function limpar_checkboxes() {
 
 }
 
+// Adicionar opções para os selects
 function criar_select(select, dados, opt_selected) {
 
   select = document.getElementById(select);
@@ -149,59 +40,7 @@ function criar_select(select, dados, opt_selected) {
 
 }
 
-function mudar_select(div_mudar, componente, select, dados, funcao) {
-
-  $("#" + div_mudar).empty();
-
-  select_1 = document.createElement("select");
-  document.getElementById(div_mudar).appendChild(select_1);
-  select_1.setAttribute("id", select);
-  select_1.setAttribute("onchange", funcao);
-
-  criar_select(select, dados, componente)
-
-}
-
-function localizar_mistura(componente1, componente2) {
-
-  j1 = -1;
-  j2 = -1;
-  j3 = -1;
-
-  // Organização dos componentes de acordo com o método de cálculo de atividade escolhido
-  for (i = 0; i < data.misturas_vl.length; i++) {
-
-    if (data.misturas_vl[i] == componente1 + " e " + componente2) {
-      j1 = i;
-    } else if (data.misturas_vl[i] == componente2 + " e " + componente1) {
-      j1 = i;
-    }
-  }
-
-  for (i = 0; i < data.misturas_NRTL.length; i++) {
-
-    if (data.misturas_NRTL[i] == componente1 + " e " + componente2) {
-      j2 = i;
-    } else if (data.misturas_NRTL[i] == componente2 + " e " + componente1) {
-      j2 = i;
-    }
-  }
-
-  for (i = 0; i < data.misturas_Wilson.length; i++) {
-
-    if (data.misturas_Wilson[i] == componente1 + " e " + componente2) {
-      j3 = i;
-    } else if (data.misturas_Wilson[i] == componente2 + " e " + componente1) {
-      j3 = i;
-    }
-  }
-
-  if (metodo_atividade == "UNIFAC") {
-    UNIFAC_propriedades();
-  }
-
-}
-
+// Função para adicionar os valores de composições escolhidos
 function valor_composicoes() {
 
   tipo_composicao = document.getElementById("switch").checked;
@@ -210,26 +49,7 @@ function valor_composicoes() {
   xB = document.getElementById("input_fundo").value;
 }
 
-function valor_radio(grupo) {
-
-  var aux2 = Array();
-  var variavel;
-
-  aux2 = document.getElementsByName(grupo);
-
-  for (var i = 0; i < aux2.length; i++) {
-
-    if (aux2[i].checked == true) {
-      variavel = aux2[i].value;
-    }
-
-  }
-  aux2 = [];
-
-  return variavel;
-
-}
-
+// Função que pega valores das massas molares dos componentes
 function massa_molar(componente1, componente2) {
 
   for (var i = 0; i < data.componentes.length; i++) {
@@ -244,6 +64,21 @@ function massa_molar(componente1, componente2) {
 
 }
 
+// Função de conversão de composição molar para mássica
+function mol_to_mass(value) {
+
+  x_massico = (value * M1) / (value * M1 + (1 - value) * M2);
+
+}
+
+// Função de conversão de composição mássica para molar
+function mass_to_mol(value) {
+
+  x_molar = (value / M1) / (value / M1 + (1 - value) / M2);
+
+}
+
+// Chama as funções de conversão
 function converter() {
 
   // Definição dos valores inseridos e verificação da posição do switch
@@ -284,82 +119,37 @@ function converter() {
 
 }
 
-function chamar_metodo_atividade() {
+// Pega o valor marcado nos radio buttons
+function valor_radio(grupo) {
 
-  if (metodo_atividade == "Van Laar") {
-    Van_Laar();
-  } else if (metodo_atividade == "NRTL") {
-    NRTL();
-  } else if (metodo_atividade == "Wilson") {
-    Wilson();
-  } else if (metodo_atividade == "UNIFAC") {
-    UNIFAC();
-  }
+  var aux2 = [];
+  var variavel;
 
-}
+  aux2 = document.getElementsByName(grupo);
 
-function separar_resultados() {
+  for (var i = 0; i < aux2.length; i++) {
 
-  x_estagio = [];
-  y_estagio = [];
-
-  num_estagios = 0;
-  estagio_alimentacao = 0;
-  for (var i = 1; i < y_degrau.length; i++) {
-
-    if (y_degrau[i - 1] == y_degrau[i]) {
-      x_estagio.push(x_degrau[i]);
-      y_estagio.push(y_degrau[i]);
-      num_estagios = num_estagios + 1;
-    }
-
-    if ((xF <= x_degrau[i - 1]) && (xF > x_degrau[i])) {
-      estagio_alimentacao = num_estagios;
+    if (aux2[i].checked == true) {
+      variavel = aux2[i].value;
     }
 
   }
+  aux2 = [];
+
+  return variavel;
 
 }
 
-function alterar_label() {
-
-  document.getElementById("num_estagios").innerHTML = num_estagios;
-  document.getElementById("prato_alimentacao").innerHTML = estagio_alimentacao;
-
-}
-
-function composicao_estagios() {
-
-  var tabela = document.getElementById("tabela_composicoes");
-
-  // Create an empty <tr> element and add it to the 1st position of the table:
-  $("#tabela_composicoes tr").remove();
-  $("#tabela_composicoes2 tr").remove();
-
-  tabela1_head = document.getElementById("tabela1_head");
-  tabela1_head.innerHTML = tabela1_head.innerHTML + "<tr> <th>" + "Estágio" + "</th> <th>" + "x (fração molar)" + "</th> <th>" + "y (fração molar)" + "</th> </tr>";
-  tabela2_head = document.getElementById("tabela2_head");
-  tabela2_head.innerHTML = tabela2_head.innerHTML + "<tr> <th>" + "Estágio" + "</th> <th>" + "x (fração molar)" + "</th> <th>" + "y (fração molar)" + "</th> </tr>";
-
-  tabela1_body = document.getElementById("tabela1_body");
-  for (var i = 1; i <= Math.round(x_estagio.length / 2); i++) {
-    tabela1_body.innerHTML = tabela1_body.innerHTML + "<tr> <th>" + i + "</th> <th>" + x_estagio[i - 1].toFixed(2) + "</th> <th>" + y_estagio[i - 1].toFixed(2) + "</th> </tr>";
-  }
-
-  tabela2_body = document.getElementById("tabela2_body")
-  for (var i = Math.round(x_estagio.length / 2) + 1; i <= x_estagio.length; i++) {
-    tabela2_body.innerHTML = tabela2_body.innerHTML + "<tr> <th>" + i + "</th> <th>" + x_estagio[i - 1].toFixed(2) + "</th> <th>" + y_estagio[i - 1].toFixed(2) + "</th> </tr>"
-  }
-
-}
-
-function calcular_compvolatil() {
+// Função que define o componente volátil calcula temperaturas saturadas
+function calcular_comp_volatil() {
 
   // Definição dos valores das constantes de Antoine para os componentes escolhidos
   for (i = 0; i <= data.componentes.length; i++) {
 
     if (data.componentes[i] == componente1) {
+
       j = i;
+
     }
 
   }
@@ -371,7 +161,9 @@ function calcular_compvolatil() {
   for (i = 0; i <= data.componentes.length; i++) {
 
     if (data.componentes[i] == componente2) {
+
       j = i;
+
     }
 
   }
@@ -409,38 +201,331 @@ function calcular_compvolatil() {
     C2 = aux;
 
   } else {
+
     compvolatil = componente1;
+
   }
 
 }
 
-function mostrar_label() {
-  if (label_info_on == false) {
+// Função que prepara os resultados para serem mostrados
+function separar_resultados() {
+
+  x_estagio = [];
+  y_estagio = [];
+
+  num_estagios = 0;
+  estagio_alimentacao = 0;
+
+  for (var i = 1; i < y_degrau.length; i++) {
+
+    if (y_degrau[i - 1] == y_degrau[i]) {
+
+      x_estagio.push(x_degrau[i]);
+      y_estagio.push(y_degrau[i]);
+      num_estagios = num_estagios + 1;
+
+    }
+
+    if ((xF <= x_degrau[i - 1]) && (xF > x_degrau[i])) {
+
+      estagio_alimentacao = num_estagios;
+
+    }
+
+  }
+
+}
+
+// Mostra resultados das labels
+function alterar_label() {
+
+  document.getElementById("num_estagios").innerHTML = num_estagios;
+  document.getElementById("prato_alimentacao").innerHTML = estagio_alimentacao;
+
+}
+
+// Mostra resultados na tabela de composições
+function composicao_estagios() {
+
+  var tabela = document.getElementById("tabela_composicoes");
+
+  // Create an empty <tr> element and add it to the 1st position of the table:
+  $("#tabela_composicoes tr").remove();
+  $("#tabela_composicoes2 tr").remove();
+
+  tabela1_head = document.getElementById("tabela1_head");
+  tabela1_head.innerHTML = tabela1_head.innerHTML + "<tr> <th>" + "Estágio" + "</th> <th>" + "x (fração molar)" + "</th> <th>" + "y (fração molar)" + "</th> </tr>";
+  tabela2_head = document.getElementById("tabela2_head");
+  tabela2_head.innerHTML = tabela2_head.innerHTML + "<tr> <th>" + "Estágio" + "</th> <th>" + "x (fração molar)" + "</th> <th>" + "y (fração molar)" + "</th> </tr>";
+
+  tabela1_body = document.getElementById("tabela1_body");
+  for (var i = 1; i <= Math.round(x_estagio.length / 2); i++) {
+
+    tabela1_body.innerHTML = tabela1_body.innerHTML + "<tr> <th>" + i + "</th> <th>" + x_estagio[i - 1].toFixed(2) + "</th> <th>" + y_estagio[i - 1].toFixed(2) + "</th> </tr>";
+
+  }
+
+  tabela2_body = document.getElementById("tabela2_body")
+  for (var i = Math.round(x_estagio.length / 2) + 1; i <= x_estagio.length; i++) {
+
+    tabela2_body.innerHTML = tabela2_body.innerHTML + "<tr> <th>" + i + "</th> <th>" + x_estagio[i - 1].toFixed(2) + "</th> <th>" + y_estagio[i - 1].toFixed(2) + "</th> </tr>"
+
+  }
+
+}
+
+// Funções de definição do método de cálculo de atividade e de entalpia
+function add_metodo() {
+
+  metodo_added = false;
+
+  if (document.getElementById("novo_select").value != 0) {
+
+    metodo_atividade = metodos_atividade[document.getElementById("novo_select").value - 1];
+
+  }
+  if (metodo_atividade) {
+
+    metodo_added = true;
+
+  }
+
+}
+
+// Pega os parâmetros da mistura de cada método de cálculo de atividade
+function localizar_mistura(componente1, componente2) {
+
+  j1 = -1;
+  j2 = -1;
+  j3 = -1;
+
+  // Organização dos componentes de acordo com o método de cálculo de atividade escolhido
+  for (i = 0; i < data.misturas_vl.length; i++) {
+
+    if (data.misturas_vl[i] == componente1 + " e " + componente2) {
+
+      j1 = i;
+
+    } else if (data.misturas_vl[i] == componente2 + " e " + componente1) {
+
+      j1 = i;
+
+    }
+
+  }
+
+  for (i = 0; i < data.misturas_NRTL.length; i++) {
+
+    if (data.misturas_NRTL[i] == componente1 + " e " + componente2) {
+
+      j2 = i;
+
+    } else if (data.misturas_NRTL[i] == componente2 + " e " + componente1) {
+
+      j2 = i;
+
+    }
+
+  }
+
+  for (i = 0; i < data.misturas_Wilson.length; i++) {
+
+    if (data.misturas_Wilson[i] == componente1 + " e " + componente2) {
+
+      j3 = i;
+
+    } else if (data.misturas_Wilson[i] == componente2 + " e " + componente1) {
+
+      j3 = i;
+
+    }
+
+  }
+
+  if (metodo_atividade == "UNIFAC") {
+
+    UNIFAC_propriedades();
+
+  }
+
+}
+
+// Chama o método de atividade de acordo com o escolhido
+function chamar_metodo_atividade() {
+
+  if (metodo_atividade == "Van Laar") {
+
+    Van_Laar();
+
+  } else if (metodo_atividade == "NRTL") {
+
+    NRTL();
+
+  } else if (metodo_atividade == "Wilson") {
+
+    Wilson();
+
+  } else if (metodo_atividade == "UNIFAC") {
+
+    UNIFAC();
+
+  }
+
+}
+
+// Função de adição dos métodos de cálculo de atividade à caixa de rolagem
+function add_atividade(componente) {
+
+  // Limpeza do vetor dos métodos de atividade
+  metodos_atividade = [];
+
+  // Habilitação das caixas de input das composições
+  document.getElementById("div_composicoes").className = "row";
+
+  // Definição das massas molares dos componentes
+  massa_molar(componente1, componente2);
+
+  // Organização dos componentes de acordo com o banco de dados de misturas de cada método não ideal
+  localizar_mistura(componente1, componente2);
+
+  // Determinação dos métodos disponíveis para cada mistura
+  if (j1 >= 0) {
+
+    metodos_atividade.push("Van Laar");
+
+  }
+
+  if (j2 >= 0) {
+
+    metodos_atividade.push("NRTL");
+
+  }
+
+  if (j3 >= 0) {
+
+    metodos_atividade.push("Wilson");
+
+  }
+
+  metodos_atividade.push("UNIFAC");
+
+  mudar_select("div_select", componente, "novo_select", metodos_atividade, "add_metodo()");
+
+  // Adição da label à div
+  $("#div_select").append('<label>Método de cálculo da atividade:</label>');
+
+  $('select').material_select();
+}
+
+// Função de adição dos componentes à caixa de rolagem do componete 1
+function add_comp_1() {
+
+  c_added_1 = true;
+
+  // Adição dos componentes a partir das barras de rolagem
+  componente1 = data.componentes[document.getElementById("select_componentes_1").value - 1];
+
+  if (document.getElementById("select_componentes_2").value != 0) {
+
+    componente2 = data.componentes[document.getElementById("select_componentes_2").value - 1];
+
+  }
+
+  if (componente2) {
+
+    c_added_2 == true;
+    add_atividade("Escolha uma opção");
+    calcular_comp_volatil();
+    document.getElementById("label_composicao").innerHTML = "Composição (" + compvolatil + "):";
+    document.getElementById("label_info4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
+
+  }
+
+}
+
+// Função de adição dos componentes à caixa de rolagem do componete 2
+function add_comp_2() {
+
+  c_added_2 = true;
+
+  // Adição dos componentes a partir das barras de rolagem
+  componente2 = data.componentes[document.getElementById("select_componentes_2").value - 1];
+
+  if (document.getElementById("select_componentes_1").value != 0) {
+
+    componente1 = data.componentes[document.getElementById("select_componentes_1").value - 1];
+
+  }
+
+  if (componente1) {
+
+    c_added_1 == true;
+    add_atividade("Escolha uma opção");
+    calcular_comp_volatil();
+    document.getElementById("label_composicao").innerHTML = "Composição (" + compvolatil + "):";
+    document.getElementById("label_info4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
+
+  }
+
+}
+
+// Função que muda o select
+function mudar_select(div_mudar, componente, select, dados, funcao) {
+
+  $("#" + div_mudar).empty();
+
+  select_1 = document.createElement("select");
+  document.getElementById(div_mudar).appendChild(select_1);
+  select_1.setAttribute("id", select);
+  select_1.setAttribute("onchange", funcao);
+
+  criar_select(select, dados, componente)
+
+}
+
+// Funções para esconder/mostrar informações
+function mostrar_label_1() {
+
+  if (info_on_1 == false) {
+
     document.getElementById("label_info1").removeAttribute('hidden');
     document.getElementById("label_info2").removeAttribute('hidden');
     document.getElementById("label_info3").removeAttribute('hidden');
     document.getElementById("label_info6").removeAttribute('hidden');
-    label_info_on = true;
-  } else if (label_info_on == true) {
+    info_on_1 = true;
+
+  } else if (info_on_1 == true) {
+
     document.getElementById("label_info1").setAttribute('hidden', 'hidden');
     document.getElementById("label_info2").setAttribute('hidden', 'hidden');
     document.getElementById("label_info3").setAttribute('hidden', 'hidden');
     document.getElementById("label_info6").setAttribute('hidden', 'hidden');
-    label_info_on = false;
+    info_on_1 = false;
+
   }
+
 }
 
-function mostrar_label2() {
-  if (label_info_on2 == false) {
+function mostrar_label_2() {
+
+  if (info_on_2 == false) {
+
     document.getElementById("label_info4").removeAttribute('hidden');
     document.getElementById("label_info5").removeAttribute('hidden');
-    label_info_on2 = true;
-  } else if (label_info_on2 == true) {
+    info_on_2 = true;
+
+  } else if (info_on_2 == true) {
+
     document.getElementById("label_info4").setAttribute('hidden', 'hidden');
     document.getElementById("label_info5").setAttribute('hidden', 'hidden');
-    label_info_on2 = false;
+    info_on_2 = false;
+
   }
   if (compvolatil) {
+
     document.getElementById("label_info4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
+
   }
+
 }

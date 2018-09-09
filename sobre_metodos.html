@@ -20,8 +20,8 @@
   <nav class="cyan darken-4">
     <div class="nav-wrapper">
 
-      <a href="#!" class="brand-logo"> DestSim</a>
-      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+      <a class="brand-logo"> DestSim</a>
+      <a data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
       <ul class="right hide-on-med-and-down">
         <li><a href="inicio.html">Início</a></li>
@@ -29,6 +29,7 @@
         <li><a href="manual.html">Manual</a></li>
         <li><a class="active" href="sobre_metodos.html">Sobre os Métodos</a></li>
       </ul>
+
       <ul class="side-nav" id="mobile-demo">
         <li><a href="inicio.html">Início</a></li>
         <li><a href="index.html">Simulação</a></li>
@@ -93,8 +94,11 @@
 
             <div class="div_texto">
 
-              <p class="aux_p">O Método de Ponchon-Savarit objetiva calcular o número de estágios ideais necessários em uma destilação a partir do Diagrama de Entalpia-Composição da mistura a ser separada. Neste método, ao contrário do de McCabe-Thiele, não são feitas considerações em relação ao fluxo molar constante dentro da coluna, permitindo sua aplicação a uma gama maior de misturas e obtenção de um resultado mais preciso caso os dados termodinâmicos disponíveis estejam corretos. A aplicação deste método, porém, está restrita à destilação de misturas binárias e extração em sistemas ternários.</p>
-              <p class="aux_p">Neste método também são traçadas retas de Operação, Retificação e Alimentação, com base em balanços de massa e de energia. O método se baseia na chamada Regra do Braço de Alavanca, utilizada para simplificar balanços de massa e energia em linhas retas. Como auxílio, são utilizadas isotermas, que podem ser obtidas a partir da junção do Diagrama de Entalpia-Composição com a Cruva de Equilíbrio da mistura.</p>
+              <p class="aux_p">O Método de Ponchon-Savarit objetiva calcular o número de estágios ideais necessários em uma destilação a partir do Diagrama de Entalpia-Composição da mistura a ser separada. Neste método, ao contrário do de McCabe-Thiele, não são feitas
+                considerações em relação ao fluxo molar constante dentro da coluna, permitindo sua aplicação a uma gama maior de misturas e obtenção de um resultado mais preciso caso os dados termodinâmicos disponíveis estejam corretos. A aplicação deste
+                método, porém, está restrita à destilação de misturas binárias e extração em sistemas ternários.</p>
+              <p class="aux_p">Neste método também são traçadas retas de Operação, Retificação e Alimentação, com base em balanços de massa e de energia. O método se baseia na chamada Regra do Braço de Alavanca, utilizada para simplificar balanços de massa e energia em
+                linhas retas. Como auxílio, são utilizadas isotermas, que podem ser obtidas a partir da junção do Diagrama de Entalpia-Composição com a Cruva de Equilíbrio da mistura.</p>
               <p class="aux_p">Para mais detalhes, sugere-se a consulta dos livros: <em>Equilibrium-Stage Separation Operations in Chemical Engineering</em>, de E. J. Henley e J. D. Seader e <em>Design of Equilibrium Stage Procecess</em>, de B. D. Smith.</p>
 
 
@@ -153,8 +157,9 @@
             <div class="div_texto">
 
               <p class="aux_p">As Propriedades Residuais consistem na medição da diferença entre propriedades termodinâmicas de uma mistura de gases reais e de uma mistura de gases ideais na mesma temperatura e pressão. Para se conhecer o comportamento da entalpia de
-                uma mistura real gasosa de acordo com sua composição é necessário calcular sua Entalpia Residual. Existem correlações para encontrar este valor a partir da manipulação de equações de estado cúbicas. Estas são equações polinomiais simples elaboradas com o intuito de descrever o comportamento PVT de líquidos e vapores em largas faicas de temperatura e pressão. Seus parâmetros variam de acordo com
-                os modelos, como, por exemplo, van de Waals, Soave/Redlich/Kwong, Peng Robinson e Redlich/Kwong. </p>
+                uma mistura real gasosa de acordo com sua composição é necessário calcular sua Entalpia Residual. Existem correlações para encontrar este valor a partir da manipulação de equações de estado cúbicas. Estas são equações polinomiais simples
+                elaboradas com o intuito de descrever o comportamento PVT de líquidos e vapores em largas faicas de temperatura e pressão. Seus parâmetros variam de acordo com os modelos, como, por exemplo, van de Waals, Soave/Redlich/Kwong, Peng Robinson
+                e Redlich/Kwong. </p>
               <p class="aux_p">Para mais detalhes, sugere-se a consulta do livro <em>Introdução à Termodinâmica da Engenharia Química</em>, de J. M. Smith, H. C. Van Ness e M. M. Abbot.</p>
 
             </div>
@@ -167,4 +172,11 @@
 
     </div>
 
+    <!-- link do jquery -->
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <!-- link do materialize (estilização) -->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+
 </body>
+
+</html>

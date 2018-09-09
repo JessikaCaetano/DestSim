@@ -1,5 +1,5 @@
  // Arquivo de controle do gráfico
- function gerar_grafico(duration) {
+ function gerar_grafico_McCabe(duration) {
 
    // Limpeza da div que contém o gráfico, criação do canvas e adição do gráfico no mesmo
    $("#div_chart").empty();
@@ -184,6 +184,108 @@
            scaleLabel: {
              display: true,
              labelString: 'x (fração molar)'
+           },
+           ticks: {
+             max: 1,
+             min: 0
+           }
+         }]
+       },
+       elements: {
+         line: {
+           tension: 0
+         }
+       }
+     }
+
+   });
+
+ }
+
+ function gerar_grafico_Ponchon(duration) {
+
+   // Limpeza da div que contém o gráfico, criação do canvas e adição do gráfico no mesmo
+   $("#div_chart").empty();
+   var ctx2 = document.createElement("canvas");
+   ctx2.setAttribute("id", "myChart");
+   ctx2.setAttribute("height", "250px");
+   div_chart.appendChild(ctx2);
+
+   //declaração da variável do chart
+   var ctx = document.getElementById("myChart");
+
+   //Criação das variáveis contendo os dados do gráfico
+   var curva_liquido = [];
+   var curva_vapor = [];
+
+   // Adição das séries de dados no gráfico
+   for (i = 0; i <= 100; i++) {
+
+     var aux_0 = {
+       x: xvolatil[i],
+       y: entalpia_liquido[i]
+     };
+
+     var aux_1 = {
+       x: yvolatil[i],
+       y: entalpia_vapor[i]
+     };
+
+     curva_liquido.push(aux_0);
+     curva_vapor.push(aux_1);
+
+   }
+
+   //Caracterização do gráfico
+   var myLineChart = new Chart(ctx, {
+
+     type: 'scatter',
+
+     data: {
+       datasets: [{
+           label: 'Entalpia Vapor',
+           backgroundColor: '#546e7a',
+           showLine: true,
+           fill: false,
+           data: curva_vapor,
+           borderColor: '#546e7a',
+           borderWidth: 2,
+           pointRadius: 0.1
+         },
+         {
+           label: "Entalpia Líquido",
+           backgroundColor: '#90a4ae',
+           showLine: true,
+           fill: false,
+           data: curva_liquido,
+           borderColor: '#90a4ae',
+           borderWidth: 2,
+           pointRadius: 0.1
+         }
+       ]
+     },
+
+     // Configurações do gráfico
+     options: {
+       legend: {
+         labels: {
+           boxWidth: 20
+         }
+       },
+       animation: {
+         duration: duration
+       },
+       scales: {
+         yAxes: [{
+           scaleLabel: {
+             display: true,
+             labelString: 'Entalpia (kJ/molK)'
+           }
+         }],
+         xAxes: [{
+           scaleLabel: {
+             display: true,
+             labelString: 'x e y (fração molar)'
            },
            ticks: {
              max: 1,
