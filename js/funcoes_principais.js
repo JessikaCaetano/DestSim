@@ -20,7 +20,7 @@ function Antoine() {
 }
 
 //Função de cálculo da curva de equilibrio líquido-vapor para misturas ideais
-function curvaeq_ideal() {
+function curva_eq_ideal() {
 
   //Definição das constantes de Antoine para cada componente de acordo com o banco de dados
   Antoine()
@@ -156,10 +156,14 @@ function Van_Laar() {
   A21 = [];
   A12 = data.vl_A12[j1];
   A21 = data.vl_A21[j1];
+  entalpia_excesso = null;
 
   // Cálculo das atividades
-  atividade1 = Math.exp(A12 * Math.pow(((A21 * x2) / (A12 * x1 + A21 * x2)), 2));
-  atividade2 = Math.exp(A21 * Math.pow(((A12 * x1) / (A12 * x1 + A21 * x2)), 2));
+  atividade_1 = Math.exp(A12 * Math.pow(((A21 * x2) / (A12 * x1 + A21 * x2)), 2));
+  atividade_2 = Math.exp(A21 * Math.pow(((A12 * x1) / (A12 * x1 + A21 * x2)), 2));
+
+  // Cálculo da Entalpia em excesso
+  entalpia_excesso = 0;
 
 }
 
@@ -168,6 +172,7 @@ function NRTL() {
   // Definição dos parâmetros do método de acordo com o banco de dados
   A12 = [];
   A21 = [];
+  entalpia_excesso = null;
   A12 = data.NRTL_A12[j2];
   A21 = data.NRTL_A21[j2];
   alfa = data.NRTL_alfa[j2];
@@ -177,8 +182,16 @@ function NRTL() {
   g21 = Math.exp(-alfa * tau21);
 
   // Cálculo das atividades
-  atividade1 = Math.exp(Math.pow(x2, 2) * (tau21 * Math.pow(g21 / (x1 + x2 * g21), 2) + tau12 * g12 / Math.pow(x2 + x1 * g12, 2)), 2);
-  atividade2 = Math.exp(Math.pow(x1, 2) * (tau12 * Math.pow(g12 / (x2 + x1 * g12), 2) + tau21 * g21 / Math.pow(x1 + x2 * g21, 2)), 2);
+  atividade_1 = Math.exp(Math.pow(x2, 2) * (tau21 * Math.pow(g21 / (x1 + x2 * g21), 2) + tau12 * g12 / Math.pow(x2 + x1 * g12, 2)), 2);
+  atividade_2 = Math.exp(Math.pow(x1, 2) * (tau12 * Math.pow(g12 / (x2 + x1 * g12), 2) + tau21 * g21 / Math.pow(x1 + x2 * g21, 2)), 2);
+
+  // Cálculo da Entalpia em excesso
+  var numerador_1, numerador_2, denominador_1, denominador_2;
+  numerador_1 = (x1 * Math.exp((-alfa * A21) / (1.9872 * T1)) * alfa * Math.pow(A21, 2)) / (1.9872 * T1) - (x1 * Math.exp((-alfa * A21) / (1.9872 * T1)) * A21) - (x2 * Math.pow(Math.exp((-alfa * A21) / (1.9872 * T1)), 2) * A21);
+  numerador_2 = (x2 * Math.exp((-alfa * A12) / (1.9872 * T1)) * alfa * Math.pow(A12, 2)) / (1.9872 * T1) - (x2 * Math.exp((-alfa * A12) / (1.9872 * T1)) * A12) - (x1 * Math.pow(Math.exp((-alfa * A12) / (1.9872 * T1)), 2) * A12);
+  denominador_1 = Math.pow(x1, 2) + 2 * x1 * x2 * Math.exp((-alfa * A21) / (1.9872 * T1)) + Math.pow(x2, 2) * Math.pow(Math.exp((-alfa * A21) / (1.9872 * T1)), 2);
+  denominador_2 = Math.pow(x2, 2) + 2 * x2 * x1 * Math.exp((-alfa * A12) / (1.9872 * T1)) + Math.pow(x1, 2) * Math.pow(Math.exp((-alfa * A12) / (1.9872 * T1)), 2);
+  entalpia_excesso = -T1 * 0.0041868 * x1 * x2 * ((numerador_1 / denominador_1) + (numerador_2 / denominador_2));
 
 }
 
@@ -187,6 +200,7 @@ function Wilson() {
   // Definição dos parâmetros do método de acordo com o banco de dados
   A12 = [];
   A21 = [];
+  entalpia_excesso = null;
   A12 = data.Wilson_A12[j3];
   A21 = data.Wilson_A21[j3];
 
@@ -194,60 +208,63 @@ function Wilson() {
 
     if (data.componentes[k] == componente1) {
 
-      w_componente1 = data.prop_w[k];
-      Pc_componente1 = data.prop_Pc[k];
-      Tc_componente1 = data.prop_Tc[k];
+      w_componente_1 = data.prop_w[k];
+      Pc_componente_1 = data.prop_Pc[k];
+      Tc_componente_1 = data.prop_Tc[k];
 
     }
 
     if (data.componentes[k] == componente2) {
 
-      w_componente2 = data.prop_w[k];
-      Pc_componente2 = data.prop_Pc[k];
-      Tc_componente2 = data.prop_Tc[k];
+      w_componente_2 = data.prop_w[k];
+      Pc_componente_2 = data.prop_Pc[k];
+      Tc_componente_2 = data.prop_Tc[k];
 
     }
 
   }
 
-  zra1 = 0.29056 - 0.08775 * w_componente1;
-  Tr1 = T1 / (Tc_componente1 + 273.15);
-  V1 = (8.314 * (Tc_componente1 + 273.15) / Pc_componente1) * Math.pow(zra1, (1 + Math.pow(1 - Tr1, 2 / 7)));
-  zra2 = 0.29056 - 0.08775 * w_componente2;
-  Tr2 = T1 / (Tc_componente2 + 273.15);
-  V2 = (8.314 * (Tc_componente2 + 273.15) / Pc_componente2) * Math.pow(zra2, (1 + Math.pow(1 - Tr2, 2 / 7)));
+  zra1 = 0.29056 - 0.08775 * w_componente_1;
+  Tr1 = T1 / (Tc_componente_1 + 273.15);
+  V1 = (8.314 * (Tc_componente_1 + 273.15) / Pc_componente_1) * Math.pow(zra1, (1 + Math.pow(1 - Tr1, 2 / 7)));
+  zra2 = 0.29056 - 0.08775 * w_componente_2;
+  Tr2 = T1 / (Tc_componente_2 + 273.15);
+  V2 = (8.314 * (Tc_componente_2 + 273.15) / Pc_componente_2) * Math.pow(zra2, (1 + Math.pow(1 - Tr2, 2 / 7)));
   tau12 = (V2 / V1) * Math.exp(-A12 / (1.9872 * T1));
   tau21 = (V1 / V2) * Math.exp(-A21 / (1.9872 * T1));
 
   // Cálculo das atividades
-  ln_atividade1 = -Math.log(x1 + tau12 * x2) + x2 * (tau12 / (x1 + tau12 * x2) - tau21 / (x2 + x1 * tau21));
-  atividade1 = Math.exp(ln_atividade1);
-  ln_atividade2 = -Math.log(x2 + tau21 * x1) - x1 * (tau12 / (x1 + tau12 * x2) - tau21 / (x2 + x1 * tau21));
-  atividade2 = Math.exp(ln_atividade2);
+  ln_atividade_1 = -Math.log(x1 + tau12 * x2) + x2 * (tau12 / (x1 + tau12 * x2) - tau21 / (x2 + x1 * tau21));
+  atividade_1 = Math.exp(ln_atividade_1);
+  ln_atividade_2 = -Math.log(x2 + tau21 * x1) - x1 * (tau12 / (x1 + tau12 * x2) - tau21 / (x2 + x1 * tau21));
+  atividade_2 = Math.exp(ln_atividade_2);
+
+  // Cálculo da Entalpia em excesso
+  entalpia_excesso = 0.0041868 * (x2 * (x1 * A21 * (V1 / V2) * Math.exp((-A21) / (1.9872 * T1))) / (x2 + x1 * (V1 / V2) * Math.exp((-A21) / (1.9872 * T1))) + x1 * (x2 * A21 * (V2 / V1) * Math.exp((-A21) / (1.9872 * T1))) / (x1 + x2 * (V2 / V1) * Math.exp(-A12 / (1.9872 * T1))));
 
 }
 
 function UNIFAC_propriedades() {
 
   // Limpeza e criação dos vetores utilizados
-  var grupos_comp1 = [],
-    grupos_comp2 = [],
+  var grupos_comp_1 = [],
+    grupos_comp_2 = [],
     id_1 = [],
     id_2 = [],
     indice = [],
-    qtd_comp1 = [],
-    qtd_comp2 = [],
-    indice_comp1 = [],
-    indice_comp2 = [],
-    Rk_comp1 = [],
-    Rk_comp2 = [],
-    Qk_comp1 = [],
-    Qk_comp2 = [];
+    qtd_comp_1 = [],
+    qtd_comp_2 = [],
+    indice_comp_1 = [],
+    indice_comp_2 = [],
+    Rk_comp_1 = [],
+    Rk_comp_2 = [],
+    Qk_comp_1 = [],
+    Qk_comp_2 = [];
   ek1 = [];
   ek2 = [];
   id1 = [];
   p_interacao = [];
-
+  entalpia_excesso = null;
 
   // Definição dos grupos funcionais e a quantidade dos mesmos presente em cada componente
   for (var l = 0; l < data.componentes.length; l++) {
@@ -278,67 +295,67 @@ function UNIFAC_propriedades() {
 
   if (g11 != "") {
 
-    grupos_comp1.push(g11);
-    qtd_comp1.push(qtd11);
+    grupos_comp_1.push(g11);
+    qtd_comp_1.push(qtd11);
 
   }
 
   if (g12 != "") {
 
-    grupos_comp1.push(g12);
-    qtd_comp1.push(qtd12);
+    grupos_comp_1.push(g12);
+    qtd_comp_1.push(qtd12);
 
   }
 
   if (g13 != "") {
 
-    grupos_comp1.push(g13);
-    qtd_comp1.push(qtd13);
+    grupos_comp_1.push(g13);
+    qtd_comp_1.push(qtd13);
 
   }
 
   if (g21 != "") {
 
-    grupos_comp2.push(g21);
-    qtd_comp2.push(qtd21);
+    grupos_comp_2.push(g21);
+    qtd_comp_2.push(qtd21);
 
   }
 
   if (g22 != "") {
 
-    grupos_comp2.push(g22);
-    qtd_comp2.push(qtd22);
+    grupos_comp_2.push(g22);
+    qtd_comp_2.push(qtd22);
 
   }
   if (g23 != "") {
 
-    grupos_comp2.push(g23);
-    qtd_comp2.push(qtd23);
+    grupos_comp_2.push(g23);
+    qtd_comp_2.push(qtd23);
 
   }
 
   // Início da coleta de propriedades de cada componente/grupo segundo o método UNIFAC
   for (var m = 0; m < data.grupos_UNIFAC.length; m++) {
 
-    for (var n = 0; n < grupos_comp1.length; n++) {
+    for (var n = 0; n < grupos_comp_1.length; n++) {
 
-      if (data.grupos_UNIFAC[m] == grupos_comp1[n]) {
+      if (data.grupos_UNIFAC[m] == grupos_comp_1[n]) {
 
-        indice_comp1[n] = data.indice_grupos_UNIFAC[m];
-        Rk_comp1[n] = data.UNIFAC_Rk[m];
-        Qk_comp1[n] = data.UNIFAC_Qk[m];
+        indice_comp_1[n] = data.indice_grupos_UNIFAC[m];
+        Rk_comp_1[n] = data.UNIFAC_Rk[m];
+        Qk_comp_1[n] = data.UNIFAC_Qk[m];
 
       }
 
     }
 
-    for (var n = 0; n < grupos_comp2.length; n++) {
+    for (var n = 0; n < grupos_comp_2.length; n++) {
 
-      if (data.grupos_UNIFAC[m] == grupos_comp2[n]) {
+      if (data.grupos_UNIFAC[m] == grupos_comp_2[n]) {
 
-        indice_comp2[n] = data.indice_grupos_UNIFAC[m];
-        Rk_comp2[n] = data.UNIFAC_Rk[m];
-        Qk_comp2[n] = data.UNIFAC_Qk[m];
+        indice_comp_2[n] = data.indice_grupos_UNIFAC[m];
+        Rk_comp_2[n] = data.UNIFAC_Rk[m];
+        Qk_comp_2[n] = data.UNIFAC_Qk[m];
 
       }
 
@@ -349,46 +366,46 @@ function UNIFAC_propriedades() {
   rk1_total = 0;
   qk1_total = 0;
 
-  for (var i = 0; i < Rk_comp1.length; i++) {
+  for (var i = 0; i < Rk_comp_1.length; i++) {
 
-    rk1_total = rk1_total + qtd_comp1[i] * Rk_comp1[i];
-    qk1_total = qk1_total + qtd_comp1[i] * Qk_comp1[i];
+    rk1_total = rk1_total + qtd_comp_1[i] * Rk_comp_1[i];
+    qk1_total = qk1_total + qtd_comp_1[i] * Qk_comp_1[i];
 
   }
 
   rk2_total = 0;
   qk2_total = 0;
 
-  for (var i = 0; i < Rk_comp2.length; i++) {
+  for (var i = 0; i < Rk_comp_2.length; i++) {
 
-    rk2_total = rk2_total + qtd_comp2[i] * Rk_comp2[i];
-    qk2_total = qk2_total + qtd_comp2[i] * Qk_comp2[i];
-
-  }
-
-  for (var i = 0; i < indice_comp1.length; i++) {
-
-    id1.push(indice_comp1[i]);
+    rk2_total = rk2_total + qtd_comp_2[i] * Rk_comp_2[i];
+    qk2_total = qk2_total + qtd_comp_2[i] * Qk_comp_2[i];
 
   }
 
-  for (var i = 0; i < indice_comp2.length; i++) {
+  for (var i = 0; i < indice_comp_1.length; i++) {
 
-    id1.push(indice_comp2[i]);
+    id1.push(indice_comp_1[i]);
 
   }
 
-  for (var i = 0; i < Qk_comp1.length; i++) {
+  for (var i = 0; i < indice_comp_2.length; i++) {
 
-    ek1[i] = Qk_comp1[i] * qtd_comp1[i] / qk1_total;
+    id1.push(indice_comp_2[i]);
+
+  }
+
+  for (var i = 0; i < Qk_comp_1.length; i++) {
+
+    ek1[i] = Qk_comp_1[i] * qtd_comp_1[i] / qk1_total;
 
   }
 
   for (var i = 0; i < id1.length; i++) {
 
-    for (var j = 0; j < indice_comp1.length; j++) {
+    for (var j = 0; j < indice_comp_1.length; j++) {
 
-      if (id1[i] == indice_comp1[j]) {
+      if (id1[i] == indice_comp_1[j]) {
 
         indice[i] = i;
         break
@@ -428,17 +445,17 @@ function UNIFAC_propriedades() {
 
   indice = [];
 
-  for (var i = 0; i < Qk_comp2.length; i++) {
+  for (var i = 0; i < Qk_comp_2.length; i++) {
 
-    ek2[i] = Qk_comp2[i] * qtd_comp2[i] / qk2_total;
+    ek2[i] = Qk_comp_2[i] * qtd_comp_2[i] / qk2_total;
 
   }
 
   for (var i = 0; i < id1.length; i++) {
 
-    for (var j = 0; j < indice_comp2.length; j++) {
+    for (var j = 0; j < indice_comp_2.length; j++) {
 
-      if (id1[i] == indice_comp2[j]) {
+      if (id1[i] == indice_comp_2[j]) {
 
         indice[i] = i;
         break;
@@ -519,8 +536,8 @@ function UNIFAC() {
   J2 = (rk2_total / ((rk1_total * x1) + (rk2_total * x2)));
   L1 = (qk1_total / ((qk1_total * x1) + (qk2_total * x2)));
   L2 = (qk2_total / ((qk1_total * x1) + (qk2_total * x2)));
-  ln_AtivC1 = 1 - J1 + Math.log(J1) - 5 * qk1_total * (1 - (J1 / L1) + Math.log(J1 / L1));
-  ln_AtivC2 = 1 - J2 + Math.log(J2) - 5 * qk2_total * (1 - (J2 / L2) + Math.log(J2 / L2));
+  ln_AtivC_1 = 1 - J1 + Math.log(J1) - 5 * qk1_total * (1 - (J1 / L1) + Math.log(J1 / L1));
+  ln_AtivC_2 = 1 - J2 + Math.log(J2) - 5 * qk2_total * (1 - (J2 / L2) + Math.log(J2 / L2));
 
   for (var i = 0; i < p_interacao.length; i++) {
 
@@ -549,28 +566,74 @@ function UNIFAC() {
 
   }
 
-  ln_AtivR1 = qk1_total;
-  ln_AtivR2 = qk2_total;
+  ln_AtivR_1 = qk1_total;
+  ln_AtivR_2 = qk2_total;
 
   for (var i = 0; i < bk1.length; i++) {
 
-    ln_AtivR1 += -qk1_total * ((Tetak[i] * (bk1[i] / Sk[i])) - ek1[i] * Math.log(bk1[i] / Sk[i]));
-    ln_AtivR2 += -qk2_total * (Tetak[i] * (bk2[i] / Sk[i]) - ek2[i] * Math.log(bk2[i] / Sk[i]));
+    ln_AtivR_1 += -qk1_total * (Tetak[i] * (bk1[i] / Sk[i]) - ek1[i] * Math.log(bk1[i] / Sk[i]));
+    ln_AtivR_2 += -qk2_total * (Tetak[i] * (bk2[i] / Sk[i]) - ek2[i] * Math.log(bk2[i] / Sk[i]));
 
   }
 
-  atividade1 = Math.exp(ln_AtivC1 + ln_AtivR1);
-  atividade2 = Math.exp(ln_AtivC2 + ln_AtivR2);
+  atividade_1 = Math.exp(ln_AtivC_1 + ln_AtivR_1);
+  atividade_2 = Math.exp(ln_AtivC_2 + ln_AtivR_2);
+
+  var Tm_derivada = [],
+    bk1_derivada = [],
+    bk2_derivada = [],
+    Sk_derivada = [];
+
+  for (var i = 0; i < p_interacao.length; i++) {
+
+    Tm_derivada[i] = Math.exp(-p_interacao[i] / T1) * (p_interacao[i] / Math.pow(T1, 2));
+
+  }
+
+  for (var i = 0; i < id1.length; i++) {
+
+    bk1_derivada[i] = 0;
+    bk2_derivada[i] = 0;
+    Sk_derivada[i] = 0;
+
+  }
+
+  marc = 0;
+  for (var i = 0; i < id1.length; i++) {
+
+    for (var j = 0; j < ek1.length; j++) {
+
+      bk1_derivada[i] += ek1[j] * Tm_derivada[marc];
+      bk2_derivada[i] += ek2[j] * Tm_derivada[marc];
+      Sk_derivada[i] += Tetak[j] * Tm_derivada[marc];
+      marc = marc + 1;
+
+    }
+
+  }
+
+  ln_AtivR_1_derivada = 0;
+  ln_AtivR_2_derivada = 0;
+
+  for (var i = 0; i < bk1.length; i++) {
+
+    ln_AtivR_1_derivada += -qk1_total * Tetak[i] * ((bk1_derivada[i] * Sk[i] - Sk_derivada[i] * bk1[i]) / Math.pow(Sk[i], 2)) - ek1[i] * (Sk[i] / bk1[i]) * ((bk1_derivada[i] * Sk[i] - Sk_derivada[i] * bk1[i]) / Math.pow(Sk[i], 2));
+    ln_AtivR_2_derivada += -qk2_total * Tetak[i] * ((bk2_derivada[i] * Sk[i] - Sk_derivada[i] * bk2[i]) / Math.pow(Sk[i], 2)) - ek2[i] * (Sk[i] / bk2[i]) * ((bk2_derivada[i] * Sk[i] - Sk_derivada[i] * bk2[i]) / Math.pow(Sk[i], 2));
+
+  }
+
+  entalpia_excesso = (-0.0041868) * 1.9872 * Math.pow(T1, 2) * (x1 * ln_AtivR_1_derivada + x2 * ln_AtivR_2_derivada);
 
 }
 
 //Função de cálculo da curva de equilibrio líquido-vapor para misturas não ideais
-function curvaeq_naoideal() {
+function curva_eq_nao_ideal() {
 
   // Limpeza dos vetores
   yvolatil = [];
   var yvolatil_2 = [];
   xvolatil = [];
+  H_excesso = [];
 
   // Criação de um vetor de xvolatil de 0 a 1, com intervalos de 0.01
   xvolatil[0] = 0;
@@ -599,7 +662,7 @@ function curvaeq_naoideal() {
 
       chamar_metodo_atividade()
 
-      P1aux = pressao / (x1 * atividade1 + x2 * atividade2 * P2sat / P1sat);
+      P1aux = pressao / (x1 * atividade_1 + x2 * atividade_2 * P2sat / P1sat);
       T2 = (B1 / (A1 - Math.log(P1aux)) - C1) + 273.15;
 
       if (T1 > T2) {
@@ -616,20 +679,24 @@ function curvaeq_naoideal() {
 
     } while (diferenca >= 0.001)
 
-    yvolatil.push(xvolatil[i] * atividade1 * P1sat / pressao);
-    yvolatil_2.push((1 - xvolatil[i]) * atividade2 * P2sat / pressao);
+    yvolatil.push(xvolatil[i] * atividade_1 * P1sat / pressao);
+    yvolatil_2.push((1 - xvolatil[i]) * atividade_2 * P2sat / pressao);
     ytotal = yvolatil[i] + yvolatil_2[i];
     yvolatil[i] = yvolatil[i] / ytotal;
     yvolatil_2[i] = yvolatil_2[i] / ytotal;
+    H_excesso.push(entalpia_excesso);
 
   }
 
   for (var i = 0; i < yvolatil.length; i++) {
 
     xmax = 1;
+
     if (yvolatil[i] <= xvolatil[i] && i != 0) {
+
       xmax = yvolatil[i - 1];
       break;
+
     }
 
   }
@@ -637,7 +704,7 @@ function curvaeq_naoideal() {
 }
 
 // Função de cálculo do McCabe-Thiele para misturas não ideais
-function McCabe_NIdeal() {
+function McCabe_nao_ideal() {
 
   // Limpeza de vetores
   x_degrau = [];
@@ -658,7 +725,7 @@ function McCabe_NIdeal() {
 
     chamar_metodo_atividade();
 
-    P1aux = pressao / (x1 * atividade1 + x2 * atividade2 * P2sat / P1sat);
+    P1aux = pressao / (x1 * atividade_1 + x2 * atividade_2 * P2sat / P1sat);
 
     T2 = (B1 / (A1 - Math.log(P1aux)) - C1) + 273.15;
 
@@ -676,10 +743,10 @@ function McCabe_NIdeal() {
 
   } while (diferenca >= 0.001)
 
-  yF_aux1 = x1 * atividade1 * P1sat / pressao;
-  yF_aux2 = x2 * atividade2 * P2sat / pressao;
-  yF_auxtotal = yF_aux1 + yF_aux2;
-  yF = yF_aux1 / yF_auxtotal;
+  yF_aux_1 = x1 * atividade_1 * P1sat / pressao;
+  yF_aux_2 = x2 * atividade_2 * P2sat / pressao;
+  yF_auxtotal = yF_aux_1 + yF_aux_2;
+  yF = yF_aux_1 / yF_auxtotal;
 
   // Cálculo da taxa de refluxo mínimo
   if ((xD - yF) / (xF - yF) > 0) {
@@ -709,16 +776,16 @@ function McCabe_NIdeal() {
   x_aux = xD;
   y_aux = xD;
   T1 = (y_aux * T1sat) + ((1 - y_aux) * T2sat) + 273.15;
-  atividade1 = 1;
-  atividade2 = 1;
+  atividade_1 = 1;
+  atividade_2 = 1;
 
   do {
 
     y_degrau.push(y_aux);
     P1sat = Math.exp(A1 - B1 / (T1 - 273.15 + C1));
     P2sat = Math.exp(A2 - B2 / (T1 - 273.15 + C2));
-    x1 = y_aux * pressao / (atividade1 * P1sat);
-    x2 = (1 - y_aux) * pressao / (atividade2 * P2sat);
+    x1 = y_aux * pressao / (atividade_1 * P1sat);
+    x2 = (1 - y_aux) * pressao / (atividade_2 * P2sat);
     xtotal = x1 + x2;
     x1 = x1 / xtotal;
     x2 = x2 / xtotal;
@@ -728,13 +795,13 @@ function McCabe_NIdeal() {
       // Chamada do método de atividade e normalização do valor de x
       chamar_metodo_atividade();
 
-      x1 = y_aux * pressao / (atividade1 * P1sat);
-      x2 = (1 - y_aux) * pressao / (atividade2 * P2sat);
+      x1 = y_aux * pressao / (atividade_1 * P1sat);
+      x2 = (1 - y_aux) * pressao / (atividade_2 * P2sat);
       xtotal = x1 + x2;
       x1 = x1 / xtotal;
       x2 = x2 / xtotal;
 
-      P1aux = pressao / (x1 * atividade1 + x2 * atividade2 * P2sat / P1sat);
+      P1aux = pressao / (x1 * atividade_1 + x2 * atividade_2 * P2sat / P1sat);
       T2 = (B1 / (A1 - Math.log(P1aux)) - C1) + 273.15;
 
       if (T1 > T2) {
@@ -769,8 +836,8 @@ function McCabe_NIdeal() {
     y_degrau.push(y_aux);
     P1sat = Math.exp(A1 - B1 / (T1 - 273.15 + C1));
     P2sat = Math.exp(A2 - B2 / (T1 - 273.15 + C2));
-    x1 = y_aux * pressao / (atividade1 * P1sat);
-    x2 = (1 - y_aux) * pressao / (atividade2 * P2sat);
+    x1 = y_aux * pressao / (atividade_1 * P1sat);
+    x2 = (1 - y_aux) * pressao / (atividade_2 * P2sat);
     xtotal = x1 + x2;
     x1 = x1 / xtotal;
     x2 = x2 / xtotal;
@@ -779,13 +846,13 @@ function McCabe_NIdeal() {
 
       // Chamada do método de atividade e normalização do valor de x
       chamar_metodo_atividade();
-      x1 = y_aux * pressao / (atividade1 * P1sat);
-      x2 = (1 - y_aux) * pressao / (atividade2 * P2sat);
+      x1 = y_aux * pressao / (atividade_1 * P1sat);
+      x2 = (1 - y_aux) * pressao / (atividade_2 * P2sat);
       xtotal = x1 + x2;
       x1 = x1 / xtotal;
       x2 = x2 / xtotal;
 
-      P1aux = pressao / (x1 * atividade1 + x2 * atividade2 * P2sat / P1sat);
+      P1aux = pressao / (x1 * atividade_1 + x2 * atividade_2 * P2sat / P1sat);
       T2 = (B1 / (A1 - Math.log(P1aux)) - C1) + 273.15;
 
       if (T1 > T2) {
@@ -823,6 +890,21 @@ function McCabe_NIdeal() {
 // Função que calcula os dados para plotar a curva de entalpia ideal da mistura
 function curva_entalpia_ideal() {
 
+  entalpia_liquido = [];
+  entalpia_vapor = [];
+  Cp_gA1 = null;
+  Cp_gB1 = null;
+  Cp_gC1 = null;
+  Cp_l1 = null;
+  calor_formacao_g1 = null;
+  calor_formacao_l1 = null;
+  Cp_gA2 = null;
+  Cp_gB2 = null;
+  Cp_gC2 = null;
+  Cp_l2 = null;
+  calor_formacao_g2 = null;
+  calor_formacao_l2 = null;
+
   for (i = 0; i <= data.componentes.length; i++) {
 
     if (data.componentes[i] == componente1) {
@@ -855,15 +937,25 @@ function curva_entalpia_ideal() {
 
   for (var i = 0; i < temperaturas.length; i++) {
 
-    var var_entalpia_liq1 = Cp_l1 * (temperaturas[i] + 273.15 - 298.15);
-    var var_entalpia_liq2 = Cp_l2 * (temperaturas[i] + 273.15 - 298.15);
+    var var_entalpia_liq_1 = Cp_l1 * (temperaturas[i] + 273.15 - 298.15);
+    var var_entalpia_liq_2 = Cp_l2 * (temperaturas[i] + 273.15 - 298.15);
 
-    entalpia_liquido.push(xvolatil[i] * (calor_formacao_l1 + var_entalpia_liq1) + (1 - xvolatil[i]) * (calor_formacao_l2 + var_entalpia_liq2));
+    entalpia_liquido.push(xvolatil[i] * (calor_formacao_l1 + var_entalpia_liq_1) + (1 - xvolatil[i]) * (calor_formacao_l2 + var_entalpia_liq_2));
 
-    var var_entalpia_vap1 = Cp_gA1 * (temperaturas[i] + 273.15 - 298.15) + (Cp_gB1 / 2) * Math.pow((temperaturas[i] + 273.15 - 298.15), 2) + (Cp_gC1 / 3) * Math.pow((temperaturas[i] + 273.15 - 298.15), 3);
-    var var_entalpia_vap2 = Cp_gA2 * (temperaturas[i] + 273.15 - 298.15) + (Cp_gB2 / 2) * Math.pow((temperaturas[i] + 273.15 - 298.15), 2) + (Cp_gC2 / 3) * Math.pow((temperaturas[i] + 273.15 - 298.15), 3);
+    var var_entalpia_vap_1 = Cp_gA1 * (temperaturas[i] + 273.15 - 298.15) + (Cp_gB1 / 2) * Math.pow((temperaturas[i] + 273.15 - 298.15), 2) + (Cp_gC1 / 3) * Math.pow((temperaturas[i] + 273.15 - 298.15), 3);
+    var var_entalpia_vap_2 = Cp_gA2 * (temperaturas[i] + 273.15 - 298.15) + (Cp_gB2 / 2) * Math.pow((temperaturas[i] + 273.15 - 298.15), 2) + (Cp_gC2 / 3) * Math.pow((temperaturas[i] + 273.15 - 298.15), 3);
 
-    entalpia_vapor.push(yvolatil[i] * (calor_formacao_g1 + var_entalpia_vap1) + (1 - yvolatil[i]) * (calor_formacao_g2 + var_entalpia_vap2));
+    entalpia_vapor.push(yvolatil[i] * (calor_formacao_g1 + var_entalpia_vap_1) + (1 - yvolatil[i]) * (calor_formacao_g2 + var_entalpia_vap_2));
+
+  }
+
+}
+
+function curva_entalpia_nao_ideal() {
+
+  for (var i = 0; i < entalpia_liquido.length; i++) {
+
+    entalpia_liquido[i] = entalpia_liquido[i] + H_excesso[i];
 
   }
 
@@ -881,7 +973,7 @@ function change_chart() {
 
   } else if (tipo_mistura == "Mistura Não Ideal") {
 
-    McCabe_NIdeal();
+    McCabe_nao_ideal();
 
   }
 

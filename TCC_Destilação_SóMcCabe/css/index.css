@@ -1,0 +1,261 @@
+/* Caracterização de elementos gráficos de acordo com a classe ou tipo */
+
+/* Cor do plano de fundo da tela */
+
+body {
+  background-color: #f5f5f5;
+}
+
+/* Especificações dos textos das telas secundárias e labels */
+
+p {
+  text-align: justify;
+}
+
+.aux_p {
+  line-height: 2rem !important;
+  text-indent: 4%;
+}
+
+p.h6.col.m6.s12{
+  margin-top: 1%;
+}
+
+label {
+  text-align: justify;
+  color: #757575;
+  font-size: 0.8rem;
+}
+
+.aux_label {
+  color: #757575 !important;
+}
+
+/* Especificações do Select */
+
+.dropdown-content li>a, .dropdown-content li>span {
+  color: #006064;
+  font-size: 1rem;
+}
+
+.dropdown-content li>span {
+  padding: 2% 0 2% 8% !important;
+}
+
+.dropdown-content li {
+  min-height: 5% !important;
+}
+
+/*Especificações do Switch*/
+
+.switch label input[type="checkbox"]:checked+.lever::after, .switch label .lever::after {
+  background-color: #006064;
+}
+
+#div_switch {
+  text-align: right;
+}
+
+/* Especificações do input de texto */
+
+input[type="number"]:not(.browser-default):focus:not([readonly]) {
+  border-bottom: 1px solid #006064;
+  box-shadow: 0 1px 0 0 #006064;
+}
+
+input[type="number"].valid:not(.browser-default) {
+  border-bottom: 1px solid #9e9e9e;
+  box-shadow: 0 1px 0 0 #9e9e9e;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+.validate{
+  margin-bottom: 2% !important;
+}
+
+.disabledDiv{
+  margin-bottom: 2% !important;
+}
+
+/* Especificação das Checkboxes */
+
+[type="radio"]:checked+label::after {
+  background-color: #006064;
+  border: 2px solid #5a5a5a;
+}
+
+[type="radio"]+label::before, [type="radio"]+label::after {
+  width: 15px;
+  height: 15px;
+}
+
+/* Especificações do Range */
+
+.range_container {
+  margin-left: 2%;
+  margin-right: 1%;
+}
+
+#range_element {
+  margin-bottom: 2%;
+}
+
+input[type="range"] {
+  border: none;
+}
+
+input[type="range"]::-moz-range-thumb {
+  background: #006064;
+}
+
+input[type="range"]+.thumb {
+  background-color: #006064;
+}
+
+/* Especificações do card */
+
+.card-title {
+  margin-bottom: 3vh !important;
+}
+
+.card {
+  box-shadow: 0 0 0.4rem 0 #546e7a !important;
+}
+
+.row.card-content{
+  margin-bottom: 0;
+}
+
+/* Especificações da logo ufg */
+
+.responsive-img {
+  width: 15vh;
+}
+
+/* Especificações dos botões */
+
+.btn-small.waves-effect.grey-text.grey.lighten-4 {
+  padding: 0 0 0 0 !important;
+  margin-top: 0 !important;
+}
+
+.btn-small {
+  padding: 2px 10px 2px 10px;
+  border-radius: 3px;
+  margin: 2% 0 2% 0 !important;
+}
+
+/* Especificações das divs*/
+
+.disabledDiv {
+  pointer-events: none;
+  opacity: 0.4;
+}
+
+div.col.m5.s6.left {
+  padding: 0 0 0 0;
+}
+
+div.col.m12.s12 {
+  padding: 1% 0 0 0;
+}
+
+/* Especificações de ícones */
+
+.tiny {
+  line-height: 20px;
+}
+
+.material-icons {
+  font-size: 22px;
+}
+
+/* Especificações de forms */
+
+.rb_form.col.m6.s12 {
+  padding-left: 0;
+}
+
+.rb_form {
+  margin-left: 2%;
+  line-height: 0.95em;
+}
+
+/* Especificações dos informativos */
+
+.row-informativos {
+  margin-left: 2% !important;
+  font-size: 10px;
+  padding-bottom: 2%;
+}
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+/* Especificações de tabela */
+
+#tabela_composicoes, #tabela_composicoes2 {
+  margin-top: 3%;
+  font-size: 15px;
+}
+
+thead th {
+  font-weight: bold;
+  background-color: #eeeeee;
+}
+
+th, td {
+  border-bottom: 1px solid #b0bec5;
+  border-right: 1px dotted #b0bec5;
+  text-align: center;
+  vertical-align: center;
+  font-weight: normal;
+}
+
+/* Especificações de gráficos */
+
+canvas {
+  min-height: 200px;
+}
+
+/* Especificações do Toast */
+
+@media only screen and (min-width: 601px) and (max-width: 1260px) {
+  .toast {
+    width: 100%;
+    border-radius: 0;
+    justify-content: center;
+  }
+}
+
+@media only screen and (min-width: 1261px) {
+  .toast {
+    width: 100%;
+    border-radius: 0;
+    justify-content: center;
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 1260px) {
+  #toast-container {
+    min-width: 100%;
+    bottom: 0%;
+    top: 50%;
+    right: 0%;
+    left: 0%;
+  }
+}
+
+@media only screen and (min-width: 1261px) {
+  #toast-container {
+    min-width: 100%;
+    bottom: 0%;
+    top: 50%;
+    right: 0%;
+    left: 0%;
+  }
+}

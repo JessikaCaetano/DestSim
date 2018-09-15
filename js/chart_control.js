@@ -4,12 +4,12 @@
    // Limpeza da div que contém o gráfico, criação do canvas e adição do gráfico no mesmo
    $("#div_chart").empty();
    var ctx2 = document.createElement("canvas");
-   ctx2.setAttribute("id", "myChart");
+   ctx2.setAttribute("id", "grafico_metodo");
    ctx2.setAttribute("height", "250px");
    div_chart.appendChild(ctx2);
 
    //declaração da variável do chart
-   var ctx = document.getElementById("myChart");
+   var ctx = document.getElementById("grafico_metodo");
 
    //Criação das variáveis contendo os dados do gráfico
    var linha_aux = [];
@@ -207,12 +207,12 @@
    // Limpeza da div que contém o gráfico, criação do canvas e adição do gráfico no mesmo
    $("#div_chart").empty();
    var ctx2 = document.createElement("canvas");
-   ctx2.setAttribute("id", "myChart");
+   ctx2.setAttribute("id", "grafico_metodo");
    ctx2.setAttribute("height", "250px");
    div_chart.appendChild(ctx2);
 
    //declaração da variável do chart
-   var ctx = document.getElementById("myChart");
+   var ctx = document.getElementById("grafico_metodo");
 
    //Criação das variáveis contendo os dados do gráfico
    var curva_liquido = [];

@@ -79,7 +79,7 @@
 
               <div class="col m5 s6 left">
 
-                <a class="waves-effect white-text waves-light btn-small cyan darken-4" onclick=exemplo_mc_nideal()>Não Ideal</a>
+                <a class="waves-effect white-text waves-light btn-small cyan darken-4" onclick=exemplo_mc_nao_ideal()>Não Ideal</a>
 
               </div>
 
@@ -96,13 +96,13 @@
               <!-- Botões de exemplo Ponchon-Savarit-->
               <div class="col m5 s6 left">
 
-                <a class="waves-effect white-text waves-light btn-small cyan darken-4" onclick=exemplo_po_ideal()>Ideal</a>
+                <a class="waves-effect white-text waves-light btn-small cyan darken-4" onclick=exemplo_ps_ideal()>Ideal</a>
 
               </div>
 
               <div class="col m5 s6 left">
 
-                <a class="waves-effect  white-text waves-light btn-small cyan darken-4" onclick=exemplo_po_nideal()>Não Ideal</a>
+                <a class="waves-effect  white-text waves-light btn-small cyan darken-4" onclick=exemplo_ps_nao_ideal()>Não Ideal</a>
 
               </div>
 
@@ -119,7 +119,7 @@
           </div>
 
           <!-- Caixa de Rolagem 2 -->
-          <div class="input-field col s12" id="div_componentes2">
+          <div class="input-field col s12" id="div_componentes_2">
 
             <select onchange="add_comp_2()" id="select_componentes_2"></select>
             <label class="aux_label">Componente 2</label>
@@ -178,13 +178,13 @@
               <label>Método gráfico:</label>
 
               <p>
-                <input name="grupo2" type="radio" id="metodo1" value="McCabe-Thiele" onclick='disableSelect()' />
-                <label for="metodo1">McCabe-Thiele</label>
+                <input name="grupo_2" type="radio" id="metodo_1" value="McCabe-Thiele" onclick='disableSelect()' />
+                <label for="metodo_1">McCabe-Thiele</label>
               </p>
 
               <p>
-                <input name="grupo2" type="radio" id="metodo2" value="Ponchon-Savarit" onclick='disableSelect()' />
-                <label for="metodo2">Ponchon-Savarit</label>
+                <input name="grupo_2" type="radio" id="metodo_2" value="Ponchon-Savarit" onclick='disableSelect()' />
+                <label for="metodo_2">Ponchon-Savarit</label>
               </p>
 
             </form>
@@ -195,12 +195,12 @@
               <label>Tipo de mistura:</label>
 
               <p>
-                <input name="grupo1" type="radio" value="Mistura Ideal" id="tipo_mistura1" onclick='disableSelect()' />
+                <input name="grupo_1" type="radio" value="Mistura Ideal" id="tipo_mistura1" onclick='disableSelect()' />
                 <label for="tipo_mistura1">Mistura Ideal</label>
               </p>
 
               <p>
-                <input name="grupo1" type="radio" value="Mistura Não Ideal" id="tipo_mistura2" onclick='disableSelect()' />
+                <input name="grupo_1" type="radio" value="Mistura Não Ideal" id="tipo_mistura2" onclick='disableSelect()' />
                 <label for="tipo_mistura2">Mistura Não Ideal</label>
               </p>
 
@@ -219,7 +219,7 @@
             </div>
 
             <!-- Caixas de rolagem do método de cálculo de entalpia residual da fase vapor-->
-            <div class="disabledDiv input-field col m6 s12" id=div_select2>
+            <div class="disabledDiv input-field col m6 s12" id=div_select_2>
 
               <select id="select_entalpia"></select>
               <label>Método de cálculo da entalpia residual:</label>
@@ -231,24 +231,24 @@
               // Função para desabilitar caixa de rolagem do método de atividade caso a mistura seja ideal
               function disableSelect() {
 
-                tipo_mistura = valor_radio("grupo1");
+                tipo_mistura = valor_radio("grupo_1");
 
-                metodo_grafico = valor_radio("grupo2");
+                metodo_grafico = valor_radio("grupo_2");
 
                 if (tipo_mistura == "Mistura Ideal") {
 
                   document.getElementById("div_select").classList.add("disabledDiv");
-                  document.getElementById("div_select2").classList.add("disabledDiv");
+                  document.getElementById("div_select_2").classList.add("disabledDiv");
 
                 } else if (tipo_mistura == "Mistura Não Ideal") {
 
                   document.getElementById("div_select").className = "input-field col m6 s12";
-                  document.getElementById("div_select2").className = "input-field col m6 s12";
+                  document.getElementById("div_select_2").className = "input-field col m6 s12";
 
                 }
                 if (metodo_grafico == "McCabe-Thiele") {
 
-                  document.getElementById("div_select2").classList.add("disabledDiv");
+                  document.getElementById("div_select_2").classList.add("disabledDiv");
 
                 }
 
@@ -283,7 +283,7 @@
           <!-- canvas que contém o gráfico -->
           <div id="div_chart" class="chart-container">
 
-            <canvas id="myChart" height="250px"></canvas>
+            <canvas id="grafico_metodo" height="250px"></canvas>
 
           </div>
 
@@ -303,10 +303,10 @@
 
               <a class="btn-small waves-effect grey-text grey lighten-4 col m1 s1" onclick="mostrar_label_1()"><i class="material-icons left">info_outline</i></a>
 
-              <label id="label_info1" class="col m11 s10" hidden>Para a simulação considerou-se que a mistura entra na coluna como líquido saturado.</label>
-              <label id="label_info2" class="col m12 s12" hidden>Quando a razão de refluxo tende a seu valor mínimo, o número de estágios tende a infinito.</label>
-              <label id="label_info3" class="col m12 s12" hidden>Quando a razão de refluxo tende a um valor alto, obtém-se o número mínimo de pratos.</label>
-              <label id="label_info6" class="col m12 s12" hidden>Os pratos são enumerados de cima para baixo.</label>
+              <label id="label_info_1" class="col m11 s10" hidden>Para a simulação considerou-se que a mistura entra na coluna como líquido saturado.</label>
+              <label id="label_info_2" class="col m12 s12" hidden>Quando a razão de refluxo tende a seu valor mínimo, o número de estágios tende a infinito.</label>
+              <label id="label_info_3" class="col m12 s12" hidden>Quando a razão de refluxo tende a um valor alto, obtém-se o número mínimo de pratos.</label>
+              <label id="label_info_6" class="col m12 s12" hidden>Os pratos são enumerados de cima para baixo.</label>
 
             </div>
 
@@ -341,16 +341,16 @@
 
             <a class="btn-small waves-effect grey-text grey lighten-4 col m1 s1" onclick="mostrar_label_2()"><i class="material-icons left">info_outline</i></a>
 
-            <label id="label_info4" class="col m11 s10" hidden>As composições são dadas em relação ao componente mais volátil.</label>
-            <label id="label_info5" class="col m11 s12" hidden>As composições dos estágios correspondem aos pontos onde os degraus tocam a cruva de equilíbrio.</label>
+            <label id="label_info_4" class="col m11 s10" hidden>As composições são dadas em relação ao componente mais volátil.</label>
+            <label id="label_info_5" class="col m11 s12" hidden>As composições dos estágios correspondem aos pontos onde os degraus tocam a cruva de equilíbrio.</label>
 
           </div>
 
           <div class="col m6 s12">
 
-            <table id="tabela_composicoes">
+            <table id="tabela_composicoes_1">
 
-              <thead id="tabela1_head">
+              <thead id="tabela_1_head">
 
                 <tr>
                   <th>Estágio</th>
@@ -360,7 +360,7 @@
 
               </thead>
 
-              <tbody id="tabela1_body">
+              <tbody id="tabela_1_body">
 
               </tbody>
 
@@ -370,9 +370,9 @@
 
           <div class="col m6 s12">
 
-            <table id="tabela_composicoes2">
+            <table id="tabela_composicoes_2">
 
-              <thead id="tabela2_head">
+              <thead id="tabela_2_head">
 
                 <tr>
                   <th>Estágio</th>
@@ -382,7 +382,7 @@
 
               </thead>
 
-              <tbody id="tabela2_body">
+              <tbody id="tabela_2_body">
 
               </tbody>
 

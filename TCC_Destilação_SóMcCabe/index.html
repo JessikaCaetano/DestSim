@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Destilação Binária So McCabe</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Importar materialize.css-->
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+  <link type="text/css" rel="stylesheet" href="css/index.css" />
+  <!--Comuniar ao browser compatibilidade com celular-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+
+  <!-- Barra de navegação -->
+  <nav class="cyan darken-4">
+    <div class="nav-wrapper">
+
+      <a href="#!" class="brand-logo"> DestSim</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="sass.html">Início</a></li>
+        <li><a href="badges.html">Simulação</a></li>
+        <li><a href="collapsible.html">Manual</a></li>
+        <li><a href="mobile.html">Sobre os Métodos</a></li>
+      </ul>
+      <ul class="side-nav" id="mobile-demo">
+        <li><a href="sass.html">Início</a></li>
+        <li><a href="badges.html">Simulação</a></li>
+        <li><a href="collapsible.html">Manual</a></li>
+        <li><a href="mobile.html">Sobre os Métodos</a></li>
+      </ul>
+    </div>
+
+  </nav>
+
+  <!-- Conteúdo da página -->
+  <div class="row">
+
+    <div class="col m1 s3">
+
+      <img class="responsive-img" src="Marca_UFG_cor_vertical-03.png">
+
+    </div>
+    <!-- Card da esquerda -->
+    <div class="col m5 s12">
+
+      <div class="card grey lighten-4">
+
+        <div class="card-content">
+          <span class="center-align card-title">Entrada de Dados</span>
+
+          <!-- Caixa de Rolagem 1 -->
+          <div class="input-field col s12" id="div_componentes">
+            <select onchange="add_comp_1()" id="select_componentes">
+            </select>
+            <label>Componente 1</label>
+          </div>
+
+          <!-- Caixa de Rolagem 2 -->
+          <div class="input-field col s12" id="div_componentes2">
+            <select onchange="add_comp_2()" id="select_componentes2">
+            </select>
+            <label>Componente 2</label>
+          </div>
+
+          <!-- Seleção de unidade de composição (mássica ou molar) -->
+          <div class="row  m12 s12">
+            <label id="label_composicao" class="col m6 s12">Composição (Componente mais volátil):</label>
+            <div id='div_switch' class="switch col m6 s12" onchange="converter()">
+              <label>
+                Molar
+                <input id = "switch" type="checkbox">
+                <span class="lever grey"></span>
+                Mássica
+              </label>
+            </div>
+          </div>
+
+          <div class="row disabledDiv" id="div_composicoes">
+
+            <!-- Inputs das composições de alimentação, topo e fundo -->
+            <div class="input-field col m4 s12">
+              <input placeholder="Ex. 0.42" id="input_alimentacao" type="number" step="any" class="validate" value="">
+              <label for="first_name">Alimentação</label>
+            </div>
+
+            <div class="input-field col m4 s6">
+              <input placeholder="Ex. 0.42" id="input_topo" type="number" step="any" class="validate" value="">
+              <label for="first_name">Topo</label>
+            </div>
+
+            <div class="input-field col m4 s6">
+              <input placeholder="Ex. 0.42" id="input_fundo" type="number" step="any" class="validate" value="">
+              <label for="first_name">Fundo</label>
+            </div>
+
+          </div>
+
+          <div class="row">
+
+            <!-- Botões de seleção do tipo de mistura-->
+            <div class="col m12 s12">
+              <label>Tipo de mistura:</label>
+            </div>
+
+            <form class="rb_form col m12 s12" action="#">
+              <div class="col m6 s12">
+                <p>
+                  <input name="grupo1" type="radio" value="Mistura Ideal" id="tipo_mistura1" onclick='disableSelect()' />
+                  <label for="tipo_mistura1">Mistura Ideal</label>
+                </p>
+              </div>
+              <div class="col m6 s12">
+                <p>
+                  <input name="grupo1" type="radio" value="Mistura Não Ideal" id="tipo_mistura2" onclick='disableSelect()' />
+                  <label for="tipo_mistura2">Mistura Não Ideal</label>
+                </p>
+              </div>
+            </form>
+
+          </div>
+
+          <div class="row">
+
+            <!-- Caixas de rolagem do método de cálculo de atividade-->
+            <div class="disabledDiv input-field col m12 s12" id="div_select">
+              <select id="select_atividade" onchange="add_metodo()">
+            </select>
+              <label>Método de cálculo da atividade:</label>
+            </div>
+
+            <script>
+              // Função para desabilitar caixa de rolagem do método de atividade caso a mistura seja ideal
+              function disableSelect() {
+
+                tipo_mistura = valor_radio("grupo1");
+
+                metodo_grafico = valor_radio("grupo2");
+
+                if (tipo_mistura == "Mistura Ideal") {
+                  document.getElementById("div_select").classList.add("disabledDiv");
+                } else if (tipo_mistura == "Mistura Não Ideal") {
+                  document.getElementById("div_select").className = "input-field col m12 s12";
+                }
+
+              }
+            </script>
+
+          </div>
+
+          <div class="row">
+            <div class="col m4 s8 offset-s2">
+              <!-- Botão para calcular -->
+              <a class=" btn-small waves-effect white-text cyan darken-4" onclick=botao_calcular()>Calcular
+            <i class="tiny material-icons right">send</i>
+          </a>
+            </div>
+
+            <div class="col m4 s8 offset-s2">
+              <!-- Botão do exemplo ideal -->
+              <a class="waves-effect white-text waves-light btn-small cyan darken-4" onclick=exemplo_ideal()>Ex. Ideal
+            <i class="tiny material-icons right">send</i>
+          </a>
+            </div>
+
+            <div class="col m4 s8 offset-s2">
+              <!-- Botão do exemplo não ideal -->
+              <a class="waves-effect  white-text waves-light btn-small cyan darken-4" onclick=exemplo_nideal()>Ex. Não Ideal
+            <i class="tiny material-icons right">send</i>
+          </a>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div>
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Card da direita -->
+    <div class="col m5 s12">
+
+      <div class="card grey lighten-4">
+
+        <div class="row card-content">
+          <!-- Título do card da direita -->
+          <span class="center-align card-title">Resultado da Simulação</span>
+
+          <!-- canvas que contém o gráfico -->
+          <div id="div_chart" class="chart-container">
+            <canvas id="myChart" height="250px"></canvas>
+          </div>
+
+          <div>
+
+            <!-- Slider da razão de refluxo -->
+            <form class="range_container" action="#">
+              <p class="range-field">
+                <label for="range_element">Razão de refluxo:</label>
+                <input type="range" id="range_element" max="100" value=10 oninput="change_chart()" />
+              </p>
+            </form>
+
+            <div class="row-informativos col m12 s12">
+
+              <a class="btn-small waves-effect grey-text grey lighten-4 col m1 s2" onclick="mostrar_label()">
+                <i class="material-icons left">info_outline</i>
+              </a>
+
+              <label id="label_info1" class="col m11 s10" hidden>Para a simulação considerou-se que a mistura entra na coluna como líquido saturado.</label>
+              <label id="label_info2" class="col m12 s12" hidden>Quando a razão de refluxo tende a seu valor mínimo, o número de estágios tende a infinito.</label>
+              <label id="label_info3" class="col m12 s12" hidden>Quando a razão de refluxo tende a um valor alto, obtém-se o número mínimo de pratos.</label>
+
+            </div>
+
+            <div>
+              <p class="h6 col m6 s12">Número de estágios: <span id="num_estagios"></span></p>
+              <p class="h6 col m6 s12">Prato de alimentação: <span id="prato_alimentacao"></span></p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col offset-m1 m10 s12">
+
+      <div class="card grey lighten-4">
+
+        <div class="row card-content">
+          <!-- Resultados da composição de cada estágio -->
+          <span class="center-align card-title">Composição dos Estágios</span>
+
+          <div class="row-informativos col m12 s12">
+
+            <a class="btn-small waves-effect grey-text grey lighten-4 col m1 s2" onclick="mostrar_label2()">
+              <i class="material-icons left">info_outline</i>
+            </a>
+
+            <label id="label_info4" class="col m11 s10" hidden>As composições são dadas em relação ao componente mais volátil.</label>
+            <label id="label_info5" class="col m11 s12" hidden>As composições dos estágios correspondem aos pontos onde os degraus tocam a cruva de equilíbrio.</label>
+          </div>
+
+          <div class="col m6 s12">
+            <table id="tabela_composicoes">
+
+              <thead id="tabela1_head">
+                <tr>
+                  <th>Estágio</th>
+                  <th>x (fração molar)</th>
+                  <th>y (fração molar)</th>
+                </tr>
+              </thead>
+
+              <tbody id="tabela1_body">
+              </tbody>
+
+            </table>
+          </div>
+
+          <div class="col m6 s12">
+            <table id="tabela_composicoes2">
+
+              <thead id="tabela2_head">
+                <tr>
+                  <th>Estágio</th>
+                  <th>x (fração molar)</th>
+                  <th>y (fração molar)</th>
+                </tr>
+              </thead>
+
+              <tbody id="tabela2_body">
+              </tbody>
+
+            </table>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- link do jquery -->
+  <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+  <!-- link do materialize (estilização) -->
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+  <!-- link do banco de dados -->
+  <script type="text/javascript" src="json/bancodedados.json"></script>
+  <!-- link das funções que são chamadas no código principal -->
+  <script src="js/funcoes_auxiliares.js"></script>
+  <script src="js/funcoes.js"></script>
+  <!-- link do  arquivo de controle do chart -->
+  <script src="js/chart_control.js"></script>
+  <!-- link do código principal -->
+  <script src="js/destilacao.js"></script>
+  <!-- link da biblioteca do chart -->
+  <script src="js/Chart.bundle.min.js"></script>
+
+
+</body>
+
+</html>

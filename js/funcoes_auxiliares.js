@@ -3,8 +3,8 @@ function limpar_checkboxes() {
 
   $("#tipo_mistura1").prop("checked", false);
   $("#tipo_mistura2").prop("checked", false);
-  $("#metodo1").prop("checked", false);
-  $("#metodo2").prop("checked", false);
+  $("#metodo_1").prop("checked", false);
+  $("#metodo_2").prop("checked", false);
   $("#switch").prop("checked", false);
 
 }
@@ -248,28 +248,28 @@ function alterar_label() {
 // Mostra resultados na tabela de composições
 function composicao_estagios() {
 
-  var tabela = document.getElementById("tabela_composicoes");
+  var tabela = document.getElementById("tabela_composicoes_1");
 
   // Create an empty <tr> element and add it to the 1st position of the table:
-  $("#tabela_composicoes tr").remove();
-  $("#tabela_composicoes2 tr").remove();
+  $("#tabela_composicoes_1 tr").remove();
+  $("#tabela_composicoes_2 tr").remove();
 
-  tabela1_head = document.getElementById("tabela1_head");
-  tabela1_head.innerHTML = tabela1_head.innerHTML + "<tr> <th>" + "Estágio" + "</th> <th>" + "x (fração molar)" + "</th> <th>" + "y (fração molar)" + "</th> </tr>";
-  tabela2_head = document.getElementById("tabela2_head");
-  tabela2_head.innerHTML = tabela2_head.innerHTML + "<tr> <th>" + "Estágio" + "</th> <th>" + "x (fração molar)" + "</th> <th>" + "y (fração molar)" + "</th> </tr>";
+  tabela_1_head = document.getElementById("tabela_1_head");
+  tabela_1_head.innerHTML = tabela_1_head.innerHTML + "<tr> <th>" + "Estágio" + "</th> <th>" + "x (fração molar)" + "</th> <th>" + "y (fração molar)" + "</th> </tr>";
+  tabela_2_head = document.getElementById("tabela_2_head");
+  tabela_2_head.innerHTML = tabela_2_head.innerHTML + "<tr> <th>" + "Estágio" + "</th> <th>" + "x (fração molar)" + "</th> <th>" + "y (fração molar)" + "</th> </tr>";
 
-  tabela1_body = document.getElementById("tabela1_body");
+  tabela_1_body = document.getElementById("tabela_1_body");
   for (var i = 1; i <= Math.round(x_estagio.length / 2); i++) {
 
-    tabela1_body.innerHTML = tabela1_body.innerHTML + "<tr> <th>" + i + "</th> <th>" + x_estagio[i - 1].toFixed(2) + "</th> <th>" + y_estagio[i - 1].toFixed(2) + "</th> </tr>";
+    tabela_1_body.innerHTML = tabela_1_body.innerHTML + "<tr> <th>" + i + "</th> <th>" + x_estagio[i - 1].toFixed(2) + "</th> <th>" + y_estagio[i - 1].toFixed(2) + "</th> </tr>";
 
   }
 
-  tabela2_body = document.getElementById("tabela2_body")
+  tabela_2_body = document.getElementById("tabela_2_body")
   for (var i = Math.round(x_estagio.length / 2) + 1; i <= x_estagio.length; i++) {
 
-    tabela2_body.innerHTML = tabela2_body.innerHTML + "<tr> <th>" + i + "</th> <th>" + x_estagio[i - 1].toFixed(2) + "</th> <th>" + y_estagio[i - 1].toFixed(2) + "</th> </tr>"
+    tabela_2_body.innerHTML = tabela_2_body.innerHTML + "<tr> <th>" + i + "</th> <th>" + x_estagio[i - 1].toFixed(2) + "</th> <th>" + y_estagio[i - 1].toFixed(2) + "</th> </tr>"
 
   }
 
@@ -285,9 +285,28 @@ function add_metodo() {
     metodo_atividade = metodos_atividade[document.getElementById("novo_select").value - 1];
 
   }
+
   if (metodo_atividade) {
 
     metodo_added = true;
+
+  }
+
+}
+
+function add_metodo_entalpia(){
+
+  metodo_added_entalpia = false;
+
+  if (document.getElementById("select_entalpia").value != 0) {
+
+    metodo_entalpia = data.metodos_entalpia[document.getElementById("select_entalpia").value - 1];
+
+  }
+
+  if (metodo_entalpia) {
+
+    metodo_added_entalpia = true;
 
   }
 
@@ -438,7 +457,7 @@ function add_comp_1() {
     add_atividade("Escolha uma opção");
     calcular_comp_volatil();
     document.getElementById("label_composicao").innerHTML = "Composição (" + compvolatil + "):";
-    document.getElementById("label_info4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
+    document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
 
   }
 
@@ -464,7 +483,7 @@ function add_comp_2() {
     add_atividade("Escolha uma opção");
     calcular_comp_volatil();
     document.getElementById("label_composicao").innerHTML = "Composição (" + compvolatil + "):";
-    document.getElementById("label_info4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
+    document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
 
   }
 
@@ -489,18 +508,18 @@ function mostrar_label_1() {
 
   if (info_on_1 == false) {
 
-    document.getElementById("label_info1").removeAttribute('hidden');
-    document.getElementById("label_info2").removeAttribute('hidden');
-    document.getElementById("label_info3").removeAttribute('hidden');
-    document.getElementById("label_info6").removeAttribute('hidden');
+    document.getElementById("label_info_1").removeAttribute('hidden');
+    document.getElementById("label_info_2").removeAttribute('hidden');
+    document.getElementById("label_info_3").removeAttribute('hidden');
+    document.getElementById("label_info_6").removeAttribute('hidden');
     info_on_1 = true;
 
   } else if (info_on_1 == true) {
 
-    document.getElementById("label_info1").setAttribute('hidden', 'hidden');
-    document.getElementById("label_info2").setAttribute('hidden', 'hidden');
-    document.getElementById("label_info3").setAttribute('hidden', 'hidden');
-    document.getElementById("label_info6").setAttribute('hidden', 'hidden');
+    document.getElementById("label_info_1").setAttribute('hidden', 'hidden');
+    document.getElementById("label_info_2").setAttribute('hidden', 'hidden');
+    document.getElementById("label_info_3").setAttribute('hidden', 'hidden');
+    document.getElementById("label_info_6").setAttribute('hidden', 'hidden');
     info_on_1 = false;
 
   }
@@ -511,20 +530,20 @@ function mostrar_label_2() {
 
   if (info_on_2 == false) {
 
-    document.getElementById("label_info4").removeAttribute('hidden');
-    document.getElementById("label_info5").removeAttribute('hidden');
+    document.getElementById("label_info_4").removeAttribute('hidden');
+    document.getElementById("label_info_5").removeAttribute('hidden');
     info_on_2 = true;
 
   } else if (info_on_2 == true) {
 
-    document.getElementById("label_info4").setAttribute('hidden', 'hidden');
-    document.getElementById("label_info5").setAttribute('hidden', 'hidden');
+    document.getElementById("label_info_4").setAttribute('hidden', 'hidden');
+    document.getElementById("label_info_5").setAttribute('hidden', 'hidden');
     info_on_2 = false;
 
   }
   if (compvolatil) {
 
-    document.getElementById("label_info4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
+    document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
 
   }
 
