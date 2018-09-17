@@ -187,11 +187,11 @@ function NRTL() {
 
   // Cálculo da Entalpia em excesso
   var numerador_1, numerador_2, denominador_1, denominador_2;
-  numerador_1 = (x1 * Math.exp((-alfa * A21) / (1.9872 * T1)) * alfa * Math.pow(A21, 2)) / (1.9872 * T1) - (x1 * Math.exp((-alfa * A21) / (1.9872 * T1)) * A21) - (x2 * Math.pow(Math.exp((-alfa * A21) / (1.9872 * T1)), 2) * A21);
-  numerador_2 = (x2 * Math.exp((-alfa * A12) / (1.9872 * T1)) * alfa * Math.pow(A12, 2)) / (1.9872 * T1) - (x2 * Math.exp((-alfa * A12) / (1.9872 * T1)) * A12) - (x1 * Math.pow(Math.exp((-alfa * A12) / (1.9872 * T1)), 2) * A12);
+  numerador_1 = (x1 * Math.exp((-alfa * A21) / (1.9872 * T1)) * alfa * Math.pow(A21, 2)) / (1.9872 * T1);
+  numerador_2 = (x2 * Math.exp((-alfa * A12) / (1.9872 * T1)) * alfa * Math.pow(A12, 2)) / (1.9872 * T1);
   denominador_1 = Math.pow(x1, 2) + 2 * x1 * x2 * Math.exp((-alfa * A21) / (1.9872 * T1)) + Math.pow(x2, 2) * Math.pow(Math.exp((-alfa * A21) / (1.9872 * T1)), 2);
   denominador_2 = Math.pow(x2, 2) + 2 * x2 * x1 * Math.exp((-alfa * A12) / (1.9872 * T1)) + Math.pow(x1, 2) * Math.pow(Math.exp((-alfa * A12) / (1.9872 * T1)), 2);
-  entalpia_excesso = -T1 * 0.0041868 * x1 * x2 * ((numerador_1 / denominador_1) + (numerador_2 / denominador_2));
+  entalpia_excesso = -0.0041868 * x1 * x2 * ((numerador_1 / denominador_1) + (numerador_2 / denominador_2));
 
 }
 
@@ -240,7 +240,13 @@ function Wilson() {
   atividade_2 = Math.exp(ln_atividade_2);
 
   // Cálculo da Entalpia em excesso
-  entalpia_excesso = 0.0041868 * (x2 * (x1 * A21 * (V1 / V2) * Math.exp((-A21) / (1.9872 * T1))) / (x2 + x1 * (V1 / V2) * Math.exp((-A21) / (1.9872 * T1))) + x1 * (x2 * A21 * (V2 / V1) * Math.exp((-A21) / (1.9872 * T1))) / (x1 + x2 * (V2 / V1) * Math.exp(-A12 / (1.9872 * T1))));
+  var numerador_1, numerador_2, denominador_1, denominador_2;
+  numerador_1 = x1 * x2 * (V2 / V1) * Math.exp(-A12 / (1.9872 * T1)) * A12;
+  numerador_2 = x2 * x1 * (V1 / V2) * Math.exp(-A21 / (1.9872 * T1)) * A21;
+  denominador_1 = x1 + x2 * (V2 / V1) * Math.exp(-A12 / (1.9872 * T1));
+  denominador_2 = x2 + x1 * (V1 / V2) * Math.exp(-A21 / (1.9872 * T1));
+
+  entalpia_excesso = 0.0041868 * ((numerador_1 / denominador_1) + (numerador_2 / denominador_2));
 
 }
 
