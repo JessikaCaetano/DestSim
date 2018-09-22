@@ -370,6 +370,30 @@ function localizar_mistura(componente1, componente2) {
 
 }
 
+function adicionar_prop_criticas(){
+
+  for (var k = 0; k < data.componentes.length; k++) {
+
+    if (data.componentes[k] == componente1) {
+
+      w_componente_1 = data.prop_w[k];
+      Pc_componente_1 = data.prop_Pc[k];
+      Tc_componente_1 = data.prop_Tc[k];
+
+    }
+
+    if (data.componentes[k] == componente2) {
+
+      w_componente_2 = data.prop_w[k];
+      Pc_componente_2 = data.prop_Pc[k];
+      Tc_componente_2 = data.prop_Tc[k];
+
+    }
+
+  }
+
+}
+
 // Chama o método de atividade de acordo com o escolhido
 function chamar_metodo_atividade() {
 
@@ -388,6 +412,28 @@ function chamar_metodo_atividade() {
   } else if (metodo_atividade == "UNIFAC") {
 
     UNIFAC();
+
+  }
+
+}
+
+function chamar_metodo_entalpia_residual(){
+
+  if (metodo_entalpia == "Van der Waals") {
+
+    Van_der_Waals();
+
+  } else if (metodo_entalpia == "Redlich/Kwong") {
+
+    Redlich_Kwong();
+
+  } else if (metodo_entalpia == "Soave/Redlich/Kwong") {
+
+    Soave_Redlich_Kwong();
+
+  } else if (metodo_entalpia == "Peng/Robinson") {
+
+    Peng_Robinson();
 
   }
 

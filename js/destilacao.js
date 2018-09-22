@@ -21,7 +21,8 @@ var temperaturas = [],
   xvolatil = [],
   yvolatil = [],
   alfa_ideal = [],
-  H_excesso = [];
+  H_excesso = [],
+  H_residual = [];
 var metodos_atividade = [];
 var ek1 = [],
   ek2 = [],
@@ -33,10 +34,15 @@ var x_degrau = [],
   y_estagio = [];
 var entalpia_liquido = [],
   entalpia_vapor = [];
-var A1, A2, B1, B2, C1, C2, T1sat, T2sat, T1, P1sat, P2sat, atividade_1, atividade_2, x1, x2, qk1_total, qk2_total, rk1_total, rk2_total, entalpia_excesso;
+var A1, A2, B1, B2, C1, C2, T1sat, T2sat, T1, T3, P1sat, P2sat, atividade_1, atividade_2, x1, x2, qk1_total, qk2_total, rk1_total, rk2_total, entalpia_excesso;
 var Cp_gA1, Cp_gB1, Cp_gC1, Cp_gA2, Cp_gB2, Cp_gC2, Cp_l1, Cp_l2, calor_formacao_g1, calor_formacao_g2, calor_formacao_l1, calor_formacao_l2;
 var tipo_mistura, metodo_atividade, metodo_grafico, metodo_entalpia, componente1, componente2, estagio_alimentacao;
 var xF, xD, xB, Rd_min, Rd, yF, x_aux, y_aux, indice_comp, compvolatil;
+var sigma, epsilon, psi, omega, alfa_Tr, der_Tr;
+var Pc = [],
+  Tc = [],
+  w = [],
+  T1_aux = [];
 var c_added_1 = false,
   c_added_2 = false,
   metodo_added = false,
@@ -417,6 +423,7 @@ function exemplo_ps_nao_ideal() {
   metodo_grafico = "Ponchon-Savarit";
   tipo_mistura = "Mistura Não Ideal";
   metodo_atividade = "Van Laar";
+  metodo_entalpia = "Van der Waals";
 
   // Marcação dos radio buttons e selects de acordo com especificações do exemplo
   $("#tipo_mistura2").prop("checked", true);
@@ -424,6 +431,7 @@ function exemplo_ps_nao_ideal() {
   $("#metodo_2").prop("switch", false);
   document.getElementById("div_select").className = "input-field col m6 s12";
   document.getElementById("div_select_2").className = "input-field col m6 s12";
+  document.getElementById("select_entalpia").value = 1;
   document.getElementById('range_element').value = 10;
 
   // Funções de cálculo do Ponchon-Savarit

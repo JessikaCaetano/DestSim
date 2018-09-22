@@ -200,29 +200,18 @@ function Wilson() {
   // Definição dos parâmetros do método de acordo com o banco de dados
   A12 = [];
   A21 = [];
+  w_componente_1 = null;
+  w_componente_2 = null;
+  Tc_componente_1 = null;
+  Tc_componente_2 = null;
+  w_componente_1 = null;
+  w_componente_2 = null;
   entalpia_excesso = null;
+
   A12 = data.Wilson_A12[j3];
   A21 = data.Wilson_A21[j3];
 
-  for (var k = 0; k < data.componentes.length; k++) {
-
-    if (data.componentes[k] == componente1) {
-
-      w_componente_1 = data.prop_w[k];
-      Pc_componente_1 = data.prop_Pc[k];
-      Tc_componente_1 = data.prop_Tc[k];
-
-    }
-
-    if (data.componentes[k] == componente2) {
-
-      w_componente_2 = data.prop_w[k];
-      Pc_componente_2 = data.prop_Pc[k];
-      Tc_componente_2 = data.prop_Tc[k];
-
-    }
-
-  }
+  adicionar_prop_criticas();
 
   zra1 = 0.29056 - 0.08775 * w_componente_1;
   Tr1 = T1 / (Tc_componente_1 + 273.15);
@@ -640,6 +629,7 @@ function curva_eq_nao_ideal() {
   var yvolatil_2 = [];
   xvolatil = [];
   H_excesso = [];
+  T1_aux = [];
 
   // Criação de um vetor de xvolatil de 0 a 1, com intervalos de 0.01
   xvolatil[0] = 0;
@@ -691,6 +681,7 @@ function curva_eq_nao_ideal() {
     yvolatil[i] = yvolatil[i] / ytotal;
     yvolatil_2[i] = yvolatil_2[i] / ytotal;
     H_excesso.push(entalpia_excesso);
+    T1_aux.push(T1);
 
   }
 
@@ -893,6 +884,52 @@ function McCabe_nao_ideal() {
 
 }
 
+function Van_der_Waals() {
+
+  sigma = 0;
+  epsilon = 0;
+  omega = 1 / 8;
+  psi = 27 / 64;
+  alfa_Tr = 1;
+  der_Tr = -27 / (8 * (T3 / Tc_aux));
+
+}
+
+function Redlich_Kwong() {
+
+  sigma = 1;
+  epsilon = 0;
+  omega = 0.08664;
+  psi = 0.42748;
+  alfa_Tr = 1 / Math.sqrt(T3 / Tc_aux);
+  der_Tr = (psi / omega) * (-3 / 2) * Math.pow(T3 / Tc_aux, -3 / 2);
+
+}
+
+function Soave_Redlich_Kwong() {
+
+  sigma = 1;
+  epsilon = 0;
+  omega = 0.08664;
+  psi = 0.42748;
+  var aux = 0.48 + 1.574 * w_aux - 0.176 * Math.pow(w_aux, 2);
+  alfa_Tr = Math.pow(1 + aux * (1 - Math.sqrt(T3 / Tc_aux)), 2);
+  der_Tr = -(psi / omega) * ((1 + aux * (1 - Math.sqrt(T3 / Tc_aux))) * aux * Math.pow(T3 / Tc_aux, -1 / 2) - Math.pow((1 + aux * (1 - Math.sqrt(T3 / Tc_aux))), 2) / (T3 / Tc_aux));
+
+}
+
+function Peng_Robinson() {
+
+  sigma = 1 + Math.sqrt(2);
+  epsilon = 1 - Math.sqrt(2);
+  omega = 0.07780;
+  psi = 0.45724;
+  var aux = 0.37464 + 1.54226 * w_aux - 0.26992 * Math.pow(w_aux, 2);
+  alfa_Tr = Math.pow(1 + aux * (1 - Math.sqrt(T3 / Tc_aux)), 2);
+  der_Tr = -(psi / omega) * ((1 + aux * (1 - Math.sqrt(T3 / Tc_aux))) * aux * Math.pow(T3 / Tc_aux, -1 / 2) - Math.pow((1 + aux * (1 - Math.sqrt(T3 / Tc_aux))), 2) / (T3 / Tc_aux));
+
+}
+
 // Função que calcula os dados para plotar a curva de entalpia ideal da mistura
 function curva_entalpia_ideal() {
 
@@ -965,6 +1002,69 @@ function curva_entalpia_nao_ideal() {
 
   }
 
+  w_componente_1 = null;
+  w_componente_2 = null;
+  Tc_componente_1 = null;
+  Tc_componente_2 = null;
+  w_componente_1 = null;
+  w_componente_2 = null;
+  H_residual = [];
+
+  adicionar_prop_criticas();
+
+  for (var i = 0; i < yvolatil.length; i++) {
+
+    Tc.push(yvolatil[i] * (Tc_componente_1 + 273.15) + (1 - yvolatil[i]) * (Tc_componente_2 + 273.15));
+    Pc.push(yvolatil[i] * Pc_componente_1 + (1 - yvolatil[i]) * Pc_componente_2);
+    w.push(yvolatil[i] * w_componente_1 + (1 - yvolatil[i]) * w_componente_2);
+
+    Tc_aux = Tc[i];
+    w_aux = w[i];
+    sigma = null;
+    epsilon = null;
+    omega = null;
+    psi = null;
+    alfa_Tr = null;
+    T3 = T1_aux[i];
+
+    chamar_metodo_entalpia_residual();
+
+    var beta = (omega * (101.325 / Pc[i])) / (T3 / Tc[i]);
+    var q = (psi * alfa_Tr) / (omega * (T3 / Tc[i]));
+    var aux = 0.01;
+    var z = null;
+    var z_aux;
+
+    for (var j = 0; j < 10; j = j + 0.0001) {
+
+      z_aux = 1 + beta - q * beta * (j - beta) / ((j + epsilon * beta) * (j + sigma * beta))
+      diferenca_2 = z_aux - j;
+
+      if (Math.abs(diferenca_2) < 0.001) {
+
+        if (Math.abs(diferenca_2) < aux) {
+
+          aux = Math.abs(diferenca_2);
+          z = z_aux;
+
+        }
+
+      }
+
+    }
+
+    var I = beta / (z + epsilon * beta);
+
+    H_residual.push(0.0041868 * (z - 1 + der_Tr * I) * 1.9872 * T3)
+
+  }
+
+  for (var i = 0; i < entalpia_liquido.length; i++) {
+
+    entalpia_vapor[i] = entalpia_vapor[i] + H_residual[i];
+
+  }
+  console.log(H_residual)
 }
 
 // Muda o chart de acordo com mudança no slider
