@@ -157,7 +157,6 @@ function Van_Laar() {
   A12 = data.vl_A12[j1];
   A21 = data.vl_A21[j1];
   entalpia_excesso = null;
-
   // Cálculo das atividades
   atividade_1 = Math.exp(A12 * Math.pow(((A21 * x2) / (A12 * x1 + A21 * x2)), 2));
   atividade_2 = Math.exp(A21 * Math.pow(((A12 * x1) / (A12 * x1 + A21 * x2)), 2));
@@ -675,6 +674,10 @@ function curva_eq_nao_ideal() {
 
     } while (diferenca >= 0.001)
 
+    P1sat = Math.exp(A1 - B1 / ((T1 - 273.15) + C1));
+    P2sat = Math.exp(A2 - B2 / ((T1 - 273.15) + C2));
+    chamar_metodo_atividade()
+
     yvolatil.push(xvolatil[i] * atividade_1 * P1sat / pressao);
     yvolatil_2.push((1 - xvolatil[i]) * atividade_2 * P2sat / pressao);
     ytotal = yvolatil[i] + yvolatil_2[i];
@@ -716,7 +719,6 @@ function McCabe_nao_ideal() {
   T1 = x1 * T1sat + x2 * T2sat + 273.15;
   P1sat = Math.exp(A1 - B1 / ((T1 - 273.15) + C1));
   P2sat = Math.exp(A2 - B2 / ((T1 - 273.15) + C2));
-
   // Cálculo de yF e yK
   do {
 
@@ -739,6 +741,10 @@ function McCabe_nao_ideal() {
     T1 = T2;
 
   } while (diferenca >= 0.001)
+
+
+  P1sat = Math.exp(A1 - B1 / ((T1 - 273.15) + C1));
+  P2sat = Math.exp(A2 - B2 / ((T1 - 273.15) + C2));
 
   yF_aux_1 = x1 * atividade_1 * P1sat / pressao;
   yF_aux_2 = x2 * atividade_2 * P2sat / pressao;
@@ -962,6 +968,7 @@ function curva_entalpia_ideal() {
   Cp_l1 = data.calor_especifico_l[j];
   calor_formacao_g1 = data.calor_formacao_g[j];
   calor_formacao_l1 = data.calor_formacao_l[j];
+  delta_vaporizacao_1 = data.calor_vaporizacao[j];
 
   for (i = 0; i <= data.componentes.length; i++) {
 
@@ -977,6 +984,17 @@ function curva_entalpia_ideal() {
   Cp_l2 = data.calor_especifico_l[j];
   calor_formacao_g2 = data.calor_formacao_g[j];
   calor_formacao_l2 = data.calor_formacao_l[j];
+  delta_vaporizacao_2 = data.calor_vaporizacao[j];
+
+  w_componente_1 = null;
+  w_componente_2 = null;
+  Tc_componente_1 = null;
+  Tc_componente_2 = null;
+  w_componente_1 = null;
+  w_componente_2 = null;
+  H_residual = [];
+
+  adicionar_prop_criticas();
 
   for (var i = 0; i < temperaturas.length; i++) {
 
@@ -985,16 +1003,116 @@ function curva_entalpia_ideal() {
 
     entalpia_liquido.push(xvolatil[i] * (calor_formacao_l1 + var_entalpia_liq_1) + (1 - xvolatil[i]) * (calor_formacao_l2 + var_entalpia_liq_2));
 
-    var var_entalpia_vap_1 = Cp_gA1 * (temperaturas[i] + 273.15 - 298.15) + (Cp_gB1 / 2) * Math.pow((temperaturas[i] + 273.15 - 298.15), 2) + (Cp_gC1 / 3) * Math.pow((temperaturas[i] + 273.15 - 298.15), 3);
-    var var_entalpia_vap_2 = Cp_gA2 * (temperaturas[i] + 273.15 - 298.15) + (Cp_gB2 / 2) * Math.pow((temperaturas[i] + 273.15 - 298.15), 2) + (Cp_gC2 / 3) * Math.pow((temperaturas[i] + 273.15 - 298.15), 3);
-
-    entalpia_vapor.push(yvolatil[i] * (calor_formacao_g1 + var_entalpia_vap_1) + (1 - yvolatil[i]) * (calor_formacao_g2 + var_entalpia_vap_2));
+    entalpia_vapor.push(entalpia_liquido[i] + xvolatil[i] * delta_vaporizacao_1 + (1 - xvolatil[i]) * delta_vaporizacao_2);
 
   }
 
 }
 
+function Ponchon_Savarit() {
+
+  xD = parseFloat(xD)
+  xF = parseFloat(xF)
+  xB = parseFloat(xB)
+  hB = null, hD = null, hF = null, qcD = null, qcB = null, Tf = null, Td = null, Tb = null, yF = null, yB = null;
+
+  if (tipo_mistura == "Mistura Ideal") {
+
+    // Cálculo da volatilidade média
+    var marc = 0;
+    var alfa_aux = 0;
+
+    for (var i = 0; i < alfa_ideal.length; i++) {
+
+      marc = marc + 1;
+      alfa_aux += alfa_ideal[i];
+
+    }
+
+    alfa_medio = alfa_aux / marc;
+
+    var entalpia_alimentacao_l, entalpia_alimentacao_g, Tf, Tb, Td, yF, yD, yB;
+
+    Tf = calculo_temp_ideal(xF)[0];
+    Td = calculo_temp_ideal(xD)[0];
+    Tb = calculo_temp_ideal(xB)[0];
+
+    yF = calculo_temp_ideal(xF)[1];
+    yB = calculo_temp_ideal(xB)[1];
+
+    var entalpia_alim_l = calculo_ent_ideais(Tf, xF, yF)[0];
+    var entalpia_alim_g = calculo_ent_ideais(Tf, xF, yF)[1];
+    var entalpia_topo_l = calculo_ent_ideais(Td, xD, xD)[0];
+    var entalpia_topo_g = calculo_ent_ideais(Td, xD, xD)[1];
+    var entalpia_fundo_l = calculo_ent_ideais(Tb, xB, yB)[0];
+    var entalpia_fundo_g = calculo_ent_ideais(Tb, xB, yB)[1];
+
+  } else if (tipo_mistura == "Mistura Não Ideal") {
+
+    Tf = calculo_temp_nao_ideal(xF)[0];
+    Td = calculo_temp_nao_ideal(xD)[0];
+    Tb = calculo_temp_nao_ideal(xB)[0];
+
+    yF = calculo_temp_nao_ideal(xF)[1];
+    yB = calculo_temp_nao_ideal(xD)[1];
+
+    var entalpia_alim_l = calculo_ent_ideais(Tf, xF, yF)[0] + calculo_temp_nao_ideal(xF)[2];
+    var entalpia_alim_g = calculo_ent_ideais(Tf, xF, yF)[1] + calculo_ent_nao_ideais(yF, Tf);
+    var entalpia_topo_l = calculo_ent_ideais(Td, xD, xD)[0] + calculo_temp_nao_ideal(xD)[2];
+    var entalpia_topo_g = calculo_ent_ideais(Td, xD, xD)[1] + calculo_ent_nao_ideais(xD, Td);
+    var entalpia_fundo_l = calculo_ent_ideais(Tb, xB, yB)[0] + calculo_temp_nao_ideal(xB)[2];
+    var entalpia_fundo_g = calculo_ent_ideais(Tb, xB, yB)[1] + calculo_ent_nao_ideais(yB, Tb);;
+
+  }
+
+  var inclinacao_min = (entalpia_alim_g - entalpia_alim_l) / (yF - xF);
+  var coef_linear_min = entalpia_alim_l - inclinacao_min * xF;
+  var y_qc_min = inclinacao_min * xD + coef_linear_min;
+  var Rd_min = (y_qc_min - entalpia_topo_g) / (entalpia_topo_g - entalpia_topo_l);
+
+  // Definição dovalor mínimo do slider
+  var slider_Rd = document.getElementById("range_element");
+  slider_Rd.min = (Rd_min + 0.2).toFixed(1);
+  step_slider = (slider_Rd.max - slider_Rd.min) / 100;
+  slider_Rd.step = step_slider.toFixed(1);
+
+  Rd = document.getElementById("range_element").value;
+  Rd = parseFloat(Rd);
+
+  qcD = (Rd + 1) * (entalpia_topo_g - entalpia_topo_l);
+
+  if (qcD < 0) {
+
+    qcD = -qcD;
+
+  }
+
+  var inclinacao = (entalpia_topo_l + qcD - entalpia_alim_l) / (xD - xF);
+  var coef_linear = entalpia_topo_l + qcD - inclinacao * xD;
+  var hB_qcB = inclinacao * xB + coef_linear;
+  qcB = entalpia_fundo_l - hB_qcB;
+  hB = entalpia_fundo_l;
+  hD = entalpia_topo_l;
+  hF = entalpia_alim_l;
+
+
+}
+
 function curva_entalpia_nao_ideal() {
+
+  entalpia_liquido = [];
+  entalpia_vapor = [];
+
+  for (var i = 0; i < T1_aux.length; i++) {
+
+    var var_entalpia_liq_1 = Cp_l1 * (T1_aux[i] - 298.15);
+    var var_entalpia_liq_2 = Cp_l2 * (T1_aux[i] - 298.15);
+
+    entalpia_liquido.push(xvolatil[i] * (calor_formacao_l1 + var_entalpia_liq_1) + (1 - xvolatil[i]) * (calor_formacao_l2 + var_entalpia_liq_2));
+
+    entalpia_vapor.push(entalpia_liquido[i] + xvolatil[i] * delta_vaporizacao_1 + (1 - xvolatil[i]) * delta_vaporizacao_2);
+
+  }
 
   for (var i = 0; i < entalpia_liquido.length; i++) {
 
@@ -1064,7 +1182,7 @@ function curva_entalpia_nao_ideal() {
     entalpia_vapor[i] = entalpia_vapor[i] + H_residual[i];
 
   }
-  console.log(H_residual)
+
 }
 
 // Muda o chart de acordo com mudança no slider
@@ -1073,17 +1191,28 @@ function change_chart() {
   // Mudar chart de acordo com Rd selecionado no slider
   Rd = document.getElementById("range_element").value;
 
-  if (tipo_mistura == "Mistura Ideal") {
+  if (metodo_grafico == "McCabe-Thiele") {
 
-    McCabe_Ideal();
+    if (tipo_mistura == "Mistura Ideal") {
 
-  } else if (tipo_mistura == "Mistura Não Ideal") {
+      McCabe_Ideal();
 
-    McCabe_nao_ideal();
+    } else if (tipo_mistura == "Mistura Não Ideal") {
+
+      McCabe_nao_ideal();
+
+    }
+
+    // Desabilitar animação do chart
+    gerar_grafico_McCabe(0);
+
+  } else if (metodo_grafico == "Ponchon-Savarit") {
+
+    Ponchon_Savarit();
+    // Desabilitar animação do chart
+    gerar_grafico_Ponchon(0);
 
   }
 
-  // Desabilitar animação do chart
-  gerar_grafico_McCabe(0);
 
 }

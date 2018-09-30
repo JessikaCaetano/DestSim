@@ -37,7 +37,7 @@ var entalpia_liquido = [],
 var A1, A2, B1, B2, C1, C2, T1sat, T2sat, T1, T3, P1sat, P2sat, atividade_1, atividade_2, x1, x2, qk1_total, qk2_total, rk1_total, rk2_total, entalpia_excesso;
 var Cp_gA1, Cp_gB1, Cp_gC1, Cp_gA2, Cp_gB2, Cp_gC2, Cp_l1, Cp_l2, calor_formacao_g1, calor_formacao_g2, calor_formacao_l1, calor_formacao_l2;
 var tipo_mistura, metodo_atividade, metodo_grafico, metodo_entalpia, componente1, componente2, estagio_alimentacao;
-var xF, xD, xB, Rd_min, Rd, yF, x_aux, y_aux, indice_comp, compvolatil;
+var xF, xD, xB, Rd_min, Rd, yF,yB, hB, hF, hD, qcD, qcB, x_aux, y_aux, indice_comp, compvolatil, delta_vaporizacao_1, delta_vaporizacao_2;
 var sigma, epsilon, psi, omega, alfa_Tr, der_Tr;
 var Pc = [],
   Tc = [],
@@ -47,7 +47,6 @@ var c_added_1 = false,
   c_added_2 = false,
   metodo_added = false,
   metodo_entalpia_added = false;
-
 
 //Comandos de cálculo do botão Calcular
 function botao_calcular() {
@@ -104,7 +103,6 @@ function botao_calcular() {
           //Inserção do tipo de mistura a partir da Check-Box
           tipo_mistura = valor_radio("grupo_1");
 
-          document.getElementById("range_element").value = 10;
           document.getElementById("div_select_2").classList.add("disabledDiv");
 
           //Chamada da função de cálculo da curva de ELV e McCabe-Thiele de acordo com o tipo de mistura
@@ -152,8 +150,6 @@ function botao_calcular() {
           //Inserção do tipo de mistura a partir da Check-Box
           tipo_mistura = valor_radio("grupo_1");
 
-          document.getElementById('range_element').value = 10;
-
           //Chamada da função de cálculo da curva de ELV de acordo com o tipo de mistura
           if (tipo_mistura == "Mistura Ideal") {
 
@@ -161,6 +157,7 @@ function botao_calcular() {
             document.getElementById("div_select_2").classList.add("disabledDiv");
             curva_eq_ideal();
             curva_entalpia_ideal();
+            Ponchon_Savarit();
             gerar_grafico_Ponchon(900);
 
           } else if (tipo_mistura == "Mistura Não Ideal") {
@@ -179,6 +176,7 @@ function botao_calcular() {
 
               if (xD < xmax && xF < xmax) {
 
+                Ponchon_Savarit();
                 gerar_grafico_Ponchon(900);
 
               } else {
@@ -272,7 +270,7 @@ function exemplo_mc_ideal() {
   $("#switch").prop("checked", true);
   document.getElementById("div_select").classList.add("disabledDiv");
   document.getElementById("div_select_2").classList.add("disabledDiv");
-  document.getElementById('range_element').value = 10;
+  document.getElementById("range_element").value = 3;
 
   // Funções de cálculo do McCabe-Thiele
   add_atividade("Escolha uma opção");
@@ -323,7 +321,7 @@ function exemplo_mc_nao_ideal() {
   $("#metodo_1").prop("switch", false);
   document.getElementById("div_select").className = "input-field col m6 s12";
   document.getElementById("div_select_2").classList.add("disabledDiv");
-  document.getElementById('range_element').value = 10;
+  document.getElementById("range_element").value = 3;
 
   // Funções de cálculo do McCabe-Thiele
   add_atividade("UNIFAC");
@@ -381,12 +379,13 @@ function exemplo_ps_ideal() {
   $("#switch").prop("checked", true);
   document.getElementById("div_select").classList.add("disabledDiv");
   document.getElementById("div_select_2").classList.add("disabledDiv");
-  document.getElementById('range_element').value = 10;
+  document.getElementById("range_element").value = 3;
 
   // Funções de cálculo do Ponchon-Savarit
   add_atividade("Escolha uma opção");
   curva_eq_ideal();
   curva_entalpia_ideal();
+  Ponchon_Savarit();
   gerar_grafico_Ponchon(900);
 
 }
@@ -432,13 +431,14 @@ function exemplo_ps_nao_ideal() {
   document.getElementById("div_select").className = "input-field col m6 s12";
   document.getElementById("div_select_2").className = "input-field col m6 s12";
   document.getElementById("select_entalpia").value = 1;
-  document.getElementById('range_element').value = 10;
+  document.getElementById("range_element").value = 3;
 
   // Funções de cálculo do Ponchon-Savarit
   add_atividade("Van Laar");
   curva_eq_nao_ideal();
   curva_entalpia_ideal();
   curva_entalpia_nao_ideal();
+  Ponchon_Savarit();
   gerar_grafico_Ponchon(900);
 
 }

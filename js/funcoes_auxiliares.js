@@ -294,7 +294,7 @@ function add_metodo() {
 
 }
 
-function add_metodo_entalpia(){
+function add_metodo_entalpia() {
 
   metodo_added_entalpia = false;
 
@@ -370,7 +370,7 @@ function localizar_mistura(componente1, componente2) {
 
 }
 
-function adicionar_prop_criticas(){
+function adicionar_prop_criticas() {
 
   for (var k = 0; k < data.componentes.length; k++) {
 
@@ -417,7 +417,130 @@ function chamar_metodo_atividade() {
 
 }
 
-function chamar_metodo_entalpia_residual(){
+function calculo_temp_ideal(x1) {
+
+  var P1sat = (pressao * alfa_medio) / (alfa_medio * x1 + 1 - x1);
+  var T = x1 * (B1 / (A1 - Math.log(P1sat)) - C1) + (1 - x1) * (B2 / (A2 - Math.log(P1sat / alfa_medio)) - C2) + 273.15;
+  var y1 = x1 * P1sat / pressao;
+
+  return [T, y1];
+
+}
+
+function calculo_temp_nao_ideal(x) {
+
+  x1 = x;
+  x2 = 1 - x1;
+
+  var diferenca_aux = 100,
+    Taux;
+  T1 = null;
+  entalpia_excesso = null;
+  atividade_1 = null, atividade_2 = null;
+  T1 = x1 * T1sat + x2 * T2sat + 273.15;
+  var P1sat = Math.exp(A1 - B1 / ((T1 - 273.15) + C1));
+  var P2sat = Math.exp(A2 - B2 / ((T1 - 273.15) + C2));
+
+  do {
+
+    chamar_metodo_atividade();
+
+    var P1aux = pressao / (x1 * atividade_1 + x2 * atividade_2 * P2sat / P1sat);
+
+    Taux = (B1 / (A1 - Math.log(P1aux)) - C1) + 273.15;
+
+    if (T1 > Taux) {
+
+      diferenca_aux = T1 - Taux;
+
+    } else {
+
+      diferenca_aux = Taux - T1;
+
+    }
+
+    T1 = Taux;
+
+  } while (diferenca_aux >= 0.001)
+
+  P1sat = Math.exp(A1 - B1 / ((T1 - 273.15) + C1));
+  P2sat = Math.exp(A2 - B2 / ((T1 - 273.15) + C2));
+  chamar_metodo_atividade();
+
+  var y_aux_1 = x1 * atividade_1 * P1sat / pressao;
+  var y_aux_2 = x2 * atividade_2 * P2sat / pressao;
+  var y_auxtotal = y_aux_1 + y_aux_2;
+  var y = y_aux_1 / y_auxtotal;
+  var excesso = entalpia_excesso;
+
+  return [T1, y, excesso];
+
+}
+
+function calculo_ent_ideais(T, x, y) {
+
+  x1 = x;
+  y1 = y;
+
+  var entalpia_l1 = Cp_l1 * (T - 298.15);
+  var entalpia_l2 = Cp_l2 * (T - 298.15);
+  var entalpia_l = x1 * (calor_formacao_l1 + entalpia_l1) + (1 - x1) * (calor_formacao_l2 + entalpia_l2);
+  var entalpia_g = entalpia_l + x1 * delta_vaporizacao_1 + (1 - x1) * delta_vaporizacao_2;
+
+  return [entalpia_l, entalpia_g];
+
+}
+
+function calculo_ent_nao_ideais(y, T) {
+
+  y1 = y;
+  y2 = 1 - y;
+  var Tc_aux = y1 * (Tc_componente_1 + 273.15) + (y2) * (Tc_componente_2 + 273.15);
+  var Pc_aux = y1 * Pc_componente_1 + (1 - y2) * Pc_componente_2;
+  var w_aux = y1 * w_componente_1 + (1 - y2) * w_componente_2;
+
+  sigma = null;
+  epsilon = null;
+  omega = null;
+  psi = null;
+  alfa_Tr = null;
+  T3 = T;
+
+  chamar_metodo_entalpia_residual();
+
+  var beta = (omega * (101.325 / Pc_aux)) / (T3 / Tc_aux);
+  var q = (psi * alfa_Tr) / (omega * (T3 / Tc_aux));
+  var aux = 0.01;
+  var z = null;
+  var z_aux;
+
+  for (var j = 0; j < 10; j = j + 0.0001) {
+
+    z_aux = 1 + beta - q * beta * (j - beta) / ((j + epsilon * beta) * (j + sigma * beta))
+    diferenca_2 = z_aux - j;
+
+    if (Math.abs(diferenca_2) < 0.001) {
+
+      if (Math.abs(diferenca_2) < aux) {
+
+        aux = Math.abs(diferenca_2);
+        z = z_aux;
+
+      }
+
+    }
+
+  }
+
+  var I = beta / (z + epsilon * beta);
+
+  residual = 0.0041868 * (z - 1 + der_Tr * I) * 1.9872 * T3;
+
+  return residual;
+
+}
+
+function chamar_metodo_entalpia_residual() {
 
   if (metodo_entalpia == "Van der Waals") {
 

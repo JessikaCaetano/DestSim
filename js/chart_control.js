@@ -217,6 +217,9 @@
    //Criação das variáveis contendo os dados do gráfico
    var curva_liquido = [];
    var curva_vapor = [];
+   var retificacao = [],
+     esgotamento = [],
+     alimentacao = [];
 
    // Adição das séries de dados no gráfico
    for (i = 0; i <= 100; i++) {
@@ -235,6 +238,44 @@
      curva_vapor.push(aux_1);
 
    }
+
+   var aux_2 = {
+     x: xD,
+     y: hD
+   };
+
+   var aux_3 = {
+     x: xB,
+     y: hB
+   };
+
+   var aux_4 = {
+     x: xB,
+     y: (hB - qcB)
+   };
+
+   retificacao.push(aux_2);
+   esgotamento.push(aux_3);
+   alimentacao.push(aux_4);
+
+   var aux_2 = {
+     x: xD,
+     y: (hD + qcD)
+   };
+
+   var aux_3 = {
+     x: xB,
+     y: (hB - qcB)
+   };
+
+   var aux_4 = {
+     x: xD,
+     y: (hD + qcD)
+   };
+
+   retificacao.push(aux_2);
+   esgotamento.push(aux_3);
+   alimentacao.push(aux_4);
 
    //Caracterização do gráfico
    var myLineChart = new Chart(ctx, {
@@ -261,6 +302,35 @@
            borderColor: '#90a4ae',
            borderWidth: 2,
            pointRadius: 0.1
+         }, {
+           label: "Retas de Retificação e Esgotamento",
+           backgroundColor: '#b0bec5',
+           showLine: true,
+           fill: false,
+           data: retificacao,
+           borderColor: '#b0bec5',
+           borderWidth: 2,
+           pointRadius: 0.1
+         },
+         {
+           label: "z",
+           backgroundColor: '#b0bec5',
+           showLine: true,
+           fill: false,
+           data: esgotamento,
+           borderColor: '#b0bec5',
+           borderWidth: 2,
+           pointRadius: 0.1
+         },
+         {
+           label: "Reta de Alimentação",
+           backgroundColor: '#00838f',
+           showLine: true,
+           fill: false,
+           data: alimentacao,
+           borderColor: '#00838f',
+           borderWidth: 2,
+           pointRadius: 0.1
          }
        ]
      },
@@ -269,6 +339,10 @@
      options: {
        legend: {
          labels: {
+           // Remover legenda de alguns datasets
+           filter: function(item, myLineChart) {
+             return !item.text.includes("z");
+           },
            boxWidth: 20
          }
        },
@@ -280,6 +354,10 @@
            scaleLabel: {
              display: true,
              labelString: 'Entalpia (kJ/molK)'
+           }
+           ,ticks: {
+             max: (hD + qcD),
+             min: (hB - qcB)
            }
          }],
          xAxes: [{
