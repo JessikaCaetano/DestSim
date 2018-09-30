@@ -39,10 +39,7 @@ var Cp_gA1, Cp_gB1, Cp_gC1, Cp_gA2, Cp_gB2, Cp_gC2, Cp_l1, Cp_l2, calor_formacao
 var tipo_mistura, metodo_atividade, metodo_grafico, metodo_entalpia, componente1, componente2, estagio_alimentacao;
 var xF, xD, xB, Rd_min, Rd, yF,yB, hB, hF, hD, qcD, qcB, x_aux, y_aux, indice_comp, compvolatil, delta_vaporizacao_1, delta_vaporizacao_2;
 var sigma, epsilon, psi, omega, alfa_Tr, der_Tr;
-var Pc = [],
-  Tc = [],
-  w = [],
-  T1_aux = [];
+var T1_aux = [];
 var c_added_1 = false,
   c_added_2 = false,
   metodo_added = false,
@@ -171,7 +168,6 @@ function botao_calcular() {
             if (metodo_added == true && metodo_added_entalpia == true) {
 
               curva_eq_nao_ideal();
-              curva_entalpia_ideal();
               curva_entalpia_nao_ideal();
 
               if (xD < xmax && xF < xmax) {
@@ -421,7 +417,7 @@ function exemplo_ps_nao_ideal() {
   // Definição do método gráfico, tipo de mistura e método de atividade do exemplo
   metodo_grafico = "Ponchon-Savarit";
   tipo_mistura = "Mistura Não Ideal";
-  metodo_atividade = "Van Laar";
+  metodo_atividade = "UNIFAC";
   metodo_entalpia = "Van der Waals";
 
   // Marcação dos radio buttons e selects de acordo com especificações do exemplo
@@ -434,9 +430,8 @@ function exemplo_ps_nao_ideal() {
   document.getElementById("range_element").value = 3;
 
   // Funções de cálculo do Ponchon-Savarit
-  add_atividade("Van Laar");
+  add_atividade("UNIFAC");
   curva_eq_nao_ideal();
-  curva_entalpia_ideal();
   curva_entalpia_nao_ideal();
   Ponchon_Savarit();
   gerar_grafico_Ponchon(900);

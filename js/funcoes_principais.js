@@ -1,6 +1,7 @@
 // Função de cálculo das temperaturas saturadas e vetor de temperaturas
 function Antoine() {
 
+  // Definição do componente mais volátil e formação de um vetor de temperaturas
   calcular_comp_volatil();
 
   temperaturas = []
@@ -65,9 +66,9 @@ function McCabe_Ideal() {
   x_degrau = [];
   y_degrau = [];
 
-  xD = parseFloat(xD)
-  xF = parseFloat(xF)
-  xB = parseFloat(xB)
+  xD = parseFloat(xD);
+  xF = parseFloat(xF);
+  xB = parseFloat(xB);
 
   // Cálculo da volatilidade média
   marc = 0;
@@ -620,6 +621,60 @@ function UNIFAC() {
 
 }
 
+// Calcula a temperatura para determinada condição de equilíbrio para misturas não ideais
+function calculo_temp_nao_ideal(x) {
+
+  // Definição e limpeza de variáveis
+  x1 = x;
+  x2 = 1 - x1;
+
+  var diferenca_aux = 100,
+    Taux;
+  T1 = null;
+  entalpia_excesso = null;
+  atividade_1 = null, atividade_2 = null;
+  T1 = x1 * T1sat + x2 * T2sat + 273.15;
+  P1sat = Math.exp(A1 - B1 / ((T1 - 273.15) + C1));
+  P2sat = Math.exp(A2 - B2 / ((T1 - 273.15) + C2));
+
+  // Cálculo iterativo da temperatura
+  do {
+
+    chamar_metodo_atividade();
+
+    var P1aux = pressao / (x1 * atividade_1 + x2 * atividade_2 * P2sat / P1sat);
+
+    Taux = (B1 / (A1 - Math.log(P1aux)) - C1) + 273.15;
+
+    if (T1 > Taux) {
+
+      diferenca_aux = T1 - Taux;
+
+    } else {
+
+      diferenca_aux = Taux - T1;
+
+    }
+
+    T1 = Taux;
+
+  } while (diferenca_aux >= 0.001)
+
+  P1sat = Math.exp(A1 - B1 / ((T1 - 273.15) + C1));
+  P2sat = Math.exp(A2 - B2 / ((T1 - 273.15) + C2));
+  chamar_metodo_atividade();
+
+  // Cálculo do y
+  var y_aux_1 = x1 * atividade_1 * P1sat / pressao;
+  var y_aux_2 = x2 * atividade_2 * P2sat / pressao;
+  var y_auxtotal = y_aux_1 + y_aux_2;
+  var y = y_aux_1 / y_auxtotal;
+  var excesso = entalpia_excesso;
+
+  return [T1, y, excesso];
+
+}
+
 //Função de cálculo da curva de equilibrio líquido-vapor para misturas não ideais
 function curva_eq_nao_ideal() {
 
@@ -629,6 +684,7 @@ function curva_eq_nao_ideal() {
   xvolatil = [];
   H_excesso = [];
   T1_aux = [];
+  aux_array = [];
 
   // Criação de um vetor de xvolatil de 0 a 1, com intervalos de 0.01
   xvolatil[0] = 0;
@@ -641,53 +697,20 @@ function curva_eq_nao_ideal() {
 
   // Cálculo das temperaturas de saturação e localização da mistura no banco de dados dos métodos
   Antoine();
+  localizar_mistura(componente1, componente2);
 
   // Cálculo do vetor yvolatil, seguindo o método iterativo Bolha T
   for (i = 0; i < xvolatil.length; i++) {
 
-    T1 = xvolatil[i] * T1sat + (1 - xvolatil[i]) * T2sat + 273.15;
-    P1sat = Math.exp(A1 - B1 / ((T1 - 273.15) + C1));
-    P2sat = Math.exp(A2 - B2 / ((T1 - 273.15) + C2));
-    x1 = xvolatil[i];
-    x2 = 1 - x1;
+    aux_array = calculo_temp_nao_ideal(xvolatil[i]);
 
-    localizar_mistura(componente1, componente2);
-
-    do {
-
-      chamar_metodo_atividade()
-
-      P1aux = pressao / (x1 * atividade_1 + x2 * atividade_2 * P2sat / P1sat);
-      T2 = (B1 / (A1 - Math.log(P1aux)) - C1) + 273.15;
-
-      if (T1 > T2) {
-
-        diferenca = T1 - T2;
-
-      } else {
-
-        diferenca = T2 - T1;
-
-      }
-
-      T1 = T2;
-
-    } while (diferenca >= 0.001)
-
-    P1sat = Math.exp(A1 - B1 / ((T1 - 273.15) + C1));
-    P2sat = Math.exp(A2 - B2 / ((T1 - 273.15) + C2));
-    chamar_metodo_atividade()
-
-    yvolatil.push(xvolatil[i] * atividade_1 * P1sat / pressao);
-    yvolatil_2.push((1 - xvolatil[i]) * atividade_2 * P2sat / pressao);
-    ytotal = yvolatil[i] + yvolatil_2[i];
-    yvolatil[i] = yvolatil[i] / ytotal;
-    yvolatil_2[i] = yvolatil_2[i] / ytotal;
-    H_excesso.push(entalpia_excesso);
-    T1_aux.push(T1);
+    T1_aux.push(aux_array[0]);
+    yvolatil.push(aux_array[1]);
+    H_excesso.push(aux_array[2]);
 
   }
 
+  // Cálculo do máximo valor de x para o qual a mistura pode ser destilada devido à formação de azeótropos
   for (var i = 0; i < yvolatil.length; i++) {
 
     xmax = 1;
@@ -710,46 +733,12 @@ function McCabe_nao_ideal() {
   x_degrau = [];
   y_degrau = [];
 
-  xD = parseFloat(xD)
-  xF = parseFloat(xF)
-  xB = parseFloat(xB)
-  x1 = xF;
-  x2 = 1 - xF;
+  xD = parseFloat(xD);
+  xF = parseFloat(xF);
+  xB = parseFloat(xB);
 
-  T1 = x1 * T1sat + x2 * T2sat + 273.15;
-  P1sat = Math.exp(A1 - B1 / ((T1 - 273.15) + C1));
-  P2sat = Math.exp(A2 - B2 / ((T1 - 273.15) + C2));
-  // Cálculo de yF e yK
-  do {
-
-    chamar_metodo_atividade();
-
-    P1aux = pressao / (x1 * atividade_1 + x2 * atividade_2 * P2sat / P1sat);
-
-    T2 = (B1 / (A1 - Math.log(P1aux)) - C1) + 273.15;
-
-    if (T1 > T2) {
-
-      diferenca = T1 - T2;
-
-    } else {
-
-      diferenca = T2 - T1;
-
-    }
-
-    T1 = T2;
-
-  } while (diferenca >= 0.001)
-
-
-  P1sat = Math.exp(A1 - B1 / ((T1 - 273.15) + C1));
-  P2sat = Math.exp(A2 - B2 / ((T1 - 273.15) + C2));
-
-  yF_aux_1 = x1 * atividade_1 * P1sat / pressao;
-  yF_aux_2 = x2 * atividade_2 * P2sat / pressao;
-  yF_auxtotal = yF_aux_1 + yF_aux_2;
-  yF = yF_aux_1 / yF_auxtotal;
+  // Cálculo de yF
+  yF = calculo_temp_nao_ideal(xF)[1];
 
   // Cálculo da taxa de refluxo mínimo
   if ((xD - yF) / (xF - yF) > 0) {
@@ -768,9 +757,11 @@ function McCabe_nao_ideal() {
   step_slider = (slider_Rd.max - slider_Rd.min) / 100;
   slider_Rd.step = step_slider.toFixed(1);
 
+  // Definição do Rd de acordo com valor do slider
   Rd = document.getElementById("range_element").value;
   Rd = parseFloat(Rd);
 
+  // Cálculo de yK
   yK = (((Rd / (Rd + 1)) * xF) + (xD / (Rd + 1)));
 
   // Cálculo dos pratos para a seção de retificação
@@ -890,8 +881,10 @@ function McCabe_nao_ideal() {
 
 }
 
-function Van_der_Waals() {
+// Funções de definição dos parâmetros de cálculo de entalpia residual
+function Van_der_Waals(Tc_aux, T3) {
 
+  // Definição dos parâmetros
   sigma = 0;
   epsilon = 0;
   omega = 1 / 8;
@@ -901,8 +894,9 @@ function Van_der_Waals() {
 
 }
 
-function Redlich_Kwong() {
+function Redlich_Kwong(Tc_aux, T3) {
 
+  // Definição dos parâmetros
   sigma = 1;
   epsilon = 0;
   omega = 0.08664;
@@ -912,8 +906,9 @@ function Redlich_Kwong() {
 
 }
 
-function Soave_Redlich_Kwong() {
+function Soave_Redlich_Kwong(Tc_aux, T3, w_aux) {
 
+  // Definição dos parâmetros
   sigma = 1;
   epsilon = 0;
   omega = 0.08664;
@@ -924,8 +919,9 @@ function Soave_Redlich_Kwong() {
 
 }
 
-function Peng_Robinson() {
+function Peng_Robinson(Tc_aux, T3, w_aux) {
 
+  // Definição dos parâmetros
   sigma = 1 + Math.sqrt(2);
   epsilon = 1 - Math.sqrt(2);
   omega = 0.07780;
@@ -936,9 +932,39 @@ function Peng_Robinson() {
 
 }
 
+// Calcula a temperatura para determinada condição de equilíbrio para misturas ideais
+function calculo_temp_ideal(x1) {
+
+  // Cálculo da temperatura e y para misturas ideais
+  P1sat = (pressao * alfa_medio) / (alfa_medio * x1 + 1 - x1);
+  var T = x1 * (B1 / (A1 - Math.log(P1sat)) - C1) + (1 - x1) * (B2 / (A2 - Math.log(P1sat / alfa_medio)) - C2) + 273.15;
+  var y1 = x1 * P1sat / pressao;
+
+  return [T, y1];
+
+}
+
+// Cálcula as entalpias líquido e vapor para determinada condição ideal
+function calculo_ent_ideais(T, x, y) {
+
+  // Definição das variáveis
+  x1 = x;
+  y1 = y;
+
+  // Cálculo das entalpias
+  var entalpia_l1 = Cp_l1 * (T - 298.15);
+  var entalpia_l2 = Cp_l2 * (T - 298.15);
+  var entalpia_l = x1 * (calor_formacao_l1 + entalpia_l1) + (1 - x1) * (calor_formacao_l2 + entalpia_l2);
+  var entalpia_g = entalpia_l + x1 * delta_vaporizacao_1 + (1 - x1) * delta_vaporizacao_2;
+
+  return [entalpia_l, entalpia_g];
+
+}
+
 // Função que calcula os dados para plotar a curva de entalpia ideal da mistura
 function curva_entalpia_ideal() {
 
+  // Limpeza de variáveis
   entalpia_liquido = [];
   entalpia_vapor = [];
   Cp_gA1 = null;
@@ -953,39 +979,99 @@ function curva_entalpia_ideal() {
   Cp_l2 = null;
   calor_formacao_g2 = null;
   calor_formacao_l2 = null;
+  A_vap_1 = null;
+  A_vap_2 = null;
+  alfa_vap_1 = null;
+  alfa_vap_2 = null;
+  beta_vap_1 = null;
+  beta_vap_2 = null;
+  delta_vaporizacao_1 = null;
+  delta_vaporizacao_2 = null;
+  w_componente_1 = null;
+  w_componente_2 = null;
+  Tc_componente_1 = null;
+  Tc_componente_2 = null;
+  w_componente_1 = null;
+  w_componente_2 = null;
 
-  for (i = 0; i <= data.componentes.length; i++) {
+  // Adição de valores às variáveis a partir do banco de dados
+  adicionar_prop_termodinamicas()
 
-    if (data.componentes[i] == componente1) {
-      j = i;
+  adicionar_prop_criticas();
+
+  // Cálculo da entalpia do líquido e do vapor
+  for (var i = 0; i < temperaturas.length; i++) {
+
+    var aux_array = [];
+    aux_array = calculo_ent_ideais(temperaturas[i] + 273.15, xvolatil[i], yvolatil[i]);
+
+    entalpia_liquido.push(aux_array[0]);
+    entalpia_vapor.push(aux_array[1]);
+
+  }
+
+}
+
+// Cálcula as entalpias líquido e vapor para determinada condição não ideal
+function calculo_ent_nao_ideais(y, T) {
+
+  // Definição das variáveis
+  y1 = y;
+  y2 = 1 - y1;
+  var Tc_aux = y1 * (Tc_componente_1 + 273.15) + (y2) * (Tc_componente_2 + 273.15);
+  var Pc_aux = y1 * Pc_componente_1 + y2 * Pc_componente_2;
+  var w_aux = y1 * w_componente_1 + y2 * w_componente_2;
+
+  // Limpeza de variáveis
+  sigma = null;
+  epsilon = null;
+  omega = null;
+  psi = null;
+  alfa_Tr = null;
+  T3 = T;
+
+  // Execução dos métodods de definição de parâmetros para cálculo da entalpia residua
+  chamar_metodo_entalpia_residual(T3, Tc_aux, w_aux);
+
+  var beta = (omega * (101.325 / Pc_aux)) / (T3 / Tc_aux);
+  var q = (psi * alfa_Tr) / (omega * (T3 / Tc_aux));
+  var aux = 0.01;
+  var z = null;
+  var z_aux;
+
+  for (var j = 0; j < 10; j = j + 0.0001) {
+
+    z_aux = 1 + beta - q * beta * (j - beta) / ((j + epsilon * beta) * (j + sigma * beta))
+    diferenca_2 = z_aux - j;
+
+    if (Math.abs(diferenca_2) < 0.001) {
+
+      if (Math.abs(diferenca_2) < aux) {
+
+        aux = Math.abs(diferenca_2);
+        z = z_aux;
+
+      }
+
     }
 
   }
 
-  Cp_gA1 = data.calor_especifico_gA[j];
-  Cp_gB1 = data.calor_especifico_gB[j];
-  Cp_gC1 = data.calor_especifico_gC[j];
-  Cp_l1 = data.calor_especifico_l[j];
-  calor_formacao_g1 = data.calor_formacao_g[j];
-  calor_formacao_l1 = data.calor_formacao_l[j];
-  delta_vaporizacao_1 = data.calor_vaporizacao[j];
+  var I = beta / (z + epsilon * beta);
 
-  for (i = 0; i <= data.componentes.length; i++) {
+  // Cálculo da entalpia residual
+  residual = 0.0041868 * (z - 1 + der_Tr * I) * 1.9872 * T3;
 
-    if (data.componentes[i] == componente2) {
-      j = i;
-    }
+  return residual;
 
-  }
+}
 
-  Cp_gA2 = data.calor_especifico_gA[j];
-  Cp_gB2 = data.calor_especifico_gB[j];
-  Cp_gC2 = data.calor_especifico_gC[j];
-  Cp_l2 = data.calor_especifico_l[j];
-  calor_formacao_g2 = data.calor_formacao_g[j];
-  calor_formacao_l2 = data.calor_formacao_l[j];
-  delta_vaporizacao_2 = data.calor_vaporizacao[j];
+// Função que calcula os dados para plotar a curva de entalpia não ideal da mistura
+function curva_entalpia_nao_ideal() {
 
+  // Limpeza de variáveis
+  entalpia_liquido = [];
+  entalpia_vapor = [];
   w_componente_1 = null;
   w_componente_2 = null;
   Tc_componente_1 = null;
@@ -994,27 +1080,62 @@ function curva_entalpia_ideal() {
   w_componente_2 = null;
   H_residual = [];
 
+  // Pega valores de propriedades termodinâmicas do banco de dados
+  adicionar_prop_termodinamicas();
+  // Pega valores de propriedades críticas do banco de dados
   adicionar_prop_criticas();
 
-  for (var i = 0; i < temperaturas.length; i++) {
+  // Definição das entalpias para líquido e vapor não ideais
+  for (var i = 0; i < T1_aux.length; i++) {
 
-    var var_entalpia_liq_1 = Cp_l1 * (temperaturas[i] + 273.15 - 298.15);
-    var var_entalpia_liq_2 = Cp_l2 * (temperaturas[i] + 273.15 - 298.15);
+    var aux_array = [];
+    aux_array = calculo_ent_ideais(T1_aux[i], xvolatil[i], yvolatil[i]);
 
-    entalpia_liquido.push(xvolatil[i] * (calor_formacao_l1 + var_entalpia_liq_1) + (1 - xvolatil[i]) * (calor_formacao_l2 + var_entalpia_liq_2));
+    entalpia_liquido.push(aux_array[0]);
+    entalpia_vapor.push(aux_array[1]);
 
-    entalpia_vapor.push(entalpia_liquido[i] + xvolatil[i] * delta_vaporizacao_1 + (1 - xvolatil[i]) * delta_vaporizacao_2);
+  }
+
+  // Adição da entalpia em excesso ao líquido
+  for (var i = 0; i < entalpia_liquido.length; i++) {
+
+    entalpia_liquido[i] = entalpia_liquido[i] + H_excesso[i];
+
+  }
+
+  // Cálculo da entalpia residual
+  for (var i = 0; i < yvolatil.length; i++) {
+
+    H_residual.push(calculo_ent_nao_ideais(yvolatil[i], T1_aux[i]));
+
+  }
+
+  // Adição da entalpia residual à entalpia do vapor
+  for (var i = 0; i < entalpia_liquido.length; i++) {
+
+    entalpia_vapor[i] = entalpia_vapor[i] + H_residual[i];
 
   }
 
 }
 
+// Função que cálcula as retas e degraus pelo método de Ponchon-Savarit
 function Ponchon_Savarit() {
 
-  xD = parseFloat(xD)
-  xF = parseFloat(xF)
-  xB = parseFloat(xB)
-  hB = null, hD = null, hF = null, qcD = null, qcB = null, Tf = null, Td = null, Tb = null, yF = null, yB = null;
+  // Definição das composições e limpeza de variáveis
+  xD = parseFloat(xD);
+  xF = parseFloat(xF);
+  xB = parseFloat(xB);
+  hB = null;
+  hD = null;
+  hF = null;
+  qcD = null;
+  qcB = null;
+  Tf = null;
+  Td = null;
+  Tb = null;
+  yF = null;
+  yB = null;
 
   if (tipo_mistura == "Mistura Ideal") {
 
@@ -1031,157 +1152,104 @@ function Ponchon_Savarit() {
 
     alfa_medio = alfa_aux / marc;
 
+    // Cálculo dos valores de y e entalpias de correntes de topo, fundo e alimentação
     var entalpia_alimentacao_l, entalpia_alimentacao_g, Tf, Tb, Td, yF, yD, yB;
 
-    Tf = calculo_temp_ideal(xF)[0];
-    Td = calculo_temp_ideal(xD)[0];
-    Tb = calculo_temp_ideal(xB)[0];
+    var aux_array_1 = [];
+    aux_array_1 = calculo_temp_ideal(xF);
+    Tf = aux_array_1[0];
+    yF = aux_array_1[1];
 
-    yF = calculo_temp_ideal(xF)[1];
-    yB = calculo_temp_ideal(xB)[1];
+    var aux_array_1 = [];
+    aux_array_1 = calculo_temp_ideal(xD);
+    Td = aux_array_1[0];
+    yD = aux_array_1[1];
 
-    var entalpia_alim_l = calculo_ent_ideais(Tf, xF, yF)[0];
-    var entalpia_alim_g = calculo_ent_ideais(Tf, xF, yF)[1];
-    var entalpia_topo_l = calculo_ent_ideais(Td, xD, xD)[0];
-    var entalpia_topo_g = calculo_ent_ideais(Td, xD, xD)[1];
-    var entalpia_fundo_l = calculo_ent_ideais(Tb, xB, yB)[0];
-    var entalpia_fundo_g = calculo_ent_ideais(Tb, xB, yB)[1];
+    var aux_array_1 = [];
+    aux_array_1 = calculo_temp_ideal(xB);
+    Tb = aux_array_1[0];
+    yB = aux_array_1[1];
+
+    var aux_array_1 = [];
+    aux_array_1 = calculo_ent_ideais(Tf, xF, yF);
+    var entalpia_alim_l = aux_array_1[0];
+    var entalpia_alim_g = aux_array_1[1];
+
+    var aux_array_1 = [];
+    aux_array_1 = calculo_ent_ideais(Td, xD, xD);
+    var entalpia_topo_l = aux_array_1[0];
+    var entalpia_topo_g = aux_array_1[1];
+
+    var aux_array_1 = [];
+    aux_array_1 = calculo_ent_ideais(Tb, xB, yB);
+    var entalpia_fundo_l = aux_array_1[0];
+    var entalpia_fundo_g = aux_array_1[1];
 
   } else if (tipo_mistura == "Mistura Não Ideal") {
 
-    Tf = calculo_temp_nao_ideal(xF)[0];
-    Td = calculo_temp_nao_ideal(xD)[0];
-    Tb = calculo_temp_nao_ideal(xB)[0];
+    // Cálculo dos valores de y e entalpias de correntes de topo, fundo e alimentação
+    var entalpia_alimentacao_l, entalpia_alimentacao_g, Tf, Tb, Td, yF, yD, yB;
 
-    yF = calculo_temp_nao_ideal(xF)[1];
-    yB = calculo_temp_nao_ideal(xD)[1];
+    // Cálculo das temperaturas para misturas não ideais
+    var aux_array_1 = [];
+    aux_array_1 = calculo_temp_nao_ideal(xF);
+    Tf = aux_array_1[0];
+    yF = aux_array_1[1];
 
-    var entalpia_alim_l = calculo_ent_ideais(Tf, xF, yF)[0] + calculo_temp_nao_ideal(xF)[2];
-    var entalpia_alim_g = calculo_ent_ideais(Tf, xF, yF)[1] + calculo_ent_nao_ideais(yF, Tf);
-    var entalpia_topo_l = calculo_ent_ideais(Td, xD, xD)[0] + calculo_temp_nao_ideal(xD)[2];
-    var entalpia_topo_g = calculo_ent_ideais(Td, xD, xD)[1] + calculo_ent_nao_ideais(xD, Td);
-    var entalpia_fundo_l = calculo_ent_ideais(Tb, xB, yB)[0] + calculo_temp_nao_ideal(xB)[2];
-    var entalpia_fundo_g = calculo_ent_ideais(Tb, xB, yB)[1] + calculo_ent_nao_ideais(yB, Tb);;
+    var aux_array_2 = [];
+    aux_array_2 = calculo_temp_nao_ideal(xD);
+    Td = aux_array_2[0];
+    yD = xD;
+
+    var aux_array_3 = [];
+    aux_array_3 = calculo_temp_nao_ideal(xB);
+    Tb = aux_array_3[0];
+    yB = aux_array_3[1];
+
+    // Adição das entalpias em excesso e residuais nas entalpias calculadas para misturas ideais
+    var aux_array_4 = calculo_ent_ideais(Tf, xF, yF);
+    var entalpia_alim_l = aux_array_4[0] + aux_array_1[2];
+    var entalpia_alim_g = aux_array_4[1] + calculo_ent_nao_ideais(yF, Tf);
+
+    var aux_array_4 = calculo_ent_ideais(Td, xD, xD);
+    var entalpia_topo_l = aux_array_4[0] + aux_array_2[2];
+    var entalpia_topo_g = aux_array_4[1] + calculo_ent_nao_ideais(xD, Td);
+
+    var aux_array_4 = calculo_ent_ideais(Tb, xB, yB);
+    var entalpia_fundo_l = aux_array_4[0] + aux_array_3[2];
+    var entalpia_fundo_g = aux_array_4[1] + calculo_ent_nao_ideais(yB, Tb);
 
   }
 
+  // Com a definição da linha de amarração que passa por xF, pode-se obter a taxa de refluxo mínima abaixo
   var inclinacao_min = (entalpia_alim_g - entalpia_alim_l) / (yF - xF);
   var coef_linear_min = entalpia_alim_l - inclinacao_min * xF;
   var y_qc_min = inclinacao_min * xD + coef_linear_min;
   var Rd_min = (y_qc_min - entalpia_topo_g) / (entalpia_topo_g - entalpia_topo_l);
 
-  // Definição dovalor mínimo do slider
+  // Definição do valor mínimo do slider
   var slider_Rd = document.getElementById("range_element");
-  slider_Rd.min = (Rd_min + 0.2).toFixed(1);
+  slider_Rd.min = (Rd_min).toFixed(1);
   step_slider = (slider_Rd.max - slider_Rd.min) / 100;
   slider_Rd.step = step_slider.toFixed(1);
 
+  // Definição do valor de Rd
   Rd = document.getElementById("range_element").value;
   Rd = parseFloat(Rd);
 
-  qcD = (Rd + 1) * (entalpia_topo_g - entalpia_topo_l);
+  // Cálculo do calor do condensador
+  qcD = Math.abs((Rd + 1) * (entalpia_topo_g - entalpia_topo_l));
 
-  if (qcD < 0) {
-
-    qcD = -qcD;
-
-  }
-
+  // Definição da reta de alimentação e do calor do refervedor
   var inclinacao = (entalpia_topo_l + qcD - entalpia_alim_l) / (xD - xF);
   var coef_linear = entalpia_topo_l + qcD - inclinacao * xD;
   var hB_qcB = inclinacao * xB + coef_linear;
   qcB = entalpia_fundo_l - hB_qcB;
+
+  // Estabeleimento dos valores globais de entalpia
   hB = entalpia_fundo_l;
   hD = entalpia_topo_l;
   hF = entalpia_alim_l;
-
-
-}
-
-function curva_entalpia_nao_ideal() {
-
-  entalpia_liquido = [];
-  entalpia_vapor = [];
-
-  for (var i = 0; i < T1_aux.length; i++) {
-
-    var var_entalpia_liq_1 = Cp_l1 * (T1_aux[i] - 298.15);
-    var var_entalpia_liq_2 = Cp_l2 * (T1_aux[i] - 298.15);
-
-    entalpia_liquido.push(xvolatil[i] * (calor_formacao_l1 + var_entalpia_liq_1) + (1 - xvolatil[i]) * (calor_formacao_l2 + var_entalpia_liq_2));
-
-    entalpia_vapor.push(entalpia_liquido[i] + xvolatil[i] * delta_vaporizacao_1 + (1 - xvolatil[i]) * delta_vaporizacao_2);
-
-  }
-
-  for (var i = 0; i < entalpia_liquido.length; i++) {
-
-    entalpia_liquido[i] = entalpia_liquido[i] + H_excesso[i];
-
-  }
-
-  w_componente_1 = null;
-  w_componente_2 = null;
-  Tc_componente_1 = null;
-  Tc_componente_2 = null;
-  w_componente_1 = null;
-  w_componente_2 = null;
-  H_residual = [];
-
-  adicionar_prop_criticas();
-
-  for (var i = 0; i < yvolatil.length; i++) {
-
-    Tc.push(yvolatil[i] * (Tc_componente_1 + 273.15) + (1 - yvolatil[i]) * (Tc_componente_2 + 273.15));
-    Pc.push(yvolatil[i] * Pc_componente_1 + (1 - yvolatil[i]) * Pc_componente_2);
-    w.push(yvolatil[i] * w_componente_1 + (1 - yvolatil[i]) * w_componente_2);
-
-    Tc_aux = Tc[i];
-    w_aux = w[i];
-    sigma = null;
-    epsilon = null;
-    omega = null;
-    psi = null;
-    alfa_Tr = null;
-    T3 = T1_aux[i];
-
-    chamar_metodo_entalpia_residual();
-
-    var beta = (omega * (101.325 / Pc[i])) / (T3 / Tc[i]);
-    var q = (psi * alfa_Tr) / (omega * (T3 / Tc[i]));
-    var aux = 0.01;
-    var z = null;
-    var z_aux;
-
-    for (var j = 0; j < 10; j = j + 0.0001) {
-
-      z_aux = 1 + beta - q * beta * (j - beta) / ((j + epsilon * beta) * (j + sigma * beta))
-      diferenca_2 = z_aux - j;
-
-      if (Math.abs(diferenca_2) < 0.001) {
-
-        if (Math.abs(diferenca_2) < aux) {
-
-          aux = Math.abs(diferenca_2);
-          z = z_aux;
-
-        }
-
-      }
-
-    }
-
-    var I = beta / (z + epsilon * beta);
-
-    H_residual.push(0.0041868 * (z - 1 + der_Tr * I) * 1.9872 * T3)
-
-  }
-
-  for (var i = 0; i < entalpia_liquido.length; i++) {
-
-    entalpia_vapor[i] = entalpia_vapor[i] + H_residual[i];
-
-  }
 
 }
 

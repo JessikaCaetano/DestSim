@@ -353,12 +353,12 @@
          yAxes: [{
            scaleLabel: {
              display: true,
-             labelString: 'Entalpia (kJ/molK)'
+             labelString: 'Entalpia (kJ/mol)'
            }
-           ,ticks: {
-             max: (hD + qcD),
-             min: (hB - qcB)
-           }
+           // ,ticks: {
+           //   max: (hD + qcD),
+           //   min: (hB - qcB)
+           // }
          }],
          xAxes: [{
            scaleLabel: {
