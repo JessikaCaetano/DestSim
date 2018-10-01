@@ -637,7 +637,7 @@ function calculo_temp_nao_ideal(x) {
   P1sat = Math.exp(A1 - B1 / ((T1 - 273.15) + C1));
   P2sat = Math.exp(A2 - B2 / ((T1 - 273.15) + C2));
 
-  // Cálculo iterativo da temperatura
+  // Cálculo iterativo da temperatura de bolha no ponto x
   do {
 
     chamar_metodo_atividade();
@@ -950,12 +950,16 @@ function calculo_ent_ideais(T, x, y) {
   // Definição das variáveis
   x1 = x;
   y1 = y;
+  var T_ref = T1sat + 273.15;
 
-  // Cálculo das entalpias
-  var entalpia_l1 = Cp_l1 * (T - 298.15);
-  var entalpia_l2 = Cp_l2 * (T - 298.15);
-  var entalpia_l = x1 * (calor_formacao_l1 + entalpia_l1) + (1 - x1) * (calor_formacao_l2 + entalpia_l2);
-  var entalpia_g = entalpia_l + x1 * delta_vaporizacao_1 + (1 - x1) * delta_vaporizacao_2;
+  // Cálculo das entalpias (T é a temperatura de bolha no ponto x)
+  var entalpia_l1 = Cp_l1 * (T - T_ref);
+  var entalpia_l2 = Cp_l2 * (T - T_ref);
+  var entalpia_l = x1 * (entalpia_l1) + (1 - x1) * (entalpia_l2);
+
+  var entalpia_v1 = Cp_l1 * (T1sat + 273.15 - T_ref) + delta_vaporizacao_1 - (Cp_gA1 * (T1sat + 273.15 - T_ref) + Cp_gB1 * (Math.pow(T1sat + 273.15, 2) - Math.pow(T_ref, 2)) / 2 + Cp_gC1 * (Math.pow(T1sat + 273.15, 3) - Math.pow(T_ref, 3)) / 3) + Cp_gA1 * (T - T_ref) + Cp_gB1 * (Math.pow(T, 2) - Math.pow(T_ref, 2)) / 2 + Cp_gC1 * (Math.pow(T, 3) - Math.pow(T_ref, 3)) / 3;
+  var entalpia_v2 = Cp_l2 * (T2sat + 273.15 - T_ref) + delta_vaporizacao_2 - (Cp_gA2 * (T2sat + 273.15 - T_ref) + Cp_gB2 * (Math.pow(T2sat + 273.15, 2) - Math.pow(T_ref, 2)) / 2 + Cp_gC2 * (Math.pow(T2sat + 273.15, 3) - Math.pow(T_ref, 3)) / 3) + Cp_gA2 * (T - T_ref) + Cp_gB2 * (Math.pow(T, 2) - Math.pow(T_ref, 2)) / 2 + Cp_gC2 * (Math.pow(T, 3) - Math.pow(T_ref, 3)) / 3;
+  var entalpia_g = y1 * entalpia_v1 + (1 - y1) * entalpia_v2;
 
   return [entalpia_l, entalpia_g];
 
@@ -985,6 +989,8 @@ function curva_entalpia_ideal() {
   alfa_vap_2 = null;
   beta_vap_1 = null;
   beta_vap_2 = null;
+  T_vap_1 = null;
+  T_vap_2 = null;
   delta_vaporizacao_1 = null;
   delta_vaporizacao_2 = null;
   w_componente_1 = null;
@@ -999,7 +1005,7 @@ function curva_entalpia_ideal() {
 
   adicionar_prop_criticas();
 
-  // Cálculo da entalpia do líquido e do vapor
+  // Cálculo da entalpia do líquido (ponto de bolha)
   for (var i = 0; i < temperaturas.length; i++) {
 
     var aux_array = [];

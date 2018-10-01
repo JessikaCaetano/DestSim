@@ -416,6 +416,7 @@ function adicionar_prop_termodinamicas() {
   alfa_vap_1 = data.calor_vaporizacao_alfa[j];
   beta_vap_1 = data.calor_vaporizacao_beta[j];
   delta_vaporizacao_1 = data.calor_vaporizacao[j];
+  T_vap_1 = data.temperatura_vaporizacao[j];
 
   for (i = 0; i <= data.componentes.length; i++) {
 
@@ -435,6 +436,7 @@ function adicionar_prop_termodinamicas() {
   alfa_vap_2 = data.calor_vaporizacao_alfa[j];
   beta_vap_2 = data.calor_vaporizacao_beta[j];
   delta_vaporizacao_2 = data.calor_vaporizacao[j];
+  T_vap_2 = data.temperatura_vaporizacao[j];
 
 }
 
