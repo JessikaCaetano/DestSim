@@ -217,20 +217,23 @@
    //Criação das variáveis contendo os dados do gráfico
    var curva_liquido = [];
    var curva_vapor = [];
-   var retificacao = [],
-     esgotamento = [],
-     alimentacao = [];
+   var retificacao = [];
+   var esgotamento = [];
+   var alimentacao = [];
+   var degraus_r = [];
+   var degraus_e = [];
+   var amarracao = [];
 
    // Adição das séries de dados no gráfico
    for (i = 0; i <= 100; i++) {
 
      var aux_0 = {
-       x: xvolatil[i],
+       x: x_equilibrio[i],
        y: entalpia_liquido[i]
      };
 
      var aux_1 = {
-       x: yvolatil[i],
+       x: y_equilibrio[i],
        y: entalpia_vapor[i]
      };
 
@@ -276,6 +279,51 @@
    retificacao.push(aux_2);
    esgotamento.push(aux_3);
    alimentacao.push(aux_4);
+
+   for (i = 0; i < x_degrau_r.length; i++) {
+
+     var aux_5 = {
+       x: x_degrau_r[i],
+       y: y_degrau_r[i]
+     };
+
+     degraus_r.push(aux_5);
+
+   }
+
+   for (i = 0; i < x_degrau_e.length; i++) {
+
+     var aux_6 = {
+       x: x_degrau_e[i],
+       y: y_degrau_e[i]
+     };
+
+     degraus_e.push(aux_6);
+
+   }
+
+   var marc = 0;
+   for (var i = 0; i < reta_amarracao.length; i++) {
+
+     if (reta_amarracao[marc]) {
+       var aux_7 = {
+         x: reta_amarracao[marc][0],
+         y: reta_amarracao[marc][1]
+       };
+     }
+
+     if (reta_amarracao[marc + 1]) {
+       var aux_8 = {
+         x: reta_amarracao[marc + 1][0],
+         y: reta_amarracao[marc + 1][1]
+       };
+     }
+
+     amarracao.push(aux_7, aux_8);
+
+     marc = marc + 2;
+
+   }
 
    //Caracterização do gráfico
    var myLineChart = new Chart(ctx, {
@@ -331,6 +379,35 @@
            borderColor: '#00838f',
            borderWidth: 2,
            pointRadius: 0.1
+         },
+         {
+           label: "Estágios",
+           backgroundColor: '#4db6ac',
+           showLine: true,
+           fill: false,
+           data: degraus_r,
+           borderColor: '#4db6ac',
+           borderWidth: 2,
+           pointRadius: 0.1
+         }, {
+           label: "z",
+           backgroundColor: '#4db6ac',
+           showLine: true,
+           fill: false,
+           data: degraus_e,
+           borderColor: '#4db6ac',
+           borderWidth: 2,
+           pointRadius: 0.1
+         },{
+           label: "Linhas de Amarração",
+           backgroundColor: '#e0e0e0',
+           showLine: true,
+           fill: false,
+           data:amarracao,
+           borderColor: '#bdbdbd95',
+           borderDash: [10,5],
+           borderWidth: 1.5,
+           pointRadius: 0.1
          }
        ]
      },
@@ -355,10 +432,6 @@
              display: true,
              labelString: 'Entalpia (kJ/mol)'
            }
-           // ,ticks: {
-           //   max: (hD + qcD),
-           //   min: (hB - qcB)
-           // }
          }],
          xAxes: [{
            scaleLabel: {

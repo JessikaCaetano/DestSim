@@ -406,15 +406,23 @@ function adicionar_prop_termodinamicas() {
 
   }
 
-  Cp_gA1 = data.calor_especifico_gA[j];
-  Cp_gB1 = data.calor_especifico_gB[j];
-  Cp_gC1 = data.calor_especifico_gC[j];
-  Cp_l1 = data.calor_especifico_l[j];
-  calor_formacao_g1 = data.calor_formacao_g[j];
-  calor_formacao_l1 = data.calor_formacao_l[j];
-  A_vap_1 = data.calor_vaporizacao_A[j];
-  alfa_vap_1 = data.calor_vaporizacao_alfa[j];
-  beta_vap_1 = data.calor_vaporizacao_beta[j];
+  Cpl1_C1 = data.Cpl_C1[j];
+  Cpl1_C2 = data.Cpl_C2[j];
+  Cpl1_C3 = data.Cpl_C3[j];
+  Cpl1_C4 = data.Cpl_C4[j];
+  Cpl1_C5 = data.Cpl_C5[j];
+
+  Cpg1_C1 = data.Cpg_C1[j];
+  Cpg1_C2 = data.Cpg_C2[j];
+  Cpg1_C3 = data.Cpg_C3[j];
+  Cpg1_C4 = data.Cpg_C4[j];
+  Cpg1_C5 = data.Cpg_C5[j];
+
+  Lat1_C1 = data.calor_latente_C1[j];
+  Lat1_C2 = data.calor_latente_C2[j];
+  Lat1_C3 = data.calor_latente_C3[j];
+  Lat1_C4 = data.calor_latente_C3[j];
+
   delta_vaporizacao_1 = data.calor_vaporizacao[j];
   T_vap_1 = data.temperatura_vaporizacao[j];
 
@@ -426,15 +434,23 @@ function adicionar_prop_termodinamicas() {
 
   }
 
-  Cp_gA2 = data.calor_especifico_gA[j];
-  Cp_gB2 = data.calor_especifico_gB[j];
-  Cp_gC2 = data.calor_especifico_gC[j];
-  Cp_l2 = data.calor_especifico_l[j];
-  calor_formacao_g2 = data.calor_formacao_g[j];
-  calor_formacao_l2 = data.calor_formacao_l[j];
-  A_vap_2 = data.calor_vaporizacao_A[j];
-  alfa_vap_2 = data.calor_vaporizacao_alfa[j];
-  beta_vap_2 = data.calor_vaporizacao_beta[j];
+  Cpl2_C1 = data.Cpl_C1[j];
+  Cpl2_C2 = data.Cpl_C2[j];
+  Cpl2_C3 = data.Cpl_C3[j];
+  Cpl2_C4 = data.Cpl_C4[j];
+  Cpl2_C5 = data.Cpl_C5[j];
+
+  Cpg2_C1 = data.Cpg_C1[j];
+  Cpg2_C2 = data.Cpg_C2[j];
+  Cpg2_C3 = data.Cpg_C3[j];
+  Cpg2_C4 = data.Cpg_C4[j];
+  Cpg2_C5 = data.Cpg_C5[j];
+
+  Lat2_C1 = data.calor_latente_C1[j];
+  Lat2_C2 = data.calor_latente_C2[j];
+  Lat2_C3 = data.calor_latente_C3[j];
+  Lat2_C4 = data.calor_latente_C3[j];
+
   delta_vaporizacao_2 = data.calor_vaporizacao[j];
   T_vap_2 = data.temperatura_vaporizacao[j];
 
