@@ -12,9 +12,14 @@ function Antoine() {
 
   }
 
+
   if (T2sat - T1sat > 50) {
 
-    Materialize.toast("O método de McCabe-Thiele não se adequa a essa mistura. Sugere-se o uso do método de Ponchon-Savarit.", 3000, "red darken-4 justify-center");
+    if (metodo_grafico=="McCabe-Thiele") {
+
+      Materialize.toast("O método de McCabe-Thiele não se adequa a essa mistura. Sugere-se o uso do método de Ponchon-Savarit.", 3000, "red darken-4 justify-center");
+
+    }
 
   }
 
@@ -101,9 +106,6 @@ function McCabe_Ideal() {
   step_slider = (slider_Rd.max - slider_Rd.min) / 100;
   slider_Rd.step = step_slider.toFixed(1);
 
-  Rd = document.getElementById("range_element").value;
-  Rd = parseFloat(Rd);
-
   yK = (Rd / (Rd + 1)) * xF + xD / (Rd + 1);
 
   // Cálculo dos pratos para a seção de retificação
@@ -141,11 +143,6 @@ function McCabe_Ideal() {
 
   y_degrau.pop();
   y_degrau.push(x_aux);
-
-  // Resultados do número de pratos, prato de alimentação e composição de cada estágio
-  separar_resultados();
-  alterar_label();
-  composicao_estagios();
 
 }
 
@@ -811,10 +808,6 @@ function McCabe_nao_ideal() {
   step_slider = (slider_Rd.max - slider_Rd.min) / 100;
   slider_Rd.step = step_slider.toFixed(1);
 
-  // Definição do Rd de acordo com valor do slider
-  Rd = document.getElementById("range_element").value;
-  Rd = parseFloat(Rd);
-
   // Cálculo de yK
   yK = (((Rd / (Rd + 1)) * xF) + (xD / (Rd + 1)));
 
@@ -858,11 +851,6 @@ function McCabe_nao_ideal() {
 
   y_degrau.pop();
   y_degrau.push(x_aux);
-
-  // Resultados do número de pratos, prato de alimentação e composição de cada estágio
-  separar_resultados();
-  alterar_label();
-  composicao_estagios();
 
 }
 
@@ -1270,17 +1258,13 @@ function Ponchon_Savarit() {
   var coef_linear_min = entalpia_alim_l - inclinacao_min * xF;
   y_qc_min = inclinacao_min * xD + coef_linear_min;
   y_qr_min = inclinacao_min * xB + coef_linear_min;
-  var Rd_min = (y_qc_min - entalpia_topo_g) / (entalpia_topo_g - entalpia_topo_l);
+  Rd_min = (y_qc_min - entalpia_topo_g) / (entalpia_topo_g - entalpia_topo_l);
 
   // Definição do valor mínimo do slider
   var slider_Rd = document.getElementById("range_element");
   slider_Rd.min = (Rd_min + 0.3).toFixed(1);
   step_slider = (slider_Rd.max - slider_Rd.min) / 100;
   slider_Rd.step = step_slider.toFixed(1);
-
-  // Definição do valor de Rd
-  Rd = document.getElementById("range_element").value;
-  Rd = parseFloat(Rd);
 
   // Cálculo do calor do condensador
   qcD = Math.abs((Rd + 1) * (entalpia_topo_g - entalpia_topo_l));
@@ -1448,8 +1432,8 @@ function Ponchon_Savarit() {
 // Muda o chart de acordo com mudança no slider
 function change_chart() {
 
-  // Mudar chart de acordo com Rd selecionado no slider
-  Rd = document.getElementById("range_element").value;
+  Rd = null;
+  Rd = parseFloat(document.getElementById("range_element").value);
 
   if (metodo_grafico == "McCabe-Thiele") {
 
@@ -1463,14 +1447,20 @@ function change_chart() {
 
     }
 
-    // Desabilitar animação do chart
+    // Desabilitar animação do chart e gerar resultados do número de pratos, prato de alimentação e composição de cada estágio
+    separar_resultados();
+    composicao_estagios();
     gerar_grafico_McCabe(0);
+    alterar_label();
 
   } else if (metodo_grafico == "Ponchon-Savarit") {
 
     Ponchon_Savarit();
-    // Desabilitar animação do chart
+    // Desabilitar animação do chart e gerar resultados do número de pratos, prato de alimentação e composição de cada estágio
+    separar_resultados();
+    composicao_estagios();
     gerar_grafico_Ponchon(0);
+    alterar_label();
 
   }
 

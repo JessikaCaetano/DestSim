@@ -42,8 +42,7 @@ var x_degrau = [],
 var entalpia_liquido = [],
   entalpia_vapor = [];
 var A1, A2, B1, B2, C1, C2, T1sat, T2sat, T1, T3, P1sat, P2sat, atividade_1, atividade_2, x1, x2, qk1_total, qk2_total, rk1_total, rk2_total, entalpia_excesso;
-var Cp_gA1, Cp_gB1, Cp_gC1, Cp_gA2, Cp_gB2, Cp_gC2, Cp_l1, Cp_l2, calor_formacao_g1, calor_formacao_g2, calor_formacao_l1, calor_formacao_l2;
-var tipo_mistura, metodo_atividade, metodo_grafico, metodo_entalpia, componente1, componente2, estagio_alimentacao, y_qc_min, y_qr_min;
+var tipo_mistura, metodo_atividade, metodo_grafico, metodo_entalpia, componente1, componente2, estagio_alimentacao, y_qc_min, y_qr_min, Rd_min, num_minimo_pratos;
 var xF, xD, xB, Rd_min, Rd, yF, yB, hB, hF, hD, qcD, qcB, x_aux, y_aux, indice_comp, compvolatil, delta_vaporizacao_1, delta_vaporizacao_2;
 var sigma, epsilon, psi, omega, alfa_Tr, der_Tr;
 var T1_aux = [];
@@ -102,6 +101,9 @@ function botao_calcular() {
         //Inserção do método gráfico a partir da Check-Box
         metodo_grafico = valor_radio("grupo_2");
 
+        Rd = null;
+        Rd = parseFloat(document.getElementById("range_element").value);
+
         if (metodo_grafico == "McCabe-Thiele") {
 
           //Inserção do tipo de mistura a partir da Check-Box
@@ -115,7 +117,11 @@ function botao_calcular() {
             document.getElementById("div_select").classList.add("disabledDiv");
             curva_eq_ideal();
             McCabe_Ideal();
+            // Resultados do número de pratos, prato de alimentação e composição de cada estágio
+            separar_resultados();
+            composicao_estagios();
             gerar_grafico_McCabe(900);
+            alterar_label();
 
           } else if (tipo_mistura == "Mistura Não Ideal") {
 
@@ -129,7 +135,11 @@ function botao_calcular() {
               if (xD < xmax && xF < xmax) {
 
                 McCabe_nao_ideal();
+                // Resultados do número de pratos, prato de alimentação e composição de cada estágio
+                separar_resultados();
+                composicao_estagios();
                 gerar_grafico_McCabe(900);
+                alterar_label();
 
               } else {
 
@@ -162,7 +172,11 @@ function botao_calcular() {
             curva_eq_ideal();
             curva_entalpia_ideal();
             Ponchon_Savarit();
+            // Resultados do número de pratos, prato de alimentação e composição de cada estágio
+            separar_resultados();
+            composicao_estagios();
             gerar_grafico_Ponchon(900);
+            alterar_label();
 
           } else if (tipo_mistura == "Mistura Não Ideal") {
 
@@ -180,7 +194,11 @@ function botao_calcular() {
               if (xD < xmax && xF < xmax) {
 
                 Ponchon_Savarit();
+                // Resultados do número de pratos, prato de alimentação e composição de cada estágio
+                separar_resultados();
+                composicao_estagios();
                 gerar_grafico_Ponchon(900);
+                alterar_label();
 
               } else {
 
@@ -273,13 +291,20 @@ function exemplo_mc_ideal() {
   $("#switch").prop("checked", true);
   document.getElementById("div_select").classList.add("disabledDiv");
   document.getElementById("div_select_2").classList.add("disabledDiv");
-  document.getElementById("range_element").value = 5;
+  document.getElementById("range_element").value = 3.5;
 
-  // Funções de cálculo do McCabe-Thiele
+  Rd = null;
+  Rd = 3.5;
+
+  // Funções de cálculo do McCabe-Thiele e demonstração dos resultados
   add_atividade("Escolha uma opção");
   curva_eq_ideal();
   McCabe_Ideal();
+  // Resultados do número de pratos, prato de alimentação e composição de cada estágio
+  separar_resultados();
+  composicao_estagios();
   gerar_grafico_McCabe(700);
+  alterar_label();
 
 }
 
@@ -324,13 +349,20 @@ function exemplo_mc_nao_ideal() {
   $("#metodo_1").prop("switch", false);
   document.getElementById("div_select").className = "input-field col m6 s12";
   document.getElementById("div_select_2").classList.add("disabledDiv");
-  document.getElementById("range_element").value = 5;
+  document.getElementById("range_element").value = 4;
 
-  // Funções de cálculo do McCabe-Thiele
+  Rd = null;
+  Rd = 4;
+
+  // Funções de cálculo do McCabe-Thiele e demonstração dos resultados
   add_atividade("UNIFAC");
   curva_eq_nao_ideal();
   McCabe_nao_ideal();
+  // Resultados do número de pratos, prato de alimentação e composição de cada estágio
+  separar_resultados();
+  composicao_estagios();
   gerar_grafico_McCabe(700);
+  alterar_label();
 
 }
 
@@ -382,14 +414,21 @@ function exemplo_ps_ideal() {
   $("#switch").prop("checked", true);
   document.getElementById("div_select").classList.add("disabledDiv");
   document.getElementById("div_select_2").classList.add("disabledDiv");
-  document.getElementById("range_element").value = 5;
+  document.getElementById("range_element").value = 3.5;
 
-  // Funções de cálculo do Ponchon-Savarit
+  Rd = null;
+  Rd = 3.5;
+
+  // Funções de cálculo do Ponchon-Savarit e demonstração dos resultados
   add_atividade("Escolha uma opção");
   curva_eq_ideal();
   curva_entalpia_ideal();
   Ponchon_Savarit();
+  // Resultados do número de pratos, prato de alimentação e composição de cada estágio
+  separar_resultados();
+  composicao_estagios();
   gerar_grafico_Ponchon(900);
+  alterar_label();
 
 }
 
@@ -434,13 +473,20 @@ function exemplo_ps_nao_ideal() {
   document.getElementById("div_select").className = "input-field col m6 s12";
   document.getElementById("div_select_2").className = "input-field col m6 s12";
   document.getElementById("select_entalpia").value = 1;
-  document.getElementById("range_element").value = 5;
+  document.getElementById("range_element").value = 4;
 
-  // Funções de cálculo do Ponchon-Savarit
+  Rd = null;
+  Rd = 4;
+
+  // Funções de cálculo do Ponchon-Savarit e demonstração dos resultados
   add_atividade("UNIFAC");
   curva_eq_nao_ideal();
   curva_entalpia_nao_ideal();
   Ponchon_Savarit();
+  // Resultados do número de pratos, prato de alimentação e composição de cada estágio
+  separar_resultados();
+  composicao_estagios();
   gerar_grafico_Ponchon(900);
+  alterar_label();
 
 }

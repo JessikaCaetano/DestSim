@@ -208,28 +208,103 @@ function calcular_comp_volatil() {
 
 }
 
-// Função que prepara os resultados para serem mostrados
-function separar_resultados() {
+function calcular_num_min_pratos() {
 
-  x_estagio = [];
-  y_estagio = [];
+  Rd = null;
+  Rd = 100;
+  var aux_estagios = 0;
 
-  num_estagios = 0;
-  estagio_alimentacao = 0;
+  if (metodo_grafico == "McCabe-Thiele") {
 
-  for (var i = 1; i < y_degrau.length; i++) {
+    if (tipo_mistura == "Mistura Ideal") {
 
-    if (y_degrau[i - 1] == y_degrau[i]) {
+      McCabe_Ideal();
 
-      x_estagio.push(x_degrau[i]);
-      y_estagio.push(y_degrau[i]);
-      num_estagios = num_estagios + 1;
+    } else if (tipo_mistura == "Mistura Não Ideal") {
+
+      McCabe_nao_ideal();
 
     }
 
-    if ((xF <= x_degrau[i - 1]) && (xF > x_degrau[i])) {
+    for (var i = 1; i < y_degrau.length; i++) {
 
-      estagio_alimentacao = num_estagios;
+      if (y_degrau[i - 1] == y_degrau[i]) {
+
+        aux_estagios = aux_estagios + 1;
+
+      }
+
+    }
+
+  } else if (metodo_grafico == "Ponchon-Savarit") {
+
+    Ponchon_Savarit();
+
+    aux_estagios = reta_amarracao.length / 2;
+
+  }
+
+  return aux_estagios;
+
+}
+// Função que prepara os resultados para serem mostrados
+function separar_resultados() {
+
+  if (metodo_grafico == "McCabe-Thiele") {
+    x_estagio = [];
+    y_estagio = [];
+
+    num_estagios = 0;
+    estagio_alimentacao = 0;
+
+    for (var i = 1; i < y_degrau.length; i++) {
+
+      if (y_degrau[i - 1] == y_degrau[i]) {
+
+        x_estagio.push(x_degrau[i]);
+        y_estagio.push(y_degrau[i]);
+        num_estagios = num_estagios + 1;
+
+      }
+
+      if ((xF <= x_degrau[i - 1]) && (xF > x_degrau[i])) {
+
+        estagio_alimentacao = num_estagios;
+
+      }
+
+    }
+
+  } else if (metodo_grafico == "Ponchon-Savarit") {
+
+    x_estagio = [];
+    y_estagio = [];
+
+    num_estagios = reta_amarracao.length / 2;
+    estagio_alimentacao = 0;
+    var aux = 0;
+
+    for (var i = 1; i < reta_amarracao.length; i++) {
+
+      if (reta_amarracao[aux]) {
+        y_estagio.push(reta_amarracao[aux][0]);
+      }
+
+      if (reta_amarracao[aux + 1]) {
+        x_estagio.push(reta_amarracao[aux + 1][0]);
+      }
+
+      aux = aux + 2;
+
+    }
+
+    for (var i = 0; i < x_estagio.length; i++) {
+
+      if (xF >= x_estagio[i] && xF <= y_estagio[i]) {
+
+        estagio_alimentacao = i + 1;
+
+      }
 
     }
 
@@ -240,8 +315,11 @@ function separar_resultados() {
 // Mostra resultados das labels
 function alterar_label() {
 
+  num_minimo_pratos = calcular_num_min_pratos();
   document.getElementById("num_estagios").innerHTML = num_estagios;
   document.getElementById("prato_alimentacao").innerHTML = estagio_alimentacao;
+  document.getElementById("Rd_min").innerHTML = Rd_min.toFixed(2);
+  document.getElementById("Num_min").innerHTML = num_minimo_pratos;
 
 }
 
