@@ -15,6 +15,10 @@ criar_select("select_componentes_2", data.componentes, "Escolha uma opção");
 criar_select("select_atividade", data.metodos_atividade, "Escolha uma opção");
 criar_select("select_entalpia", data.metodos_entalpia, "Escolha uma opção");
 
+// Desabilitação do slider enquanto não houverem dados inseridos
+document.getElementById("range_element").disabled = "disabled";
+document.getElementById("range_element").classList.add("Disabled_Range");
+
 // Início da programação dos cálculos com a declaração das variáveis
 var pressao = 101.325;
 var temperaturas = [],
@@ -51,8 +55,16 @@ var c_added_1 = false,
   metodo_added = false,
   metodo_entalpia_added = false;
 
+// Disabilitar scroll nos inputs das composições
+$(document).on("wheel", "input[type=number]", function(e) {
+  $(this).blur();
+});
+
+
 //Comandos de cálculo do botão Calcular
 function botao_calcular() {
+
+  document.getElementById("range_element").value = "10";
 
   // Limpeza de variáveis
   componente1 = null;
@@ -82,6 +94,10 @@ function botao_calcular() {
       valor_composicoes();
 
       if (xF && xB && xD && xF > xB && xD > xF && xD <= 1 && xB >= 0) {
+
+        // Habilitação do slider
+        document.getElementById("range_element").className = "";
+        document.getElementById("range_element").disabled = "";
 
         // Conversão dos valores de composição caso necessário caso necessário
         if (tipo_composicao == true) {
@@ -143,7 +159,7 @@ function botao_calcular() {
 
               } else {
 
-                Materialize.toast("Esta mistura não pode ser destilada até concentrações maiores que " + xmax.toFixed(2) + " devido à formação de azeótropo.", 3000, "red darken-4 justify-center");
+                Materialize.toast("Esta mistura não pode ser destilada até concentrações molares maiores que " + xmax.toFixed(2) + " devido à formação de azeótropo.", 3000, "red darken-4 justify-center");
 
               }
 
@@ -202,7 +218,7 @@ function botao_calcular() {
 
               } else {
 
-                Materialize.toast("Esta mistura não pode ser destilada até concentrações maiores que " + xmax.toFixed(2) + " devido à formação de azeótropo.", 3000, "red darken-4 justify-center");
+                Materialize.toast("Esta mistura não pode ser destilada até concentrações molares maiores que " + xmax.toFixed(2) + " devido à formação de azeótropo.", 3000, "red darken-4 justify-center");
 
               }
 
@@ -245,6 +261,10 @@ function exemplo_mc_ideal() {
 
   // Limpeza das checkboxes
   limpar_checkboxes()
+
+  // Habilitação do slider
+  document.getElementById("range_element").className = "";
+  document.getElementById("range_element").disabled = "";
 
   // Definição dos componentes do exemplo
   componente1 = "Benzeno";
@@ -314,6 +334,10 @@ function exemplo_mc_nao_ideal() {
   // Limpeza das checkboxes
   limpar_checkboxes()
 
+  // Habilitação do slider
+  document.getElementById("range_element").className = "";
+  document.getElementById("range_element").disabled = "";
+
   // Definição dos componentes do exemplo
   componente1 = "Etanol";
   componente2 = "Água";
@@ -370,6 +394,10 @@ function exemplo_ps_ideal() {
 
   // Limpeza das checkboxes
   limpar_checkboxes()
+
+  // Habilitação do slider
+  document.getElementById("range_element").className = "";
+  document.getElementById("range_element").disabled = "";
 
   // Definição dos componentes do exemplo
   componente1 = "Benzeno";
@@ -435,6 +463,10 @@ function exemplo_ps_ideal() {
 function exemplo_ps_nao_ideal() {
 
   limpar_checkboxes()
+
+  // Habilitação do slider
+  document.getElementById("range_element").className = "";
+  document.getElementById("range_element").disabled = "";
 
   // Definição dos componentes do exemplo
   componente1 = "Etanol";

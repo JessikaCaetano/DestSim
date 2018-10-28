@@ -103,6 +103,11 @@ input[type='number'] {
   margin-bottom: 2%;
 }
 
+.Disabled_Range{
+  pointer-events: none;
+  opacity: 0.2;
+}
+
 input[type="range"] {
   border: none;
 }

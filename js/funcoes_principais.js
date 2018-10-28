@@ -15,7 +15,7 @@ function Antoine() {
 
   if (T2sat - T1sat > 50) {
 
-    if (metodo_grafico=="McCabe-Thiele") {
+    if (metodo_grafico == "McCabe-Thiele") {
 
       Materialize.toast("O método de McCabe-Thiele não se adequa a essa mistura. Sugere-se o uso do método de Ponchon-Savarit.", 3000, "red darken-4 justify-center");
 
@@ -102,9 +102,7 @@ function McCabe_Ideal() {
 
   // Definição dovalor mínimo do slider
   var slider_Rd = document.getElementById("range_element");
-  slider_Rd.min = (Rd_min + 0.3).toFixed(1);
-  step_slider = (slider_Rd.max - slider_Rd.min) / 100;
-  slider_Rd.step = step_slider.toFixed(1);
+  slider_Rd.min = (Rd_min + 0.5).toFixed(1);
 
   yK = (Rd / (Rd + 1)) * xF + xD / (Rd + 1);
 
@@ -601,8 +599,8 @@ function UNIFAC() {
 
   for (var i = 0; i < bk1.length; i++) {
 
-    ln_AtivR_1_derivada += -qk1_total * Tetak[i] * ((bk1_derivada[i] * Sk[i] - Sk_derivada[i] * bk1[i]) / Math.pow(Sk[i], 2)) - ek1[i] * (Sk[i] / bk1[i]) * ((bk1_derivada[i] * Sk[i] - Sk_derivada[i] * bk1[i]) / Math.pow(Sk[i], 2));
-    ln_AtivR_2_derivada += -qk2_total * Tetak[i] * ((bk2_derivada[i] * Sk[i] - Sk_derivada[i] * bk2[i]) / Math.pow(Sk[i], 2)) - ek2[i] * (Sk[i] / bk2[i]) * ((bk2_derivada[i] * Sk[i] - Sk_derivada[i] * bk2[i]) / Math.pow(Sk[i], 2));
+    ln_AtivR_1_derivada += -qk1_total * Tetak[i] * ((bk1_derivada[i] * Sk[i] - Sk_derivada[i] * bk1[i]) / Math.pow(Sk[i], 2)) - qk1_total * ek1[i] * (Sk[i] / bk1[i]) * ((bk1_derivada[i] * Sk[i] - Sk_derivada[i] * bk1[i]) / Math.pow(Sk[i], 2));
+    ln_AtivR_2_derivada += -qk2_total * Tetak[i] * ((bk2_derivada[i] * Sk[i] - Sk_derivada[i] * bk2[i]) / Math.pow(Sk[i], 2)) - qk2_total * ek2[i] * (Sk[i] / bk2[i]) * ((bk2_derivada[i] * Sk[i] - Sk_derivada[i] * bk2[i]) / Math.pow(Sk[i], 2));
 
   }
 
@@ -716,9 +714,9 @@ function calculo_temp_nao_ideal_orvalho(y) {
   P2sat = Math.exp(A2 - B2 / (T1 - 273.15 + C2));
   x1 = y1 * pressao / (atividade_1 * P1sat);
   x2 = (1 - y1) * pressao / (atividade_2 * P2sat);
-  xtotal = x1 + x2;
-  x1 = x1 / xtotal;
-  x2 = x2 / xtotal;
+  // xtotal = x1 + x2;
+  // x1 = x1 / xtotal;
+  // x2 = x2 / xtotal;
 
   var excesso = entalpia_excesso;
 
@@ -804,9 +802,7 @@ function McCabe_nao_ideal() {
 
   // Definição do valor mínimo do slider
   var slider_Rd = document.getElementById("range_element");
-  slider_Rd.min = (Rd_min + 0.3).toFixed(1);
-  step_slider = (slider_Rd.max - slider_Rd.min) / 100;
-  slider_Rd.step = step_slider.toFixed(1);
+  slider_Rd.min = (Rd_min + 0.5).toFixed(1);
 
   // Cálculo de yK
   yK = (((Rd / (Rd + 1)) * xF) + (xD / (Rd + 1)));
@@ -910,7 +906,8 @@ function calculo_temp_ideal(x1) {
 
   // Cálculo da temperatura e y para misturas ideais
   P1sat = (pressao * alfa_medio) / (alfa_medio * x1 + 1 - x1);
-  var T = x1 * (B1 / (A1 - Math.log(P1sat)) - C1) + (1 - x1) * (B2 / (A2 - Math.log(P1sat / alfa_medio)) - C2) + 273.15;
+  var T = (B1 / (A1 - Math.log(P1sat)) - C1) + 273.15;
+  // var T = x1 * (B1 / (A1 - Math.log(P1sat)) - C1) + (1 - x1) * (B2 / (A2 - Math.log(P1sat / alfa_medio)) - C2) + 273.15;
   var y1 = x1 * P1sat / pressao;
 
   return [T, y1];
@@ -1111,7 +1108,7 @@ function curva_entalpia_nao_ideal() {
   adicionar_prop_termodinamicas();
   // Pega valores de propriedades críticas do banco de dados
   adicionar_prop_criticas();
-
+  var aux = [];
   // Definição das entalpias para líquido e vapor não ideais
   for (var i = 0; i < x_equilibrio.length; i++) {
 
@@ -1122,7 +1119,7 @@ function curva_entalpia_nao_ideal() {
     var excesso = aux_array[2];
 
     entalpia_liquido.push(calculo_ent_ideais(T_aux, x_equilibrio[i], y_aux)[0] + excesso);
-
+    aux.push(excesso)
   }
 
   for (var i = 0; i < y_equilibrio.length; i++) {
@@ -1136,6 +1133,7 @@ function curva_entalpia_nao_ideal() {
     entalpia_vapor.push(calculo_ent_ideais(T_aux, x_aux, y_equilibrio[i])[1] + residual);
 
   }
+  // console.log(aux)
 
 }
 
@@ -1262,9 +1260,7 @@ function Ponchon_Savarit() {
 
   // Definição do valor mínimo do slider
   var slider_Rd = document.getElementById("range_element");
-  slider_Rd.min = (Rd_min + 0.3).toFixed(1);
-  step_slider = (slider_Rd.max - slider_Rd.min) / 100;
-  slider_Rd.step = step_slider.toFixed(1);
+  slider_Rd.min = (Rd_min + 0.5).toFixed(1);
 
   // Cálculo do calor do condensador
   qcD = Math.abs((Rd + 1) * (entalpia_topo_g - entalpia_topo_l));
