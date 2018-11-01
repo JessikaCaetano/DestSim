@@ -87,6 +87,8 @@ function botao_calcular() {
     if (componente1 == componente2) {
 
       Materialize.toast("Por favor, escolha dois componentes distintos.", 2500, "red darken-4 justify-center");
+      document.getElementById("range_element").disabled = "disabled";
+      document.getElementById("range_element").classList.add("Disabled_Range");
 
     } else {
 
@@ -160,18 +162,24 @@ function botao_calcular() {
               } else {
 
                 Materialize.toast("Esta mistura não pode ser destilada até concentrações molares maiores que " + xmax.toFixed(2) + " devido à formação de azeótropo.", 3000, "red darken-4 justify-center");
+                document.getElementById("range_element").disabled = "disabled";
+                document.getElementById("range_element").classList.add("Disabled_Range");
 
               }
 
             } else {
 
               Materialize.toast("Por favor, defina o método de cálculo dos coeficientes de atividade.", 2500, "red darken-4 justify-center");
+              document.getElementById("range_element").disabled = "disabled";
+              document.getElementById("range_element").classList.add("Disabled_Range");
 
             }
 
           } else {
 
             Materialize.toast("Por favor, defina o tipo da mistura escolhida.", 2500, "red darken-4 justify-center");
+            document.getElementById("range_element").disabled = "disabled";
+            document.getElementById("range_element").classList.add("Disabled_Range");
 
           }
 
@@ -219,30 +227,40 @@ function botao_calcular() {
               } else {
 
                 Materialize.toast("Esta mistura não pode ser destilada até concentrações molares maiores que " + xmax.toFixed(2) + " devido à formação de azeótropo.", 3000, "red darken-4 justify-center");
+                document.getElementById("range_element").disabled = "disabled";
+                document.getElementById("range_element").classList.add("Disabled_Range");
 
               }
 
             } else {
 
               Materialize.toast("Por favor, defina o método de cálculo dos coeficientes de atividade e da entalpia residual.", 2500, "red darken-4 justify-center");
+              document.getElementById("range_element").disabled = "disabled";
+              document.getElementById("range_element").classList.add("Disabled_Range");
 
             }
 
           } else {
 
             Materialize.toast("Por favor, defina o tipo da mistura escolhida.", 2500, "red darken-4 justify-center");
+            document.getElementById("range_element").disabled = "disabled";
+            document.getElementById("range_element").classList.add("Disabled_Range");
 
           }
 
         } else {
 
           Materialize.toast("Por favor, defina o método gráfico escolhido.", 2500, "red darken-4 justify-center");
+          document.getElementById("range_element").disabled = "disabled";
+          document.getElementById("range_element").classList.add("Disabled_Range");
 
         }
 
       } else {
 
         Materialize.toast("Por favor, defina valores coerentes para as composições de alimentação, topo e fundo.", 3000, "red darken-4 justify-center");
+        document.getElementById("range_element").disabled = "disabled";
+        document.getElementById("range_element").classList.add("Disabled_Range");
 
       }
 
@@ -251,7 +269,9 @@ function botao_calcular() {
   } else {
 
     Materialize.toast("Por favor, defina todos os componentes da mistura.", 2500, "red darken-4 justify-center");
-
+    document.getElementById("range_element").disabled = "disabled";
+    document.getElementById("range_element").classList.add("Disabled_Range");
+    
   }
 
 }

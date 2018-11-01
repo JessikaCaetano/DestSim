@@ -628,6 +628,8 @@ function add_atividade(componente) {
 function add_comp_1() {
 
   document.getElementById("range_element").value = "10";
+  document.getElementById("range_element").disabled = "disabled";
+  document.getElementById("range_element").classList.add("Disabled_Range");
   c_added_1 = true;
 
   // Adição dos componentes a partir das barras de rolagem
@@ -655,6 +657,8 @@ function add_comp_1() {
 function add_comp_2() {
 
   document.getElementById("range_element").value = "10";
+  document.getElementById("range_element").disabled = "disabled";
+  document.getElementById("range_element").classList.add("Disabled_Range");
   c_added_2 = true;
 
   // Adição dos componentes a partir das barras de rolagem

@@ -154,8 +154,8 @@ function Van_Laar() {
   A21 = data.vl_A21[j1];
   entalpia_excesso = null;
   // Cálculo das atividades
-  atividade_1 = Math.exp(A12 * Math.pow(((A21 * x2) / (A12 * x1 + A21 * x2)), 2));
-  atividade_2 = Math.exp(A21 * Math.pow(((A12 * x1) / (A12 * x1 + A21 * x2)), 2));
+  atividade_1 = Math.exp(A12 * Math.pow(1 + (A12 * x1) / (A21 * x2), -2));
+  atividade_2 = Math.exp(A21 * Math.pow(1 + (A21 * x2) / (A12 * x1), -2));
 
   // Cálculo da Entalpia em excesso
   entalpia_excesso = 0;
@@ -181,12 +181,19 @@ function NRTL() {
   atividade_2 = Math.exp(Math.pow(x1, 2) * (tau12 * Math.pow(g12 / (x2 + x1 * g12), 2) + tau21 * g21 / Math.pow(x1 + x2 * g21, 2)), 2);
 
   // Cálculo da Entalpia em excesso
-  var numerador_1, numerador_2, denominador_1, denominador_2;
-  numerador_1 = (x1 * Math.exp((-alfa * A21) / (1.9872 * T1)) * alfa * Math.pow(A21, 2)) / (1.9872 * T1);
-  numerador_2 = (x2 * Math.exp((-alfa * A12) / (1.9872 * T1)) * alfa * Math.pow(A12, 2)) / (1.9872 * T1);
-  denominador_1 = Math.pow(x1, 2) + 2 * x1 * x2 * Math.exp((-alfa * A21) / (1.9872 * T1)) + Math.pow(x2, 2) * Math.pow(Math.exp((-alfa * A21) / (1.9872 * T1)), 2);
-  denominador_2 = Math.pow(x2, 2) + 2 * x2 * x1 * Math.exp((-alfa * A12) / (1.9872 * T1)) + Math.pow(x1, 2) * Math.pow(Math.exp((-alfa * A12) / (1.9872 * T1)), 2);
-  entalpia_excesso = -0.0041868 * x1 * x2 * ((numerador_1 / denominador_1) + (numerador_2 / denominador_2));
+  var termo_11, termo_12, termo_13;
+
+  termo_11 = (alfa * Math.pow(A21, 2) * Math.exp((-alfa * A21) / (1.9872 * T1))) / (Math.pow(8.314, 2) * Math.pow(T1, 3) * (x1 + x2 * Math.exp((-alfa * A21) / (1.9872 * T1))));
+  termo_12 = (-A21 * Math.exp((-alfa * A21) / (1.9872 * T1))) / (8.314 * Math.pow(T1, 2) * (x1 + x2 * Math.exp((-alfa * A21) / (1.9872 * T1))));
+  termo_13 = (-Math.pow(A21, 2) * alfa * x2 * Math.pow(Math.exp((-alfa * A21) / (1.9872 * T1)), 2)) / (Math.pow(8.314, 2) * Math.pow(T1, 3) * Math.pow((x1 + x2 * Math.exp((-alfa * A21) / (1.9872 * T1))), 2));
+
+  var termo_21, termo_22, termo_23;
+
+  termo_21 = (alfa * Math.pow(A12, 2) * Math.exp((-alfa * A12) / (1.9872 * T1))) / (Math.pow(8.314, 2) * Math.pow(T1, 3) * (x2 + x1 * Math.exp((-alfa * A12) / (1.9872 * T1))));
+  termo_22 = (-A12 * Math.exp((-alfa * A12) / (1.9872 * T1))) / (8.314 * Math.pow(T1, 2) * (x1 + x2 * Math.exp((-alfa * A12) / (1.9872 * T1))));
+  termo_23 = (-Math.pow(A12, 2) * alfa * x1 * Math.pow(Math.exp((-alfa * A12) / (1.9872 * T1)), 2)) / (Math.pow(8.314, 2) * Math.pow(T1, 3) * Math.pow((x2 + x1 * Math.exp((-alfa * A12) / (1.9872 * T1))), 2));
+
+  entalpia_excesso = -0.001 * x1 * x2 * 8.314 * Math.pow(T1, 2) * (termo_11 + termo_12 + termo_13 + termo_21 + termo_22 + termo_23);
 
 }
 
@@ -215,14 +222,20 @@ function Wilson() {
   ln_atividade_2 = -Math.log(x2 + tau21 * x1) - x1 * (tau12 / (x1 + tau12 * x2) - tau21 / (x2 + x1 * tau21));
   atividade_2 = Math.exp(ln_atividade_2);
 
+  var derV1 = -(8.314 / Pc_componente_1) * Math.pow(zra1, (1 + Math.pow(1 - Tr1, 2 / 7))) * Math.log(zra1) * (2 / 7) * Math.pow(1 - Tr1, -5 / 7);
+  var derV2 = -(8.314 / Pc_componente_2) * Math.pow(zra2, (1 + Math.pow(1 - Tr2, 2 / 7))) * Math.log(zra2) * (2 / 7) * Math.pow(1 - Tr2, -5 / 7);
+  var derV1porV2 = (derV1 * V2 - derV2 * V1) / Math.pow(V2, 1);
+  var derV2porV1 = (derV2 * V1 - derV1 * V2) / Math.pow(V1, 2);
+  var aux_num1 = derV2porV1 * Math.exp(-A12 / (1.9872 * T1)) + (V2 / V1) * Math.exp(-A12 / (1.9872 * T1)) * (A12 / (1.9872 * Math.pow(T1, 2)));
+  var aux_num2 = derV1porV2 * Math.exp(-A21 / (1.9872 * T1)) + (V1 / V2) * Math.exp(-A21 / (1.9872 * T1)) * (A21 / (1.9872 * Math.pow(T1, 2)));
   // Cálculo da Entalpia em excesso
   var numerador_1, numerador_2, denominador_1, denominador_2;
-  numerador_1 = x1 * x2 * (V2 / V1) * Math.exp(-A12 / (1.9872 * T1)) * A12;
-  numerador_2 = x2 * x1 * (V1 / V2) * Math.exp(-A21 / (1.9872 * T1)) * A21;
+  numerador_1 = 8.314 * Math.pow(T1, 2) * x1 * x2 * aux_num1;
+  numerador_2 = 8.314 * Math.pow(T1, 2) * x2 * x1 * aux_num2;
   denominador_1 = x1 + x2 * (V2 / V1) * Math.exp(-A12 / (1.9872 * T1));
   denominador_2 = x2 + x1 * (V1 / V2) * Math.exp(-A21 / (1.9872 * T1));
 
-  entalpia_excesso = 0.0041868 * ((numerador_1 / denominador_1) + (numerador_2 / denominador_2));
+  entalpia_excesso = 0.001 * ((numerador_1 / denominador_1) + (numerador_2 / denominador_2));
 
 }
 
@@ -599,12 +612,12 @@ function UNIFAC() {
 
   for (var i = 0; i < bk1.length; i++) {
 
-    ln_AtivR_1_derivada += -qk1_total * Tetak[i] * ((bk1_derivada[i] * Sk[i] - Sk_derivada[i] * bk1[i]) / Math.pow(Sk[i], 2)) - qk1_total * ek1[i] * (Sk[i] / bk1[i]) * ((bk1_derivada[i] * Sk[i] - Sk_derivada[i] * bk1[i]) / Math.pow(Sk[i], 2));
-    ln_AtivR_2_derivada += -qk2_total * Tetak[i] * ((bk2_derivada[i] * Sk[i] - Sk_derivada[i] * bk2[i]) / Math.pow(Sk[i], 2)) - qk2_total * ek2[i] * (Sk[i] / bk2[i]) * ((bk2_derivada[i] * Sk[i] - Sk_derivada[i] * bk2[i]) / Math.pow(Sk[i], 2));
+    ln_AtivR_1_derivada += -qk1_total * Tetak[i] * ((bk1_derivada[i] * Sk[i] - Sk_derivada[i] * bk1[i]) / Math.pow(Sk[i], 2)) + qk1_total * ek1[i] * (Sk[i] / bk1[i]) * ((bk1_derivada[i] * Sk[i] - Sk_derivada[i] * bk1[i]) / Math.pow(Sk[i], 2));
+    ln_AtivR_2_derivada += -qk2_total * Tetak[i] * ((bk2_derivada[i] * Sk[i] - Sk_derivada[i] * bk2[i]) / Math.pow(Sk[i], 2)) + qk2_total * ek2[i] * (Sk[i] / bk2[i]) * ((bk2_derivada[i] * Sk[i] - Sk_derivada[i] * bk2[i]) / Math.pow(Sk[i], 2));
 
   }
 
-  entalpia_excesso = (-0.0041868) * 1.9872 * Math.pow(T1, 2) * (x1 * ln_AtivR_1_derivada + x2 * ln_AtivR_2_derivada);
+  entalpia_excesso = (-0.001) * 8.314 * Math.pow(T1, 2) * (x1 * ln_AtivR_1_derivada + x2 * ln_AtivR_2_derivada);
 
 }
 
@@ -1403,7 +1416,6 @@ function Ponchon_Savarit() {
         Hn = H_vap;
         var y = (Hn - (hn - xn * (hn - hB + qcB) / (xn - xB))) / ((hn - hB + qcB) / (xn - xB));
         diferenca = Math.abs(y - y_aux);
-        // console.log(y_aux, y)
         y_aux = y;
 
       } while (diferenca > 0.01)
