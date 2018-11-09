@@ -627,7 +627,7 @@ function add_atividade(componente) {
 // Função de adição dos componentes à caixa de rolagem do componete 1
 function add_comp_1() {
 
-  document.getElementById("range_element").value = "10";
+  document.getElementById("range_element").value = "50";
   document.getElementById("range_element").disabled = "disabled";
   document.getElementById("range_element").classList.add("Disabled_Range");
   c_added_1 = true;
@@ -656,7 +656,7 @@ function add_comp_1() {
 // Função de adição dos componentes à caixa de rolagem do componete 2
 function add_comp_2() {
 
-  document.getElementById("range_element").value = "10";
+  document.getElementById("range_element").value = "50";
   document.getElementById("range_element").disabled = "disabled";
   document.getElementById("range_element").classList.add("Disabled_Range");
   c_added_2 = true;

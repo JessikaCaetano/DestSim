@@ -55,16 +55,13 @@ var c_added_1 = false,
   metodo_added = false,
   metodo_entalpia_added = false;
 
-// Disabilitar scroll nos inputs das composições
+// Desabilitar scroll nos inputs das composições
 $(document).on("wheel", "input[type=number]", function(e) {
   $(this).blur();
 });
 
-
 //Comandos de cálculo do botão Calcular
 function botao_calcular() {
-
-  document.getElementById("range_element").value = "10";
 
   // Limpeza de variáveis
   componente1 = null;
@@ -100,6 +97,7 @@ function botao_calcular() {
         // Habilitação do slider
         document.getElementById("range_element").className = "";
         document.getElementById("range_element").disabled = "";
+        document.getElementById("range_element").value = 50;
 
         // Conversão dos valores de composição caso necessário caso necessário
         if (tipo_composicao == true) {
@@ -271,7 +269,7 @@ function botao_calcular() {
     Materialize.toast("Por favor, defina todos os componentes da mistura.", 2500, "red darken-4 justify-center");
     document.getElementById("range_element").disabled = "disabled";
     document.getElementById("range_element").classList.add("Disabled_Range");
-    
+
   }
 
 }

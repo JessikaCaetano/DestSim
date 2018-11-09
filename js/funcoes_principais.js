@@ -70,6 +70,7 @@ function McCabe_Ideal() {
   // Limpeza de vetores
   x_degrau = [];
   y_degrau = [];
+  var n = null;
 
   xD = parseFloat(xD);
   xF = parseFloat(xF);
@@ -102,7 +103,7 @@ function McCabe_Ideal() {
 
   // Definição dovalor mínimo do slider
   var slider_Rd = document.getElementById("range_element");
-  slider_Rd.min = (Rd_min + 0.5).toFixed(1);
+  slider_Rd.min = (Rd_min + 0.1).toFixed(1);
 
   yK = (Rd / (Rd + 1)) * xF + xD / (Rd + 1);
 
@@ -111,6 +112,7 @@ function McCabe_Ideal() {
   y_degrau.push(xD);
   x_aux = xD;
   y_aux = xD;
+  n = 0;
 
   do {
 
@@ -120,12 +122,18 @@ function McCabe_Ideal() {
     y_aux = ((Rd / (Rd + 1)) * x_aux) + (xD / (Rd + 1));
     x_degrau.push(x_aux);
     y_degrau.push(y_aux);
+    n = n + 1;
+
+    if (n > 100) {
+      break;
+    }
 
   } while (x_aux > xF)
 
   y_degrau.pop();
   y_degrau.push(((xB * (1 - (yK - xB) / (xF - xB))) + (((yK - xB) * x_aux) / (xF - xB))));
   y_aux = ((xB * (1 - (yK - xB) / (xF - xB))) + (((yK - xB) * x_aux) / (xF - xB)));
+  n = 0;
 
   // Cálculo dos pratos para a seção de esgotamento
   do {
@@ -136,6 +144,11 @@ function McCabe_Ideal() {
     y_aux = ((xB * (1 - (yK - xB) / (xF - xB))) + (((yK - xB) * x_aux) / (xF - xB)));
     x_degrau.push(x_aux);
     y_degrau.push(y_aux);
+    n = n + 1;
+
+    if (n > 100) {
+      break;
+    }
 
   } while (x_aux > xB)
 
@@ -183,17 +196,17 @@ function NRTL() {
   // Cálculo da Entalpia em excesso
   var termo_11, termo_12, termo_13;
 
-  termo_11 = (alfa * Math.pow(A21, 2) * Math.exp((-alfa * A21) / (1.9872 * T1))) / (Math.pow(8.314, 2) * Math.pow(T1, 3) * (x1 + x2 * Math.exp((-alfa * A21) / (1.9872 * T1))));
-  termo_12 = (-A21 * Math.exp((-alfa * A21) / (1.9872 * T1))) / (8.314 * Math.pow(T1, 2) * (x1 + x2 * Math.exp((-alfa * A21) / (1.9872 * T1))));
-  termo_13 = (-Math.pow(A21, 2) * alfa * x2 * Math.pow(Math.exp((-alfa * A21) / (1.9872 * T1)), 2)) / (Math.pow(8.314, 2) * Math.pow(T1, 3) * Math.pow((x1 + x2 * Math.exp((-alfa * A21) / (1.9872 * T1))), 2));
+  termo_11 = (alfa * Math.pow(A21, 2) * Math.exp((-alfa * A21) / (1.9872 * T1))) / (Math.pow(1.9872, 2) * Math.pow(T1, 3) * (x1 + x2 * Math.exp((-alfa * A21) / (1.9872 * T1))));
+  termo_12 = (-A21 * Math.exp((-alfa * A21) / (1.9872 * T1))) / (1.9872 * Math.pow(T1, 2) * (x1 + x2 * Math.exp((-alfa * A21) / (1.9872 * T1))));
+  termo_13 = (-Math.pow(A21, 2) * alfa * x2 * Math.pow(Math.exp((-alfa * A21) / (1.9872 * T1)), 2)) / (Math.pow(1.9872, 2) * Math.pow(T1, 3) * Math.pow((x1 + x2 * Math.exp((-alfa * A21) / (1.9872 * T1))), 2));
 
   var termo_21, termo_22, termo_23;
 
-  termo_21 = (alfa * Math.pow(A12, 2) * Math.exp((-alfa * A12) / (1.9872 * T1))) / (Math.pow(8.314, 2) * Math.pow(T1, 3) * (x2 + x1 * Math.exp((-alfa * A12) / (1.9872 * T1))));
-  termo_22 = (-A12 * Math.exp((-alfa * A12) / (1.9872 * T1))) / (8.314 * Math.pow(T1, 2) * (x1 + x2 * Math.exp((-alfa * A12) / (1.9872 * T1))));
-  termo_23 = (-Math.pow(A12, 2) * alfa * x1 * Math.pow(Math.exp((-alfa * A12) / (1.9872 * T1)), 2)) / (Math.pow(8.314, 2) * Math.pow(T1, 3) * Math.pow((x2 + x1 * Math.exp((-alfa * A12) / (1.9872 * T1))), 2));
+  termo_21 = (alfa * Math.pow(A12, 2) * Math.exp((-alfa * A12) / (1.9872 * T1))) / (Math.pow(1.9872, 2) * Math.pow(T1, 3) * (x2 + x1 * Math.exp((-alfa * A12) / (1.9872 * T1))));
+  termo_22 = (-A12 * Math.exp((-alfa * A12) / (1.9872 * T1))) / (1.9872 * Math.pow(T1, 2) * (x1 + x2 * Math.exp((-alfa * A12) / (1.9872 * T1))));
+  termo_23 = (-Math.pow(A12, 2) * alfa * x1 * Math.pow(Math.exp((-alfa * A12) / (1.9872 * T1)), 2)) / (Math.pow(1.9872, 2) * Math.pow(T1, 3) * Math.pow((x2 + x1 * Math.exp((-alfa * A12) / (1.9872 * T1))), 2));
 
-  entalpia_excesso = -0.001 * x1 * x2 * 8.314 * Math.pow(T1, 2) * (termo_11 + termo_12 + termo_13 + termo_21 + termo_22 + termo_23);
+  entalpia_excesso = -0.0041868 * x1 * x2 * 1.9872 * Math.pow(T1, 2) * (termo_11 + termo_12 + termo_13 + termo_21 + termo_22 + termo_23);
 
 }
 
@@ -204,8 +217,9 @@ function Wilson() {
   A21 = [];
   entalpia_excesso = null;
 
-  A12 = data.Wilson_A12[j3];
-  A21 = data.Wilson_A21[j3];
+  // Pega os valores das constantes e converte para J/molK
+  A12 = 4.1868 * data.Wilson_A12[j3];
+  A21 = 4.1868 * data.Wilson_A21[j3];
 
   zra1 = 0.29056 - 0.08775 * w_componente_1;
   Tr1 = T1 / (Tc_componente_1 + 273.15);
@@ -213,8 +227,8 @@ function Wilson() {
   zra2 = 0.29056 - 0.08775 * w_componente_2;
   Tr2 = T1 / (Tc_componente_2 + 273.15);
   V2 = (8.314 * (Tc_componente_2 + 273.15) / Pc_componente_2) * Math.pow(zra2, (1 + Math.pow(1 - Tr2, 2 / 7)));
-  tau12 = (V2 / V1) * Math.exp(-A12 / (1.9872 * T1));
-  tau21 = (V1 / V2) * Math.exp(-A21 / (1.9872 * T1));
+  tau12 = (V2 / V1) * Math.exp(-A12 / (8.314 * T1));
+  tau21 = (V1 / V2) * Math.exp(-A21 / (8.314 * T1));
 
   // Cálculo das atividades
   ln_atividade_1 = -Math.log(x1 + tau12 * x2) + x2 * (tau12 / (x1 + tau12 * x2) - tau21 / (x2 + x1 * tau21));
@@ -226,14 +240,14 @@ function Wilson() {
   var derV2 = -(8.314 / Pc_componente_2) * Math.pow(zra2, (1 + Math.pow(1 - Tr2, 2 / 7))) * Math.log(zra2) * (2 / 7) * Math.pow(1 - Tr2, -5 / 7);
   var derV1porV2 = (derV1 * V2 - derV2 * V1) / Math.pow(V2, 1);
   var derV2porV1 = (derV2 * V1 - derV1 * V2) / Math.pow(V1, 2);
-  var aux_num1 = derV2porV1 * Math.exp(-A12 / (1.9872 * T1)) + (V2 / V1) * Math.exp(-A12 / (1.9872 * T1)) * (A12 / (1.9872 * Math.pow(T1, 2)));
-  var aux_num2 = derV1porV2 * Math.exp(-A21 / (1.9872 * T1)) + (V1 / V2) * Math.exp(-A21 / (1.9872 * T1)) * (A21 / (1.9872 * Math.pow(T1, 2)));
+  var aux_num1 = derV2porV1 * Math.exp(-A12 / (8.314 * T1)) + (V2 / V1) * Math.exp(-A12 / (8.314 * T1)) * (A12 / (8.314 * Math.pow(T1, 2)));
+  var aux_num2 = derV1porV2 * Math.exp(-A21 / (8.314 * T1)) + (V1 / V2) * Math.exp(-A21 / (8.314 * T1)) * (A21 / (8.314 * Math.pow(T1, 2)));
   // Cálculo da Entalpia em excesso
   var numerador_1, numerador_2, denominador_1, denominador_2;
   numerador_1 = 8.314 * Math.pow(T1, 2) * x1 * x2 * aux_num1;
   numerador_2 = 8.314 * Math.pow(T1, 2) * x2 * x1 * aux_num2;
-  denominador_1 = x1 + x2 * (V2 / V1) * Math.exp(-A12 / (1.9872 * T1));
-  denominador_2 = x2 + x1 * (V1 / V2) * Math.exp(-A21 / (1.9872 * T1));
+  denominador_1 = x1 + x2 * (V2 / V1) * Math.exp(-A12 / (8.314 * T1));
+  denominador_2 = x2 + x1 * (V1 / V2) * Math.exp(-A21 / (8.314 * T1));
 
   entalpia_excesso = 0.001 * ((numerador_1 / denominador_1) + (numerador_2 / denominador_2));
 
@@ -612,8 +626,8 @@ function UNIFAC() {
 
   for (var i = 0; i < bk1.length; i++) {
 
-    ln_AtivR_1_derivada += -qk1_total * Tetak[i] * ((bk1_derivada[i] * Sk[i] - Sk_derivada[i] * bk1[i]) / Math.pow(Sk[i], 2)) + qk1_total * ek1[i] * (Sk[i] / bk1[i]) * ((bk1_derivada[i] * Sk[i] - Sk_derivada[i] * bk1[i]) / Math.pow(Sk[i], 2));
-    ln_AtivR_2_derivada += -qk2_total * Tetak[i] * ((bk2_derivada[i] * Sk[i] - Sk_derivada[i] * bk2[i]) / Math.pow(Sk[i], 2)) + qk2_total * ek2[i] * (Sk[i] / bk2[i]) * ((bk2_derivada[i] * Sk[i] - Sk_derivada[i] * bk2[i]) / Math.pow(Sk[i], 2));
+    ln_AtivR_1_derivada += -qk1_total * (Tetak[i] * ((bk1_derivada[i] * Sk[i] - Sk_derivada[i] * bk1[i]) / Math.pow(Sk[i], 2)) - ek1[i] * (Sk[i] / bk1[i]) * ((bk1_derivada[i] * Sk[i] - Sk_derivada[i] * bk1[i]) / Math.pow(Sk[i], 2)));
+    ln_AtivR_2_derivada += -qk2_total * (Tetak[i] * ((bk2_derivada[i] * Sk[i] - Sk_derivada[i] * bk2[i]) / Math.pow(Sk[i], 2)) - ek2[i] * (Sk[i] / bk2[i]) * ((bk2_derivada[i] * Sk[i] - Sk_derivada[i] * bk2[i]) / Math.pow(Sk[i], 2)));
 
   }
 
@@ -727,9 +741,9 @@ function calculo_temp_nao_ideal_orvalho(y) {
   P2sat = Math.exp(A2 - B2 / (T1 - 273.15 + C2));
   x1 = y1 * pressao / (atividade_1 * P1sat);
   x2 = (1 - y1) * pressao / (atividade_2 * P2sat);
-  // xtotal = x1 + x2;
-  // x1 = x1 / xtotal;
-  // x2 = x2 / xtotal;
+  xtotal = x1 + x2;
+  x1 = x1 / xtotal;
+  x2 = x2 / xtotal;
 
   var excesso = entalpia_excesso;
 
@@ -794,6 +808,7 @@ function McCabe_nao_ideal() {
   // Limpeza de vetores
   x_degrau = [];
   y_degrau = [];
+  var n = null;
 
   xD = parseFloat(xD);
   xF = parseFloat(xF);
@@ -825,6 +840,7 @@ function McCabe_nao_ideal() {
   y_degrau.push(xD);
   x_aux = xD;
   y_aux = xD;
+  n = 0;
 
   do {
 
@@ -837,12 +853,18 @@ function McCabe_nao_ideal() {
     y_aux = ((Rd / (Rd + 1)) * x_aux) + (xD / (Rd + 1));
     x_degrau.push(x_aux);
     y_degrau.push(y_aux);
+    n = n + 1;
+
+    if (n > 100) {
+      break;
+    }
 
   } while (x_aux > xF)
 
   y_degrau.pop();
   y_degrau.push(((xB * (1 - (yK - xB) / (xF - xB))) + (((yK - xB) * x_aux) / (xF - xB))));
   y_aux = ((xB * (1 - (yK - xB) / (xF - xB))) + (((yK - xB) * x_aux) / (xF - xB)));
+  n = 0;
 
   // Cálculo dos pratos da seção de esgotamento
   do {
@@ -855,6 +877,11 @@ function McCabe_nao_ideal() {
     y_aux = ((xB * (1 - (yK - xB) / (xF - xB))) + (((yK - xB) * x_aux) / (xF - xB)));
     x_degrau.push(x_aux);
     y_degrau.push(y_aux);
+    n = n + 1;
+
+    if (n > 100) {
+      break;
+    }
 
   } while (x_aux > xB)
 
@@ -895,9 +922,10 @@ function Soave_Redlich_Kwong(Tc_aux, T3, w_aux) {
   epsilon = 0;
   omega = 0.08664;
   psi = 0.42748;
+    var Tr_aux =T3 / Tc_aux;
   var aux = 0.48 + 1.574 * w_aux - 0.176 * Math.pow(w_aux, 2);
   alfa_Tr = Math.pow(1 + aux * (1 - Math.sqrt(T3 / Tc_aux)), 2);
-  der_Tr = -(psi / omega) * ((1 + aux * (1 - Math.sqrt(T3 / Tc_aux))) * aux * Math.pow(T3 / Tc_aux, -1 / 2) - Math.pow((1 + aux * (1 - Math.sqrt(T3 / Tc_aux))), 2) / (T3 / Tc_aux));
+  der_Tr = Tr_aux*(psi / omega)*(Math.pow(1 + aux * (1 - Math.sqrt(Tr_aux)),2)/Tr_aux)*(((1 + aux * (1 - Math.sqrt(Tr_aux)))*(-aux))/Math.pow(Tr_aux, 3/2)-(Math.pow(1 + aux * (1 - Math.sqrt(Tr_aux)),2))/Math.pow(Tr_aux, 2));
 
 }
 
@@ -908,9 +936,10 @@ function Peng_Robinson(Tc_aux, T3, w_aux) {
   epsilon = 1 - Math.sqrt(2);
   omega = 0.07780;
   psi = 0.45724;
+  var Tr_aux =T3 / Tc_aux;
   var aux = 0.37464 + 1.54226 * w_aux - 0.26992 * Math.pow(w_aux, 2);
   alfa_Tr = Math.pow(1 + aux * (1 - Math.sqrt(T3 / Tc_aux)), 2);
-  der_Tr = -(psi / omega) * ((1 + aux * (1 - Math.sqrt(T3 / Tc_aux))) * aux * Math.pow(T3 / Tc_aux, -1 / 2) - Math.pow((1 + aux * (1 - Math.sqrt(T3 / Tc_aux))), 2) / (T3 / Tc_aux));
+  der_Tr = Tr_aux*(psi / omega)*(Math.pow(1 + aux * (1 - Math.sqrt(Tr_aux)),2)/Tr_aux)*(((1 + aux * (1 - Math.sqrt(Tr_aux)))*(-aux))/Math.pow(Tr_aux, 3/2)-(Math.pow(1 + aux * (1 - Math.sqrt(Tr_aux)),2))/Math.pow(Tr_aux, 2));
 
 }
 
@@ -920,7 +949,6 @@ function calculo_temp_ideal(x1) {
   // Cálculo da temperatura e y para misturas ideais
   P1sat = (pressao * alfa_medio) / (alfa_medio * x1 + 1 - x1);
   var T = (B1 / (A1 - Math.log(P1sat)) - C1) + 273.15;
-  // var T = x1 * (B1 / (A1 - Math.log(P1sat)) - C1) + (1 - x1) * (B2 / (A2 - Math.log(P1sat / alfa_medio)) - C2) + 273.15;
   var y1 = x1 * P1sat / pressao;
 
   return [T, y1];
@@ -936,8 +964,8 @@ function calculo_ent_ideais(T, x, y) {
   var T_ref = 298.15;
 
   // Cálculo das entalpias (T é a temperatura de bolha no ponto x)
-  var entalpia_l1 = (Cpl1_C1 * (T - T_ref) + Cpl1_C2 * Math.pow(T - T_ref, 2) / 2 + Cpl1_C3 * Math.pow(T - T_ref, 3) / 3 + Cpl1_C4 * Math.pow(T - T_ref, 4) / 4 + Cpl1_C5 * Math.pow(T - T_ref, 5) / 5) / 1000000;
-  var entalpia_l2 = (Cpl2_C1 * (T - T_ref) + Cpl2_C2 * Math.pow(T - T_ref, 2) / 2 + Cpl2_C3 * Math.pow(T - T_ref, 3) / 3 + Cpl2_C4 * Math.pow(T - T_ref, 4) / 4 + Cpl2_C5 * Math.pow(T - T_ref, 5) / 5) / 1000000;
+  var entalpia_l1 = (Cpl1_C1 * (T - T_ref) + Cpl1_C2 * (Math.pow(T, 2) - Math.pow(T_ref, 2)) / 2 + Cpl1_C3 * (Math.pow(T, 3) - Math.pow(T_ref, 3)) / 3 + Cpl1_C4 * (Math.pow(T, 4) - Math.pow(T_ref, 4)) / 4 + Cpl1_C5 * (Math.pow(T, 5) - Math.pow(T_ref, 5)) / 5) / 1000000;
+  var entalpia_l2 = (Cpl2_C1 * (T - T_ref) + Cpl2_C2 * (Math.pow(T, 2) - Math.pow(T_ref, 2)) / 2 + Cpl2_C3 * (Math.pow(T, 3) - Math.pow(T_ref, 3)) / 3 + Cpl2_C4 * (Math.pow(T, 4) - Math.pow(T_ref, 4)) / 4 + Cpl2_C5 * (Math.pow(T, 5) - Math.pow(T_ref, 5)) / 5) / 1000000;
   entalpia_l = x1 * (entalpia_l1) + (1 - x1) * (entalpia_l2);
 
   var Tr_1 = T / (Tc_componente_1 + 273.15);
@@ -951,8 +979,8 @@ function calculo_ent_ideais(T, x, y) {
   } else {
 
     // Cálculo do calor de vaporização na temperatura T com base na equação de Daubert, também citada no Perry
-    var Tr_aux = T_vap_1 / (Tc_componente_1 + 273.15);
-    calor_vaporizacao_1 = delta_vaporizacao_1 * Math.pow(((1 - Tr_1) / (1 - Tr_aux)), 0.38);
+    var Tr_aux = T / (Tc_componente_1 + 273.15);
+    calor_vaporizacao_1 = delta_vaporizacao_1 * Math.pow(((1 - Tr_aux) / (1 - Tr_aux)), 0.38);
 
   }
 
@@ -964,8 +992,8 @@ function calculo_ent_ideais(T, x, y) {
   } else {
 
     // Cálculo do calor de vaporização na temperatura T com base na equação de Daubert, também citada no Perry
-    var Tr_aux = T_vap_2 / (Tc_componente_2 + 273.15);
-    calor_vaporizacao_2 = delta_vaporizacao_2 * Math.pow(((1 - Tr_2) / (1 - Tr_aux)), 0.38);
+    var Tr_aux = T / (Tc_componente_2 + 273.15);
+    calor_vaporizacao_2 = delta_vaporizacao_2 * Math.pow(((1 - Tr_aux) / (1 - Tr_aux)), 0.38);
 
   }
 
@@ -1121,7 +1149,7 @@ function curva_entalpia_nao_ideal() {
   adicionar_prop_termodinamicas();
   // Pega valores de propriedades críticas do banco de dados
   adicionar_prop_criticas();
-  var aux = [];
+
   // Definição das entalpias para líquido e vapor não ideais
   for (var i = 0; i < x_equilibrio.length; i++) {
 
@@ -1132,7 +1160,7 @@ function curva_entalpia_nao_ideal() {
     var excesso = aux_array[2];
 
     entalpia_liquido.push(calculo_ent_ideais(T_aux, x_equilibrio[i], y_aux)[0] + excesso);
-    aux.push(excesso)
+
   }
 
   for (var i = 0; i < y_equilibrio.length; i++) {
@@ -1146,7 +1174,6 @@ function curva_entalpia_nao_ideal() {
     entalpia_vapor.push(calculo_ent_ideais(T_aux, x_aux, y_equilibrio[i])[1] + residual);
 
   }
-  // console.log(aux)
 
 }
 
@@ -1162,7 +1189,6 @@ function Ponchon_Savarit() {
   adicionar_prop_termodinamicas();
   // Pega valores de propriedades críticas do banco de dados
   adicionar_prop_criticas();
-
 
   // Definição das composições e limpeza de variáveis
   xD = parseFloat(xD);
@@ -1269,11 +1295,11 @@ function Ponchon_Savarit() {
   var coef_linear_min = entalpia_alim_l - inclinacao_min * xF;
   y_qc_min = inclinacao_min * xD + coef_linear_min;
   y_qr_min = inclinacao_min * xB + coef_linear_min;
-  Rd_min = (y_qc_min - entalpia_topo_g) / (entalpia_topo_g - entalpia_topo_l);
+  Rd_min = Math.abs((y_qc_min - entalpia_topo_g) / (entalpia_topo_g - entalpia_topo_l));
 
   // Definição do valor mínimo do slider
   var slider_Rd = document.getElementById("range_element");
-  slider_Rd.min = (Rd_min + 0.5).toFixed(1);
+  slider_Rd.min = parseFloat(Rd_min + 0.5).toFixed(1);
 
   // Cálculo do calor do condensador
   qcD = Math.abs((Rd + 1) * (entalpia_topo_g - entalpia_topo_l));
@@ -1304,6 +1330,7 @@ function Ponchon_Savarit() {
     // Cálculo dos pratos para a seção de retificação
     y_aux = xD;
     x_aux = y_aux / ((-y_aux * (alfa_medio - 1)) + alfa_medio);
+    var n = 0;
 
     do {
 
@@ -1328,12 +1355,18 @@ function Ponchon_Savarit() {
       } while (diferenca > 0.01)
 
       x_aux = y_aux / ((-y_aux * (alfa_medio - 1)) + alfa_medio);
+      n = n + 1;
+
+      if (n > 100) {
+        break;
+      }
 
     } while (x_aux > xF)
 
     T_aux = calculo_temp_ideal(x_aux)[0];
     hn = calculo_ent_ideais(T_aux, x_aux, y_aux)[0];
     reta_amarracao.push([y_aux, Hn], [x_aux, hn])
+    n = 0;
 
     do {
 
@@ -1358,6 +1391,11 @@ function Ponchon_Savarit() {
       x_degrau_e.push(xB);
       y_degrau_e.push(hB - qcB);
       reta_amarracao.push([y_aux, Hn], [x_aux, hn]);
+      n = n + 1;
+
+      if (n > 100) {
+        break;
+      }
 
     } while (x_aux >= xB);
 
@@ -1368,6 +1406,7 @@ function Ponchon_Savarit() {
     var aux_array_1 = calculo_temp_nao_ideal_orvalho(y_aux);
     x_aux = aux_array_1[1];
     T_aux = aux_array_1[0];
+    var n = 0;
 
     do {
 
@@ -1395,6 +1434,11 @@ function Ponchon_Savarit() {
       var aux_array_1 = calculo_temp_nao_ideal_orvalho(y_aux);
       T_aux = aux_array_1[0];
       x_aux = aux_array_1[1];
+      n = n + 1;
+
+      if (n > 100) {
+        break;
+      }
 
     } while (x_aux > xF)
 
@@ -1402,6 +1446,7 @@ function Ponchon_Savarit() {
     T_aux = aux_array_0[0];
     hn = calculo_ent_ideais(T_aux, x_aux, y_aux)[0] + aux_array_0[2];
     reta_amarracao.push([y_aux, Hn], [x_aux, hn])
+    n = 0;
 
     do {
 
@@ -1430,6 +1475,12 @@ function Ponchon_Savarit() {
       x_degrau_e.push(xB);
       y_degrau_e.push(hB - qcB);
       reta_amarracao.push([y_aux, Hn], [x_aux, hn]);
+
+      n = n + 1;
+
+      if (n > 100) {
+        break;
+      }
 
     } while (x_aux >= xB);
 
