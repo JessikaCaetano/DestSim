@@ -87,6 +87,8 @@ function converter() {
   // Chamada das funções de conversão caso necessário
   if (tipo_composicao == true) {
 
+    fracao = "mássica";
+
     if (xF) {
       mol_to_mass(parseFloat(xF));
       document.getElementById("input_alimentacao").value = x_massico.toFixed(2);
@@ -102,6 +104,8 @@ function converter() {
 
   } else {
 
+    fracao = "molar";
+
     if (xF) {
       mass_to_mol(parseFloat(xF))
       document.getElementById("input_alimentacao").value = x_molar.toFixed(2);
@@ -116,6 +120,8 @@ function converter() {
     }
 
   }
+
+  document.getElementById("label_composicao").innerHTML = "Composição (fração "+ fracao + " de " + compvolatil + "):";
 
 }
 
@@ -247,6 +253,7 @@ function calcular_num_min_pratos() {
   return aux_estagios;
 
 }
+
 // Função que prepara os resultados para serem mostrados
 function separar_resultados() {
 
@@ -588,6 +595,7 @@ function add_atividade(componente) {
 
   // Habilitação das caixas de input das composições
   document.getElementById("div_composicoes").className = "row";
+  document.getElementById("div_switch").className = "switch col m6 s12";
 
   // Definição das massas molares dos componentes
   massa_molar(componente1, componente2);
@@ -646,7 +654,7 @@ function add_comp_1() {
     c_added_2 == true;
     add_atividade("Escolha uma opção");
     calcular_comp_volatil();
-    document.getElementById("label_composicao").innerHTML = "Composição (" + compvolatil + "):";
+    document.getElementById("label_composicao").innerHTML = "Composição (fração "+ fracao + " de " + compvolatil + "):";
     document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
 
   }
@@ -675,7 +683,7 @@ function add_comp_2() {
     c_added_1 == true;
     add_atividade("Escolha uma opção");
     calcular_comp_volatil();
-    document.getElementById("label_composicao").innerHTML = "Composição (" + compvolatil + "):";
+    document.getElementById("label_composicao").innerHTML = "Composição (fração "+ fracao + " de " + compvolatil + "):";
     document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
 
   }
@@ -701,6 +709,8 @@ function mostrar_label_1() {
 
   if (info_on_1 == false) {
 
+    document.getElementById("btn_info_1").className = "btn_info col m1 s1";
+    document.getElementById("duvidas_1").setAttribute('hidden', 'hidden');
     document.getElementById("label_info_1").removeAttribute('hidden');
     document.getElementById("label_info_2").removeAttribute('hidden');
     document.getElementById("label_info_3").removeAttribute('hidden');
@@ -709,6 +719,8 @@ function mostrar_label_1() {
 
   } else if (info_on_1 == true) {
 
+    document.getElementById("btn_info_1").className = "btn_info col m12 s12";
+    document.getElementById("duvidas_1").removeAttribute('hidden');
     document.getElementById("label_info_1").setAttribute('hidden', 'hidden');
     document.getElementById("label_info_2").setAttribute('hidden', 'hidden');
     document.getElementById("label_info_3").setAttribute('hidden', 'hidden');
@@ -723,12 +735,16 @@ function mostrar_label_2() {
 
   if (info_on_2 == false) {
 
+    document.getElementById("btn_info_2").className = "btn_info col m1 s1";
+    document.getElementById("duvidas_2").setAttribute('hidden', 'hidden');
     document.getElementById("label_info_4").removeAttribute('hidden');
     document.getElementById("label_info_5").removeAttribute('hidden');
     info_on_2 = true;
 
   } else if (info_on_2 == true) {
 
+    document.getElementById("btn_info_2").className = "btn_info col m12 s12";
+    document.getElementById("duvidas_2").removeAttribute('hidden');
     document.getElementById("label_info_4").setAttribute('hidden', 'hidden');
     document.getElementById("label_info_5").setAttribute('hidden', 'hidden');
     info_on_2 = false;

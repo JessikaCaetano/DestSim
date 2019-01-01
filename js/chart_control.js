@@ -113,22 +113,22 @@
            pointRadius: 0.1
          },
          {
-           label: "Retas de Retificação e Esgotamento",
-           backgroundColor: '#b0bec5',
+           label: "Reta de Retificação",
+           backgroundColor: '#26a69a',
            showLine: true,
            fill: false,
            data: retificacao,
-           borderColor: '#b0bec5',
+           borderColor: '#26a69a',
            borderWidth: 2,
            pointRadius: 0.1
          },
          {
-           label: "z",
-           backgroundColor: '#b0bec5',
+           label: "Reta de Esgotamento",
+           backgroundColor: '#ffab0090',
            showLine: true,
            fill: false,
            data: esgotamento,
-           borderColor: '#b0bec5',
+           borderColor: '#ffab0090',
            borderWidth: 2,
            pointRadius: 0.1
          },
@@ -144,11 +144,11 @@
          },
          {
            label: "Estágios",
-           backgroundColor: '#4db6ac',
+           backgroundColor: '#0097a785',
            showLine: true,
            fill: false,
            data: degraus,
-           borderColor: '#4db6ac',
+           borderColor: '#0097a785',
            borderWidth: 2,
            pointRadius: 0.1
          }
@@ -351,42 +351,42 @@
            borderWidth: 2,
            pointRadius: 0.1
          }, {
-           label: "Retas de Retificação e Esgotamento",
-           backgroundColor: '#b0bec5',
+           label: "Reta de Retificação",
+           backgroundColor: '#00bfa5',
            showLine: true,
            fill: false,
            data: retificacao,
-           borderColor: '#b0bec5',
+           borderColor: '#00bfa5',
            borderWidth: 2,
            pointRadius: 0.1
          },
          {
-           label: "z",
-           backgroundColor: '#b0bec5',
-           showLine: true,
-           fill: false,
-           data: esgotamento,
-           borderColor: '#b0bec5',
-           borderWidth: 2,
-           pointRadius: 0.1
-         },
-         {
-           label: "Reta de Alimentação",
+           label: "Reta de Esgotamento",
            backgroundColor: '#00838f',
            showLine: true,
            fill: false,
-           data: alimentacao,
+           data: esgotamento,
            borderColor: '#00838f',
            borderWidth: 2,
            pointRadius: 0.1
          },
          {
+           label: "Reta de Alimentação",
+           backgroundColor: '#ffab0090',
+           showLine: true,
+           fill: false,
+           data: alimentacao,
+           borderColor: '#ffab0090',
+           borderWidth: 2,
+           pointRadius: 0.1
+         },
+         {
            label: "Estágios",
-           backgroundColor: '#4db6ac',
+           backgroundColor: '#0097a785',
            showLine: true,
            fill: false,
            data: degraus_r,
-           borderColor: '#4db6ac',
+           borderColor: '#0097a785',
            borderWidth: 2,
            pointRadius: 0.1
          }, {

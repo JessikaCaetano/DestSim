@@ -42,7 +42,8 @@ var x_degrau = [],
   y_degrau_e = [],
   x_estagio = [],
   y_estagio = [],
-  reta_amarracao;
+  reta_amarracao,
+  fracao = "molar";
 var entalpia_liquido = [],
   entalpia_vapor = [];
 var A1, A2, B1, B2, C1, C2, T1sat, T2sat, T1, T3, P1sat, P2sat, atividade_1, atividade_2, x1, x2, qk1_total, qk2_total, rk1_total, rk2_total, entalpia_excesso;
@@ -293,7 +294,7 @@ function exemplo_mc_ideal() {
 
   $("#div_componentes").append("<label class='aux_label'>Componente 1:</label>");
   $("#div_componentes_2").append("<label class='aux_label'>Componente 2:</label>");
-  document.getElementById("label_composicao").innerHTML = "Composição (Benzeno):";
+  document.getElementById("label_composicao").innerHTML = "Composição (fração mássica de Benzeno):";
   document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Benzeno):";
 
   // Liberação dos campos de adição de composições
@@ -329,6 +330,8 @@ function exemplo_mc_ideal() {
   $("#switch").prop("checked", true);
   document.getElementById("div_select").classList.add("disabledDiv");
   document.getElementById("div_select_2").classList.add("disabledDiv");
+  document.getElementById("div_select").setAttribute('hidden', 'hidden');
+  document.getElementById("div_select_2").setAttribute('hidden', 'hidden');
   document.getElementById("range_element").value = 3.5;
 
   Rd = null;
@@ -363,7 +366,7 @@ function exemplo_mc_nao_ideal() {
   mudar_select("div_componentes_2", componente2, "select_componentes_2", data.componentes, "add_comp_2()");
   $("#div_componentes").append("<label class='aux_label'>Componente 1:</label>");
   $("#div_componentes_2").append("<label class='aux_label'>Componente 1:</label>");
-  document.getElementById("label_composicao").innerHTML = "Composição (Etanol):";
+  document.getElementById("label_composicao").innerHTML = "Composição (fração molar de Etanol):";
   document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Etanol):";
 
   // Liberação dos campos de adição de composições
@@ -389,8 +392,9 @@ function exemplo_mc_nao_ideal() {
   $("#tipo_mistura2").prop("checked", true);
   $("#metodo_1").prop("checked", true);
   $("#metodo_1").prop("switch", false);
-  document.getElementById("div_select").className = "input-field col m6 s12";
-  document.getElementById("div_select_2").classList.add("disabledDiv");
+  document.getElementById("div_select").className = "input-field col m12 s12";
+  document.getElementById("div_select").removeAttribute('hidden');
+  document.getElementById("div_select_2").setAttribute('hidden', 'hidden');
   document.getElementById("range_element").value = 4;
 
   Rd = null;
@@ -424,7 +428,7 @@ function exemplo_ps_ideal() {
   mudar_select("div_componentes_2", componente2, "select_componentes_2", data.componentes, "add_comp_2()");
   $("#div_componentes").append("<label class='aux_label'>Componente 1:</label>");
   $("#div_componentes_2").append("<label class='aux_label'>Componente 2:</label>");
-  document.getElementById("label_composicao").innerHTML = "Composição (Benzeno):";
+  document.getElementById("label_composicao").innerHTML = "Composição (fração mássica de Benzeno):";
   document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Benzeno):";
 
   // Liberação dos campos de adição de composições
@@ -460,6 +464,8 @@ function exemplo_ps_ideal() {
   $("#switch").prop("checked", true);
   document.getElementById("div_select").classList.add("disabledDiv");
   document.getElementById("div_select_2").classList.add("disabledDiv");
+  document.getElementById("div_select").setAttribute('hidden', 'hidden');
+  document.getElementById("div_select_2").setAttribute('hidden', 'hidden');
   document.getElementById("range_element").value = 3.5;
 
   Rd = null;
@@ -493,7 +499,7 @@ function exemplo_ps_nao_ideal() {
   mudar_select("div_componentes_2", componente2, "select_componentes_2", data.componentes, "add_comp_2()");
   $("#div_componentes").append("<label class='aux_label'>Componente 1:</label>");
   $("#div_componentes_2").append("<label class='aux_label'>Componente 1:</label>");
-  document.getElementById("label_composicao").innerHTML = "Composição (Etanol):";
+  document.getElementById("label_composicao").innerHTML = "Composição (fração molar de Etanol):";
   document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Etanol):";
 
   // Liberação dos campos de adição de composições
@@ -522,6 +528,8 @@ function exemplo_ps_nao_ideal() {
   $("#metodo_2").prop("switch", false);
   document.getElementById("div_select").className = "input-field col m6 s12";
   document.getElementById("div_select_2").className = "input-field col m6 s12";
+  document.getElementById("div_select").removeAttribute('hidden');
+  document.getElementById("div_select_2").removeAttribute('hidden');
   document.getElementById("select_entalpia").value = 1;
   document.getElementById("range_element").value = 4;
 
