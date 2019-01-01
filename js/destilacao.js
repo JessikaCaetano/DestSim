@@ -294,7 +294,7 @@ function exemplo_mc_ideal() {
 
   $("#div_componentes").append("<label class='aux_label'>Componente 1:</label>");
   $("#div_componentes_2").append("<label class='aux_label'>Componente 2:</label>");
-  document.getElementById("label_composicao").innerHTML = "Composição (fração mássica de Benzeno):";
+  document.getElementById("label_composicao").innerHTML = "Composição (fração <b>mássica</b> de <b>Benzeno</b>):";
   document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Benzeno):";
 
   // Liberação dos campos de adição de composições
@@ -366,7 +366,7 @@ function exemplo_mc_nao_ideal() {
   mudar_select("div_componentes_2", componente2, "select_componentes_2", data.componentes, "add_comp_2()");
   $("#div_componentes").append("<label class='aux_label'>Componente 1:</label>");
   $("#div_componentes_2").append("<label class='aux_label'>Componente 1:</label>");
-  document.getElementById("label_composicao").innerHTML = "Composição (fração molar de Etanol):";
+  document.getElementById("label_composicao").innerHTML = "Composição (fração <b>molar</b> de <b>Etanol</b>):";
   document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Etanol):";
 
   // Liberação dos campos de adição de composições
@@ -428,7 +428,7 @@ function exemplo_ps_ideal() {
   mudar_select("div_componentes_2", componente2, "select_componentes_2", data.componentes, "add_comp_2()");
   $("#div_componentes").append("<label class='aux_label'>Componente 1:</label>");
   $("#div_componentes_2").append("<label class='aux_label'>Componente 2:</label>");
-  document.getElementById("label_composicao").innerHTML = "Composição (fração mássica de Benzeno):";
+  document.getElementById("label_composicao").innerHTML = "Composição (fração <b>mássica</b> de <b>Benzeno</b>):";
   document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Benzeno):";
 
   // Liberação dos campos de adição de composições
@@ -499,7 +499,7 @@ function exemplo_ps_nao_ideal() {
   mudar_select("div_componentes_2", componente2, "select_componentes_2", data.componentes, "add_comp_2()");
   $("#div_componentes").append("<label class='aux_label'>Componente 1:</label>");
   $("#div_componentes_2").append("<label class='aux_label'>Componente 1:</label>");
-  document.getElementById("label_composicao").innerHTML = "Composição (fração molar de Etanol):";
+  document.getElementById("label_composicao").innerHTML = "Composição (fração <b>molar</b> de <b>Etanol</b>):";
   document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Etanol):";
 
   // Liberação dos campos de adição de composições

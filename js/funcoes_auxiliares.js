@@ -121,7 +121,7 @@ function converter() {
 
   }
 
-  document.getElementById("label_composicao").innerHTML = "Composição (fração "+ fracao + " de " + compvolatil + "):";
+  document.getElementById("label_composicao").innerHTML = "Composição (fração <b>"+ fracao + "</b> de <b>" + compvolatil + "</b>):";
 
 }
 
@@ -654,7 +654,7 @@ function add_comp_1() {
     c_added_2 == true;
     add_atividade("Escolha uma opção");
     calcular_comp_volatil();
-    document.getElementById("label_composicao").innerHTML = "Composição (fração "+ fracao + " de " + compvolatil + "):";
+    document.getElementById("label_composicao").innerHTML = "Composição (fração <b>"+ fracao + "</b> de <b>" + compvolatil + "</b>):";
     document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
 
   }
@@ -683,7 +683,7 @@ function add_comp_2() {
     c_added_1 == true;
     add_atividade("Escolha uma opção");
     calcular_comp_volatil();
-    document.getElementById("label_composicao").innerHTML = "Composição (fração "+ fracao + " de " + compvolatil + "):";
+    document.getElementById("label_composicao").innerHTML = "Composição (fração <b>"+ fracao + "</b> de <b>" + compvolatil + "</b>):";
     document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
 
   }
