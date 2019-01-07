@@ -221,6 +221,7 @@ function calcular_comp_volatil() {
 
 }
 
+// Função que calcula o número mínimo de prayos
 function calcular_num_min_pratos() {
 
   Rd = null;
@@ -736,6 +737,7 @@ function mostrar_label_1() {
     document.getElementById("label_info_2").removeAttribute('hidden');
     document.getElementById("label_info_3").removeAttribute('hidden');
     document.getElementById("label_info_6").removeAttribute('hidden');
+    document.getElementById("label_info_7").removeAttribute('hidden');
     info_on_1 = true;
 
   } else if (info_on_1 == true) {
@@ -746,6 +748,7 @@ function mostrar_label_1() {
     document.getElementById("label_info_2").setAttribute('hidden', 'hidden');
     document.getElementById("label_info_3").setAttribute('hidden', 'hidden');
     document.getElementById("label_info_6").setAttribute('hidden', 'hidden');
+    document.getElementById("label_info_7").setAttribute('hidden', 'hidden');
     info_on_1 = false;
 
   }
@@ -779,6 +782,7 @@ function mostrar_label_2() {
 
 }
 
+// Função que direciona para o botão da razão de refluxo
 function rodar_calculo() {
 
   document.getElementById("range_element").className = "";
@@ -788,8 +792,10 @@ function rodar_calculo() {
 
 }
 
+// Função que retorna ao início da simulação caso algum input esteja incoerente
 function bloquear_calculo() {
 
+  // Habilitação dos campos de entrada e desabilitação do campo da razão de refluxo
   document.getElementById("div_componentes").className = "input-field col s12";
   document.getElementById("div_componentes_2").className = "input-field col s12";
   document.getElementById("div_label_switch").className = "row  m12 s12";
@@ -814,6 +820,7 @@ function bloquear_calculo() {
 
 }
 
+// Função que verifica os inputs
 function razao_refluxo() {
 
   // Limpeza de variáveis
@@ -823,7 +830,7 @@ function razao_refluxo() {
   metodo_entalpia = null;
   verificar_range = false;
 
-  // Habilitação do slider
+  // Desabilitação dos campos de entrada
   document.getElementById("div_componentes").classList.add("Disabled_Range");
   document.getElementById("div_componentes_2").classList.add("Disabled_Range");
   document.getElementById("div_label_switch").classList.add("Disabled_Range");
@@ -846,7 +853,7 @@ function razao_refluxo() {
 
   if (c_added_1 == true && c_added_2 == true) {
 
-    //Alerta caso o usuário insira dois componentes idêncticos
+    //Alerta caso o usuário insira dois componentes idênticos
     if (componente1 == componente2) {
 
       Materialize.toast("Por favor, escolha dois componentes distintos.", 2500, "red darken-4 justify-center");
@@ -882,6 +889,7 @@ function razao_refluxo() {
         //Inserção do método gráfico a partir da Check-Box
         metodo_grafico = valor_radio("grupo_2");
 
+        // Adição da razão de refluxo de acordo com o slider
         Rd = null;
         Rd = parseFloat(document.getElementById("range_element").value);
 
@@ -895,6 +903,7 @@ function razao_refluxo() {
           //Chamada da função de cálculo da curva de ELV e McCabe-Thiele de acordo com o tipo de mistura
           if (tipo_mistura == "Mistura Ideal") {
 
+            // Permissão para rodar o cálculo
             rodar_calculo();
 
           } else if (tipo_mistura == "Mistura Não Ideal") {
@@ -908,11 +917,12 @@ function razao_refluxo() {
 
               if (xD < xmax && xF < xmax) {
 
-                // Habilitação do slider
+                // Permissão para rodar o cálculo
                 rodar_calculo();
 
               } else {
 
+                // Notificação e bloqueio do cálculo
                 Materialize.toast("Esta mistura não pode ser destilada até concentrações molares maiores que " + xmax.toFixed(2) + " devido à formação de azeótropo.", 3000, "red darken-4 justify-center");
                 bloquear_calculo();
 
@@ -920,6 +930,7 @@ function razao_refluxo() {
 
             } else {
 
+              // Notificação e bloqueio do cálculo
               Materialize.toast("Por favor, defina o método de cálculo dos coeficientes de atividade.", 2500, "red darken-4 justify-center");
               bloquear_calculo();
 
@@ -927,6 +938,7 @@ function razao_refluxo() {
 
           } else {
 
+            // Notificação e bloqueio do cálculo
             Materialize.toast("Por favor, defina o tipo da mistura escolhida.", 2500, "red darken-4 justify-center");
             bloquear_calculo();
 
@@ -940,12 +952,12 @@ function razao_refluxo() {
           //Chamada da função de cálculo da curva de ELV de acordo com o tipo de mistura
           if (tipo_mistura == "Mistura Ideal") {
 
-            // Habilitação do slider
+            // Permissão para rodar o cálculo
             rodar_calculo();
 
           } else if (tipo_mistura == "Mistura Não Ideal") {
 
-            // Verificaçãoda inserção do método de cálculo de atividade
+            // Verificação da inserção do método de cálculo de atividade
             add_metodo();
 
             // Verificaçãoda inserção do método de cálculo de entalpia
@@ -958,11 +970,12 @@ function razao_refluxo() {
 
               if (xD < xmax && xF < xmax) {
 
-                // Habilitação do slider
+                // Permissão para rodar o cálculo
                 rodar_calculo();
 
               } else {
 
+                // Notificação e bloqueio do cálculo
                 Materialize.toast("Esta mistura não pode ser destilada até concentrações molares maiores que " + xmax.toFixed(2) + " devido à formação de azeótropo.", 3000, "red darken-4 justify-center");
                 bloquear_calculo();
 
@@ -970,6 +983,7 @@ function razao_refluxo() {
 
             } else {
 
+              // Notificação e bloqueio do cálculo
               Materialize.toast("Por favor, defina o método de cálculo dos coeficientes de atividade e da entalpia residual.", 2500, "red darken-4 justify-center");
               bloquear_calculo();
 
@@ -977,6 +991,7 @@ function razao_refluxo() {
 
           } else {
 
+            // Notificação e bloqueio do cálculo
             Materialize.toast("Por favor, defina o tipo da mistura escolhida.", 2500, "red darken-4 justify-center");
             bloquear_calculo();
 
@@ -984,6 +999,7 @@ function razao_refluxo() {
 
         } else {
 
+          // Notificação e bloqueio do cálculo
           Materialize.toast("Por favor, defina o método gráfico escolhido.", 2500, "red darken-4 justify-center");
           bloquear_calculo();
 
@@ -991,6 +1007,7 @@ function razao_refluxo() {
 
       } else {
 
+        // Notificação e bloqueio do cálculo
         Materialize.toast("Por favor, defina valores coerentes para as composições de alimentação, topo e fundo.", 3000, "red darken-4 justify-center");
         bloquear_calculo();
 
@@ -1000,6 +1017,7 @@ function razao_refluxo() {
 
   } else {
 
+    // Notificação e bloqueio do cálculo
     Materialize.toast("Por favor, defina todos os componentes da mistura.", 2500, "red darken-4 justify-center");
     bloquear_calculo();
 
@@ -1007,8 +1025,10 @@ function razao_refluxo() {
 
 }
 
+// Função que bloqueia a resposta quando há algum input incoerente
 function bloquear_respostas() {
 
+  // Desabilitação do campo da razão de refluxo e os resultados
   document.getElementById("range_element").value = "50";
   document.getElementById("range_element").disabled = "disabled";
   document.getElementById("div_chart").classList.add("Disabled_Range");

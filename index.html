@@ -62,7 +62,7 @@
 
           <div class="separator col m12 s12">
 
-            <label class="informativo col m12 s12">Não sabe como começar? Escolha sua mistura ou utilize os botões de exemplo no final desta seção.</label>
+            <label class="informativo col m12 s12">Não sabe por onde começar? Escolha sua mistura ou utilize os botões de exemplo no final desta seção.</label>
 
           </div>
 
@@ -186,6 +186,7 @@
               // Função para desabilitar caixa de rolagem do método de atividade caso a mistura seja ideal
               function disableSelect() {
 
+                // Desabilitação dos campos de resultados e da razão de refluxo
                 document.getElementById("range_element").value = "50";
                 document.getElementById("range_element").disabled = "disabled";
                 document.getElementById("div_chart").classList.add("Disabled_Range");
@@ -226,7 +227,7 @@
 
           <div class="col m12 s12 center">
             <!-- Botão para calcular -->
-            <a class="btn-small waves-effect white-text cyan darken-4"  onclick=razao_refluxo()>Calcular</a>
+            <a class="btn-small waves-effect white-text cyan darken-4" onclick=razao_refluxo()>Calcular</a>
 
           </div>
 
@@ -322,23 +323,27 @@
 
               <p class="range-field">
                 <label for="range_element">Razão de Refluxo:</label>
-                <input type="range" id="range_element" max="100" value="50" step="0.1" oninput="change_chart()"/>
+                <input type="range" id="range_element" max="100" value="50" step="0.1" oninput="change_chart()" />
               </p>
 
             </form>
 
             <div class="row-informativos col m12 s12">
 
+              <!-- Botão para visualizar mais informações -->
               <div id="btn_info_1" class="col m12 s12">
-                <a class="btn-floating pulse grey lighten-4" onclick="mostrar_label_1()"><i class="material-icons left">info_outline</i></a><label id="duvidas_1" class="botoes_informacao">Dúvidas?</label>
+                <a class="btn-floating pulse grey lighten-4" onclick="mostrar_label_1()"><i class="material-icons left">info_outline</i></a><label id="duvidas_1" class="botoes_informacao">Quer saber mais?</label>
               </div>
-              <label id="label_info_1" class="col m11 s10" hidden>Considera-se que a mistura entra na coluna como líquido saturado.</label>
-              <label id="label_info_2" class="col m12 s12" hidden>Quando a razão de refluxo tende a seu valor mínimo, o número de estágios tende a infinito.</label>
-              <label id="label_info_3" class="col m12 s12" hidden>Quando a razão de refluxo tende a um valor alto, obtém-se o número mínimo de pratos.</label>
-              <label id="label_info_6" class="col m12 s12" hidden>Os pratos são enumerados no gráfico de cima para baixo.</label>
+
+              <label id="label_info_6" class="col m10 s10" hidden>Os pratos são enumerados no gráfico de cima para baixo.</label>
+              <label id="label_info_7" class="col m11 s12" hidden>Considera-se que a mistura entra na coluna como líquido saturado.</label>
+              <label id="label_info_1" class="col m11 s12" hidden>Quando a razão de refluxo tende ao seu valor mínimo, o número de estágios tende ao infinito.</label>
+              <label id="label_info_2" class="col m12 s12" hidden>Quando a razão de refluxo tende a um valor alto, obtém-se o número mínimo de pratos.</label>
+              <label id="label_info_3" class="col m12 s12" hidden>Uma razão de refluxo mínima ou um número mínimo de pratos muito altos podem significar que a sua mistura é difícil de destilar.</label>
 
             </div>
 
+            <!-- Resultados princpais -->
             <div id="div_resultados">
 
               <p class="h6 col m6 s12">Número de estágios ideais: <span id="num_estagios"></span></p>
@@ -349,6 +354,7 @@
 
             </div>
 
+            <!-- Label que direciona para a tabela -->
             <div class="separator col m12 s12">
 
               <label class="informativo col m12 s12">Quer saber a composição de cada estágio? Estão em uma tabela logo abaixo.</label>
@@ -373,11 +379,13 @@
       <div class="card grey lighten-4">
 
         <div class="row card-content">
+
           <!-- Resultados da composição de cada estágio -->
           <span class="center-align card-title">Composição dos Estágios</span>
 
           <div class="row-informativos col m12 s12">
 
+            <!-- Botão com mais informações -->
             <div id="btn_info_2" class="col m12 s12">
               <a class="btn-floating pulse grey lighten-4" onclick="mostrar_label_2()"><i class="material-icons left">info_outline</i></a><label id="duvidas_2" class="botoes_informacao">Dúvidas?</label>
             </div>
@@ -389,6 +397,7 @@
 
           <div class="col m6 s12">
 
+            <!-- Tabela com as composições -->
             <table id="tabela_composicoes_1">
 
               <thead id="tabela_1_head">

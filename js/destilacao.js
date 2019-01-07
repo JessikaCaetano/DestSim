@@ -15,7 +15,7 @@ criar_select("select_componentes_2", data.componentes, "Escolha uma opção");
 criar_select("select_atividade", data.metodos_atividade, "Escolha uma opção");
 criar_select("select_entalpia", data.metodos_entalpia, "Escolha uma opção");
 
-// Desabilitação do slider enquanto não houverem dados inseridos
+// Desabilitação dos resultados enquanto não houverem dados inseridos
 bloquear_respostas();
 
 // Início da programação dos cálculos com a declaração das variáveis
@@ -61,9 +61,10 @@ $(document).on("wheel", "input[type=number]", function(e) {
   $(this).blur();
 });
 
-//Comandos de cálculo do botão Calcular
+//Comandos de cálculo do slider da razão de refluxo, após verificação dos inputs
 function botao_calcular() {
 
+  // Habilitação dos campos de entrada
   document.getElementById("div_componentes").className = "input-field col s12";
   document.getElementById("div_componentes_2").className = "input-field col s12";
   document.getElementById("div_label_switch").className = "row  m12 s12";
@@ -159,9 +160,11 @@ function exemplo_mc_ideal() {
   componente1 = "Benzeno";
   componente2 = "Tolueno";
 
+  // Atualização dos selects de métodos de atividade e entalpias residuais
   mudar_select("div_componentes", componente1, "select_componentes_1", data.componentes, "add_comp_1()");
   mudar_select("div_componentes_2", componente2, "select_componentes_2", data.componentes, "add_comp_2()");
 
+  // Atualização da label de composição
   $("#div_componentes").append("<label class='aux_label'>Componente 1:</label>");
   $("#div_componentes_2").append("<label class='aux_label'>Componente 2:</label>");
   document.getElementById("label_composicao").innerHTML = "Composição (fração <b>mássica</b> de <b>Benzeno</b>):";
@@ -211,6 +214,7 @@ function exemplo_mc_ideal() {
   document.getElementById("div_select_2").setAttribute('hidden', 'hidden');
   document.getElementById("range_element").value = 3.5;
 
+  // Definição da razão de refluxo
   Rd = null;
   Rd = 3.5;
 
@@ -242,7 +246,9 @@ function exemplo_mc_nao_ideal() {
   mudar_select("div_componentes", componente1, "select_componentes_1", data.componentes, "add_comp_1()");
   mudar_select("div_componentes_2", componente2, "select_componentes_2", data.componentes, "add_comp_2()");
   $("#div_componentes").append("<label class='aux_label'>Componente 1:</label>");
-  $("#div_componentes_2").append("<label class='aux_label'>Componente 1:</label>");
+  $("#div_componentes_2").append("<label class='aux_label'>Componente 2:</label>");
+
+  // Atualização da label de composição
   document.getElementById("label_composicao").innerHTML = "Composição (fração <b>molar</b> de <b>Etanol</b>):";
   document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Etanol):";
 
@@ -283,6 +289,7 @@ function exemplo_mc_nao_ideal() {
   document.getElementById("div_select_2").setAttribute('hidden', 'hidden');
   document.getElementById("range_element").value = 4;
 
+  // Definição da razão de refluxo
   Rd = null;
   Rd = 4;
 
@@ -303,6 +310,7 @@ function exemplo_ps_ideal() {
   // Limpeza das checkboxes
   limpar_checkboxes()
   verificar_range = true;
+
   // Habilitação do slider
   document.getElementById("range_element").className = "";
   document.getElementById("range_element").disabled = "";
@@ -314,6 +322,8 @@ function exemplo_ps_ideal() {
   mudar_select("div_componentes_2", componente2, "select_componentes_2", data.componentes, "add_comp_2()");
   $("#div_componentes").append("<label class='aux_label'>Componente 1:</label>");
   $("#div_componentes_2").append("<label class='aux_label'>Componente 2:</label>");
+
+  // Atualização da label de composições
   document.getElementById("label_composicao").innerHTML = "Composição (fração <b>mássica</b> de <b>Benzeno</b>):";
   document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Benzeno):";
 
@@ -361,6 +371,7 @@ function exemplo_ps_ideal() {
   document.getElementById("div_select_2").setAttribute('hidden', 'hidden');
   document.getElementById("range_element").value = 3.5;
 
+  // Definição da razão de refluxo
   Rd = null;
   Rd = 3.5;
 
@@ -392,6 +403,8 @@ function exemplo_ps_nao_ideal() {
   mudar_select("div_componentes_2", componente2, "select_componentes_2", data.componentes, "add_comp_2()");
   $("#div_componentes").append("<label class='aux_label'>Componente 1:</label>");
   $("#div_componentes_2").append("<label class='aux_label'>Componente 1:</label>");
+
+  // Atualização da label de composições
   document.getElementById("label_composicao").innerHTML = "Composição (fração <b>molar</b> de <b>Etanol</b>):";
   document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Etanol):";
 
@@ -436,6 +449,7 @@ function exemplo_ps_nao_ideal() {
   document.getElementById("select_entalpia").value = 1;
   document.getElementById("range_element").value = 4;
 
+// Definição da razão de refluxo
   Rd = null;
   Rd = 4;
 
