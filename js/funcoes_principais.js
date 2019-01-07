@@ -1491,6 +1491,7 @@ function Ponchon_Savarit() {
 // Muda o chart de acordo com mudança no slider
 function change_chart() {
 
+if(verificar_range == true){
   Rd = null;
   Rd = parseFloat(document.getElementById("range_element").value);
 
@@ -1522,5 +1523,11 @@ function change_chart() {
     alterar_label();
 
   }
+}else{
+
+  botao_calcular();
+  verificar_range = true;
+
+}
 
 }

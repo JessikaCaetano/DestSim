@@ -16,8 +16,7 @@ criar_select("select_atividade", data.metodos_atividade, "Escolha uma opção");
 criar_select("select_entalpia", data.metodos_entalpia, "Escolha uma opção");
 
 // Desabilitação do slider enquanto não houverem dados inseridos
-document.getElementById("range_element").disabled = "disabled";
-document.getElementById("range_element").classList.add("Disabled_Range");
+bloquear_respostas();
 
 // Início da programação dos cálculos com a declaração das variáveis
 var pressao = 101.325;
@@ -54,7 +53,8 @@ var T1_aux = [];
 var c_added_1 = false,
   c_added_2 = false,
   metodo_added = false,
-  metodo_entalpia_added = false;
+  metodo_entalpia_added = false,
+  verificar_range = false;
 
 // Desabilitar scroll nos inputs das composições
 $(document).on("wheel", "input[type=number]", function(e) {
@@ -64,212 +64,81 @@ $(document).on("wheel", "input[type=number]", function(e) {
 //Comandos de cálculo do botão Calcular
 function botao_calcular() {
 
-  // Limpeza de variáveis
-  componente1 = null;
-  componente2 = null;
-  metodo_atividade = null;
-  metodo_entalpia = null;
+  document.getElementById("div_componentes").className = "input-field col s12";
+  document.getElementById("div_componentes_2").className = "input-field col s12";
+  document.getElementById("div_label_switch").className = "row  m12 s12";
+  document.getElementById("div_composicoes").className = "row";
+  document.getElementById("div_atividade").className = "col m12 s12";
+  document.getElementById("div_metodo_mistura").className = "col m12";
+  document.getElementById("div_chart").className = "chart-container";
+  document.getElementById("div_resultados").className = "";
 
-  //Conferindo se os componentes foram adicionados
-  componente1 = data.componentes[document.getElementById("select_componentes_1").value - 1];
-  componente2 = data.componentes[document.getElementById("select_componentes_2").value - 1];
+  if (tipo_mistura == "Mistura Não Ideal" && metodo_grafico == "McCabe-Thiele") {
 
-  if (componente1 && componente2) {
-    c_added_1 = true;
-    c_added_2 = true;
+    document.getElementById("div_select").className = "input-field col m12 s12";
+
+  } else if (tipo_mistura == "Mistura Não Ideal" && metodo_grafico == "Ponchon-Savarit") {
+
+    document.getElementById("div_select").className = "input-field col m6 s12";
+    document.getElementById("div_select_2").className = "input-field col m6 s12";
+
   }
 
-  if (c_added_1 == true && c_added_2 == true) {
+  if (metodo_grafico == "McCabe-Thiele") {
 
-    //Alerta caso o usuário insira dois componentes idêncticos
-    if (componente1 == componente2) {
+    //Chamada da função de cálculo da curva de ELV e McCabe-Thiele de acordo com o tipo de mistura
+    if (tipo_mistura == "Mistura Ideal") {
 
-      Materialize.toast("Por favor, escolha dois componentes distintos.", 2500, "red darken-4 justify-center");
-      document.getElementById("range_element").disabled = "disabled";
-      document.getElementById("range_element").classList.add("Disabled_Range");
+      document.getElementById("div_select").classList.add("disabledDiv");
+      curva_eq_ideal();
+      McCabe_Ideal();
+      // Resultados do número de pratos, prato de alimentação e composição de cada estágio
+      separar_resultados();
+      composicao_estagios();
+      gerar_grafico_McCabe(900);
+      alterar_label();
 
-    } else {
+    } else if (tipo_mistura == "Mistura Não Ideal") {
 
-      // Adição dos valores de composições
-      valor_composicoes();
-
-      if (xF && xB && xD && xF > xB && xD > xF && xD <= 1 && xB >= 0) {
-
-        // Habilitação do slider
-        document.getElementById("range_element").className = "";
-        document.getElementById("range_element").disabled = "";
-        document.getElementById("range_element").value = 50;
-
-        // Conversão dos valores de composição caso necessário caso necessário
-        if (tipo_composicao == true) {
-
-          // Adição das massas molares dos componentes
-          massa_molar(componente1, componente2);
-
-          mass_to_mol(parseFloat(xF));
-          xF = x_molar;
-          mass_to_mol(parseFloat(xD));
-          xD = x_molar;
-          mass_to_mol(parseFloat(xB));
-          xB = x_molar;
-
-        }
-
-        //Inserção do método gráfico a partir da Check-Box
-        metodo_grafico = valor_radio("grupo_2");
-
-        Rd = null;
-        Rd = parseFloat(document.getElementById("range_element").value);
-
-        if (metodo_grafico == "McCabe-Thiele") {
-
-          //Inserção do tipo de mistura a partir da Check-Box
-          tipo_mistura = valor_radio("grupo_1");
-
-          document.getElementById("div_select_2").classList.add("disabledDiv");
-
-          //Chamada da função de cálculo da curva de ELV e McCabe-Thiele de acordo com o tipo de mistura
-          if (tipo_mistura == "Mistura Ideal") {
-
-            document.getElementById("div_select").classList.add("disabledDiv");
-            curva_eq_ideal();
-            McCabe_Ideal();
-            // Resultados do número de pratos, prato de alimentação e composição de cada estágio
-            separar_resultados();
-            composicao_estagios();
-            gerar_grafico_McCabe(900);
-            alterar_label();
-
-          } else if (tipo_mistura == "Mistura Não Ideal") {
-
-            // Verificação da inserção do método de atividade
-            add_metodo();
-
-            if (metodo_added == true) {
-
-              curva_eq_nao_ideal();
-
-              if (xD < xmax && xF < xmax) {
-
-                McCabe_nao_ideal();
-                // Resultados do número de pratos, prato de alimentação e composição de cada estágio
-                separar_resultados();
-                composicao_estagios();
-                gerar_grafico_McCabe(900);
-                alterar_label();
-
-              } else {
-
-                Materialize.toast("Esta mistura não pode ser destilada até concentrações molares maiores que " + xmax.toFixed(2) + " devido à formação de azeótropo.", 3000, "red darken-4 justify-center");
-                document.getElementById("range_element").disabled = "disabled";
-                document.getElementById("range_element").classList.add("Disabled_Range");
-
-              }
-
-            } else {
-
-              Materialize.toast("Por favor, defina o método de cálculo dos coeficientes de atividade.", 2500, "red darken-4 justify-center");
-              document.getElementById("range_element").disabled = "disabled";
-              document.getElementById("range_element").classList.add("Disabled_Range");
-
-            }
-
-          } else {
-
-            Materialize.toast("Por favor, defina o tipo da mistura escolhida.", 2500, "red darken-4 justify-center");
-            document.getElementById("range_element").disabled = "disabled";
-            document.getElementById("range_element").classList.add("Disabled_Range");
-
-          }
-
-        } else if (metodo_grafico == "Ponchon-Savarit") {
-
-          //Inserção do tipo de mistura a partir da Check-Box
-          tipo_mistura = valor_radio("grupo_1");
-
-          //Chamada da função de cálculo da curva de ELV de acordo com o tipo de mistura
-          if (tipo_mistura == "Mistura Ideal") {
-
-            document.getElementById("div_select").classList.add("disabledDiv");
-            document.getElementById("div_select_2").classList.add("disabledDiv");
-            curva_eq_ideal();
-            curva_entalpia_ideal();
-            Ponchon_Savarit();
-            // Resultados do número de pratos, prato de alimentação e composição de cada estágio
-            separar_resultados();
-            composicao_estagios();
-            gerar_grafico_Ponchon(900);
-            alterar_label();
-
-          } else if (tipo_mistura == "Mistura Não Ideal") {
-
-            // Verificaçãoda inserção do método de cálculo de atividade
-            add_metodo();
-
-            // Verificaçãoda inserção do método de cálculo de entalpia
-            add_metodo_entalpia();
-
-            if (metodo_added == true && metodo_added_entalpia == true) {
-
-              curva_eq_nao_ideal();
-              curva_entalpia_nao_ideal();
-
-              if (xD < xmax && xF < xmax) {
-
-                Ponchon_Savarit();
-                // Resultados do número de pratos, prato de alimentação e composição de cada estágio
-                separar_resultados();
-                composicao_estagios();
-                gerar_grafico_Ponchon(900);
-                alterar_label();
-
-              } else {
-
-                Materialize.toast("Esta mistura não pode ser destilada até concentrações molares maiores que " + xmax.toFixed(2) + " devido à formação de azeótropo.", 3000, "red darken-4 justify-center");
-                document.getElementById("range_element").disabled = "disabled";
-                document.getElementById("range_element").classList.add("Disabled_Range");
-
-              }
-
-            } else {
-
-              Materialize.toast("Por favor, defina o método de cálculo dos coeficientes de atividade e da entalpia residual.", 2500, "red darken-4 justify-center");
-              document.getElementById("range_element").disabled = "disabled";
-              document.getElementById("range_element").classList.add("Disabled_Range");
-
-            }
-
-          } else {
-
-            Materialize.toast("Por favor, defina o tipo da mistura escolhida.", 2500, "red darken-4 justify-center");
-            document.getElementById("range_element").disabled = "disabled";
-            document.getElementById("range_element").classList.add("Disabled_Range");
-
-          }
-
-        } else {
-
-          Materialize.toast("Por favor, defina o método gráfico escolhido.", 2500, "red darken-4 justify-center");
-          document.getElementById("range_element").disabled = "disabled";
-          document.getElementById("range_element").classList.add("Disabled_Range");
-
-        }
-
-      } else {
-
-        Materialize.toast("Por favor, defina valores coerentes para as composições de alimentação, topo e fundo.", 3000, "red darken-4 justify-center");
-        document.getElementById("range_element").disabled = "disabled";
-        document.getElementById("range_element").classList.add("Disabled_Range");
-
-      }
+      curva_eq_nao_ideal();
+      McCabe_nao_ideal();
+      // Resultados do número de pratos, prato de alimentação e composição de cada estágio
+      separar_resultados();
+      composicao_estagios();
+      gerar_grafico_McCabe(900);
+      alterar_label();
 
     }
 
-  } else {
+  } else if (metodo_grafico == "Ponchon-Savarit") {
 
-    Materialize.toast("Por favor, defina todos os componentes da mistura.", 2500, "red darken-4 justify-center");
-    document.getElementById("range_element").disabled = "disabled";
-    document.getElementById("range_element").classList.add("Disabled_Range");
+    //Inserção do tipo de mistura a partir da Check-Box
+    tipo_mistura = valor_radio("grupo_1");
+
+    //Chamada da função de cálculo da curva de ELV de acordo com o tipo de mistura
+    if (tipo_mistura == "Mistura Ideal") {
+
+      document.getElementById("div_select").classList.add("disabledDiv");
+      document.getElementById("div_select_2").classList.add("disabledDiv");
+      curva_eq_ideal();
+      curva_entalpia_ideal();
+      Ponchon_Savarit();
+      // Resultados do número de pratos, prato de alimentação e composição de cada estágio
+      separar_resultados();
+      composicao_estagios();
+      gerar_grafico_Ponchon(900);
+      alterar_label();
+
+    } else if (tipo_mistura == "Mistura Não Ideal") {
+
+      Ponchon_Savarit();
+      // Resultados do número de pratos, prato de alimentação e composição de cada estágio
+      separar_resultados();
+      composicao_estagios();
+      gerar_grafico_Ponchon(900);
+      alterar_label();
+
+    }
 
   }
 
@@ -280,6 +149,7 @@ function exemplo_mc_ideal() {
 
   // Limpeza das checkboxes
   limpar_checkboxes()
+  verificar_range = true;
 
   // Habilitação do slider
   document.getElementById("range_element").className = "";
@@ -298,7 +168,14 @@ function exemplo_mc_ideal() {
   document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Benzeno):";
 
   // Liberação dos campos de adição de composições
+  document.getElementById("div_componentes").className = "input-field col s12";
+  document.getElementById("div_componentes_2").className = "input-field col s12";
+  document.getElementById("div_label_switch").className = "row  m12 s12";
   document.getElementById("div_composicoes").className = "row";
+  document.getElementById("div_atividade").className = "col m12 s12";
+  document.getElementById("div_metodo_mistura").className = "col m12";
+  document.getElementById("div_chart").className = "chart-container";
+  document.getElementById("div_resultados").className = "";
 
   // Adição das massas molar dos componentes
   massa_molar(componente1, componente2);
@@ -354,7 +231,7 @@ function exemplo_mc_nao_ideal() {
 
   // Limpeza das checkboxes
   limpar_checkboxes()
-
+  verificar_range = true;
   // Habilitação do slider
   document.getElementById("range_element").className = "";
   document.getElementById("range_element").disabled = "";
@@ -370,7 +247,16 @@ function exemplo_mc_nao_ideal() {
   document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Etanol):";
 
   // Liberação dos campos de adição de composições
+  document.getElementById("div_componentes").className = "input-field col s12";
+  document.getElementById("div_componentes_2").className = "input-field col s12";
+  document.getElementById("div_label_switch").className = "row  m12 s12";
   document.getElementById("div_composicoes").className = "row";
+  document.getElementById("div_atividade").className = "col m12 s12";
+  document.getElementById("div_metodo_mistura").className = "col m12";
+  document.getElementById("div_chart").className = "chart-container";
+  document.getElementById("div_resultados").className = "";
+  document.getElementById("div_select").className = "input-field col m12 s12";
+
 
   // Adição das massas molar dos componentes
   massa_molar(componente1, componente2);
@@ -416,7 +302,7 @@ function exemplo_ps_ideal() {
 
   // Limpeza das checkboxes
   limpar_checkboxes()
-
+  verificar_range = true;
   // Habilitação do slider
   document.getElementById("range_element").className = "";
   document.getElementById("range_element").disabled = "";
@@ -432,7 +318,14 @@ function exemplo_ps_ideal() {
   document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Benzeno):";
 
   // Liberação dos campos de adição de composições
+  document.getElementById("div_componentes").className = "input-field col s12";
+  document.getElementById("div_componentes_2").className = "input-field col s12";
+  document.getElementById("div_label_switch").className = "row  m12 s12";
   document.getElementById("div_composicoes").className = "row";
+  document.getElementById("div_atividade").className = "col m12 s12";
+  document.getElementById("div_metodo_mistura").className = "col m12";
+  document.getElementById("div_chart").className = "chart-container";
+  document.getElementById("div_resultados").className = "";
 
   // Adição das massas molar dos componentes
   massa_molar(componente1, componente2);
@@ -487,7 +380,7 @@ function exemplo_ps_ideal() {
 function exemplo_ps_nao_ideal() {
 
   limpar_checkboxes()
-
+  verificar_range = true;
   // Habilitação do slider
   document.getElementById("range_element").className = "";
   document.getElementById("range_element").disabled = "";
@@ -503,7 +396,17 @@ function exemplo_ps_nao_ideal() {
   document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Etanol):";
 
   // Liberação dos campos de adição de composições
+  document.getElementById("div_componentes").className = "input-field col s12";
+  document.getElementById("div_componentes_2").className = "input-field col s12";
+  document.getElementById("div_label_switch").className = "row  m12 s12";
   document.getElementById("div_composicoes").className = "row";
+  document.getElementById("div_atividade").className = "col m12 s12";
+  document.getElementById("div_metodo_mistura").className = "col m12";
+  document.getElementById("div_chart").className = "chart-container";
+  document.getElementById("div_resultados").className = "";
+  document.getElementById("div_select").className = "input-field col m6 s12";
+  document.getElementById("div_select_2").className = "input-field col m6 s12";
+
 
   // Adição das massas molar dos componentes
   massa_molar(componente1, componente2);

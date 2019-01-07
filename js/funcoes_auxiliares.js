@@ -81,6 +81,13 @@ function mass_to_mol(value) {
 // Chama as funções de conversão
 function converter() {
 
+  document.getElementById("range_element").value = "50";
+  document.getElementById("range_element").disabled = "disabled";
+  document.getElementById("range_element").classList.add("Disabled_Range");
+  document.getElementById("div_chart").classList.add("Disabled_Range");
+  document.getElementById("div_resultados").classList.add("Disabled_Range");
+  verificar_range = false;
+
   // Definição dos valores inseridos e verificação da posição do switch
   valor_composicoes();
 
@@ -121,7 +128,7 @@ function converter() {
 
   }
 
-  document.getElementById("label_composicao").innerHTML = "Composição (fração <b>"+ fracao + "</b> de <b>" + compvolatil + "</b>):";
+  document.getElementById("label_composicao").innerHTML = "Composição (fração <b>" + fracao + "</b> de <b>" + compvolatil + "</b>):";
 
 }
 
@@ -362,6 +369,14 @@ function composicao_estagios() {
 
 // Funções de definição do método de cálculo de atividade e de entalpia
 function add_metodo() {
+
+
+  document.getElementById("range_element").value = "50";
+  document.getElementById("range_element").disabled = "disabled";
+  document.getElementById("div_chart").classList.add("Disabled_Range");
+  document.getElementById("range_element").classList.add("Disabled_Range");
+  document.getElementById("div_resultados").classList.add("Disabled_Range");
+  verificar_range = false;
 
   metodo_added = false;
 
@@ -637,7 +652,10 @@ function add_comp_1() {
 
   document.getElementById("range_element").value = "50";
   document.getElementById("range_element").disabled = "disabled";
+  document.getElementById("div_chart").classList.add("Disabled_Range");
   document.getElementById("range_element").classList.add("Disabled_Range");
+  document.getElementById("div_resultados").classList.add("Disabled_Range");
+  verificar_range = false;
   c_added_1 = true;
 
   // Adição dos componentes a partir das barras de rolagem
@@ -654,7 +672,7 @@ function add_comp_1() {
     c_added_2 == true;
     add_atividade("Escolha uma opção");
     calcular_comp_volatil();
-    document.getElementById("label_composicao").innerHTML = "Composição (fração <b>"+ fracao + "</b> de <b>" + compvolatil + "</b>):";
+    document.getElementById("label_composicao").innerHTML = "Composição (fração <b>" + fracao + "</b> de <b>" + compvolatil + "</b>):";
     document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
 
   }
@@ -666,7 +684,10 @@ function add_comp_2() {
 
   document.getElementById("range_element").value = "50";
   document.getElementById("range_element").disabled = "disabled";
+  document.getElementById("div_chart").classList.add("Disabled_Range");
   document.getElementById("range_element").classList.add("Disabled_Range");
+  document.getElementById("div_resultados").classList.add("Disabled_Range");
+  verificar_range = false;
   c_added_2 = true;
 
   // Adição dos componentes a partir das barras de rolagem
@@ -683,7 +704,7 @@ function add_comp_2() {
     c_added_1 == true;
     add_atividade("Escolha uma opção");
     calcular_comp_volatil();
-    document.getElementById("label_composicao").innerHTML = "Composição (fração <b>"+ fracao + "</b> de <b>" + compvolatil + "</b>):";
+    document.getElementById("label_composicao").innerHTML = "Composição (fração <b>" + fracao + "</b> de <b>" + compvolatil + "</b>):";
     document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
 
   }
@@ -755,5 +776,244 @@ function mostrar_label_2() {
     document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
 
   }
+
+}
+
+function rodar_calculo() {
+
+  document.getElementById("range_element").className = "";
+  document.getElementById("range_element").disabled = "";
+  document.getElementById("range_element").value = 50;
+  Materialize.toast("Por favor, escolha uma razão de refluxo.", 1500, "cyan darken-4 justify-center");
+
+}
+
+function bloquear_calculo() {
+
+  document.getElementById("div_componentes").className = "input-field col s12";
+  document.getElementById("div_componentes_2").className = "input-field col s12";
+  document.getElementById("div_label_switch").className = "row  m12 s12";
+  document.getElementById("div_composicoes").className = "row";
+  document.getElementById("div_atividade").className = "col m12 s12";
+  document.getElementById("div_metodo_mistura").className = "col m12";
+  document.getElementById("range_element").disabled = "disabled";
+  document.getElementById("range_element").classList.add("Disabled_Range");
+  document.getElementById("div_chart").classList.add("Disabled_Range");
+  document.getElementById("div_resultados").classList.add("Disabled_Range");
+
+  if (tipo_mistura == "Mistura Não Ideal" && metodo_grafico == "McCabe-Thiele") {
+
+    document.getElementById("div_select").className = "input-field col m12 s12";
+
+  } else if (tipo_mistura == "Mistura Não Ideal" && metodo_grafico == "Ponchon-Savarit") {
+
+    document.getElementById("div_select").className = "input-field col m6 s12";
+    document.getElementById("div_select_2").className = "input-field col m6 s12";
+
+  }
+
+}
+
+function razao_refluxo() {
+
+  // Limpeza de variáveis
+  componente1 = null;
+  componente2 = null;
+  metodo_atividade = null;
+  metodo_entalpia = null;
+  verificar_range = false;
+
+  // Habilitação do slider
+  document.getElementById("div_componentes").classList.add("Disabled_Range");
+  document.getElementById("div_componentes_2").classList.add("Disabled_Range");
+  document.getElementById("div_label_switch").classList.add("Disabled_Range");
+  document.getElementById("div_composicoes").classList.add("Disabled_Range");
+  document.getElementById("div_select").classList.add("Disabled_Range");
+  document.getElementById("div_select_2").classList.add("Disabled_Range");
+  document.getElementById("div_atividade").classList.add("Disabled_Range");
+  document.getElementById("div_metodo_mistura").classList.add("Disabled_Range");
+  document.getElementById("div_chart").classList.add("Disabled_Range");
+  document.getElementById("div_resultados").classList.add("Disabled_Range");
+
+  //Conferindo se os componentes foram adicionados
+  componente1 = data.componentes[document.getElementById("select_componentes_1").value - 1];
+  componente2 = data.componentes[document.getElementById("select_componentes_2").value - 1];
+
+  if (componente1 && componente2) {
+    c_added_1 = true;
+    c_added_2 = true;
+  }
+
+  if (c_added_1 == true && c_added_2 == true) {
+
+    //Alerta caso o usuário insira dois componentes idêncticos
+    if (componente1 == componente2) {
+
+      Materialize.toast("Por favor, escolha dois componentes distintos.", 2500, "red darken-4 justify-center");
+      bloquear_calculo();
+
+    } else {
+
+      // Adição dos valores de composições
+      valor_composicoes();
+
+      if (xF && xB && xD && xF > xB && xD > xF && xD <= 1 && xB >= 0) {
+
+        // Habilitação do slider
+        document.getElementById("range_element").className = "";
+        document.getElementById("range_element").disabled = "";
+        document.getElementById("range_element").value = 50;
+
+        // Conversão dos valores de composição caso necessário caso necessário
+        if (tipo_composicao == true) {
+
+          // Adição das massas molares dos componentes
+          massa_molar(componente1, componente2);
+
+          mass_to_mol(parseFloat(xF));
+          xF = x_molar;
+          mass_to_mol(parseFloat(xD));
+          xD = x_molar;
+          mass_to_mol(parseFloat(xB));
+          xB = x_molar;
+
+        }
+
+        //Inserção do método gráfico a partir da Check-Box
+        metodo_grafico = valor_radio("grupo_2");
+
+        Rd = null;
+        Rd = parseFloat(document.getElementById("range_element").value);
+
+        if (metodo_grafico == "McCabe-Thiele") {
+
+          //Inserção do tipo de mistura a partir da Check-Box
+          tipo_mistura = valor_radio("grupo_1");
+
+          document.getElementById("div_select_2").classList.add("disabledDiv");
+
+          //Chamada da função de cálculo da curva de ELV e McCabe-Thiele de acordo com o tipo de mistura
+          if (tipo_mistura == "Mistura Ideal") {
+
+            rodar_calculo();
+
+          } else if (tipo_mistura == "Mistura Não Ideal") {
+
+            // Verificação da inserção do método de atividade
+            add_metodo();
+
+            if (metodo_added == true) {
+
+              curva_eq_nao_ideal();
+
+              if (xD < xmax && xF < xmax) {
+
+                // Habilitação do slider
+                rodar_calculo();
+
+              } else {
+
+                Materialize.toast("Esta mistura não pode ser destilada até concentrações molares maiores que " + xmax.toFixed(2) + " devido à formação de azeótropo.", 3000, "red darken-4 justify-center");
+                bloquear_calculo();
+
+              }
+
+            } else {
+
+              Materialize.toast("Por favor, defina o método de cálculo dos coeficientes de atividade.", 2500, "red darken-4 justify-center");
+              bloquear_calculo();
+
+            }
+
+          } else {
+
+            Materialize.toast("Por favor, defina o tipo da mistura escolhida.", 2500, "red darken-4 justify-center");
+            bloquear_calculo();
+
+          }
+
+        } else if (metodo_grafico == "Ponchon-Savarit") {
+
+          //Inserção do tipo de mistura a partir da Check-Box
+          tipo_mistura = valor_radio("grupo_1");
+
+          //Chamada da função de cálculo da curva de ELV de acordo com o tipo de mistura
+          if (tipo_mistura == "Mistura Ideal") {
+
+            // Habilitação do slider
+            rodar_calculo();
+
+          } else if (tipo_mistura == "Mistura Não Ideal") {
+
+            // Verificaçãoda inserção do método de cálculo de atividade
+            add_metodo();
+
+            // Verificaçãoda inserção do método de cálculo de entalpia
+            add_metodo_entalpia();
+
+            if (metodo_added == true && metodo_added_entalpia == true) {
+
+              curva_eq_nao_ideal();
+              curva_entalpia_nao_ideal();
+
+              if (xD < xmax && xF < xmax) {
+
+                // Habilitação do slider
+                rodar_calculo();
+
+              } else {
+
+                Materialize.toast("Esta mistura não pode ser destilada até concentrações molares maiores que " + xmax.toFixed(2) + " devido à formação de azeótropo.", 3000, "red darken-4 justify-center");
+                bloquear_calculo();
+
+              }
+
+            } else {
+
+              Materialize.toast("Por favor, defina o método de cálculo dos coeficientes de atividade e da entalpia residual.", 2500, "red darken-4 justify-center");
+              bloquear_calculo();
+
+            }
+
+          } else {
+
+            Materialize.toast("Por favor, defina o tipo da mistura escolhida.", 2500, "red darken-4 justify-center");
+            bloquear_calculo();
+
+          }
+
+        } else {
+
+          Materialize.toast("Por favor, defina o método gráfico escolhido.", 2500, "red darken-4 justify-center");
+          bloquear_calculo();
+
+        }
+
+      } else {
+
+        Materialize.toast("Por favor, defina valores coerentes para as composições de alimentação, topo e fundo.", 3000, "red darken-4 justify-center");
+        bloquear_calculo();
+
+      }
+
+    }
+
+  } else {
+
+    Materialize.toast("Por favor, defina todos os componentes da mistura.", 2500, "red darken-4 justify-center");
+    bloquear_calculo();
+
+  }
+
+}
+
+function bloquear_respostas() {
+
+  document.getElementById("range_element").value = "50";
+  document.getElementById("range_element").disabled = "disabled";
+  document.getElementById("div_chart").classList.add("Disabled_Range");
+  document.getElementById("range_element").classList.add("Disabled_Range");
+  document.getElementById("div_resultados").classList.add("Disabled_Range");
+  verificar_range = false;
 
 }

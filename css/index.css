@@ -162,7 +162,7 @@ input[type="range"]+.thumb {
   background-color: #006064;
 }
 
-.input-field.col.m12.s12{
+.input-field.col.m12.s12 {
   padding-left: 2%;
   padding-right: 2%;
 }
@@ -218,6 +218,12 @@ div.col.m5.s6.left {
 
 div.col.m5.s12.left {
   padding: 0 0 0 0;
+}
+
+@media only screen and (max-width: 768px) {
+  div.col.m5.s12.left {
+    padding-left: 4% !important;
+  }
 }
 
 div.col.m12.s12 {
