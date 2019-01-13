@@ -73,6 +73,10 @@ function botao_calcular() {
   document.getElementById("div_metodo_mistura").className = "col m12";
   document.getElementById("div_chart").className = "chart-container";
   document.getElementById("div_resultados").className = "";
+  document.getElementById("range_container").className = "range_container";
+  clearTimeout(timer);
+  timer=null;
+
 
   if (tipo_mistura == "Mistura Não Ideal" && metodo_grafico == "McCabe-Thiele") {
 

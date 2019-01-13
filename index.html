@@ -304,10 +304,14 @@
 
       <div class="card grey lighten-4">
 
-        <div class="row card-content">
+        <div id = "card_resultados" class="row card-content">
           <!-- Título do card da direit
           a -->
           <span class="center-align card-title">Resultados da Simulação</span>
+
+          <div id = "div_taxa_refluxo" class="col s11 taxa_refluxo">
+            <p class="center-align">Por favor, escolha uma razão de refluxo.</p>
+          </div>
 
           <!-- canvas que contém o gráfico -->
           <div id="div_chart" class="chart-container">
@@ -319,10 +323,10 @@
           <div>
 
             <!-- Slider da razão de refluxo -->
-            <form class="range_container" action="#">
+            <form id="range_container" class="range_container " action="#">
 
               <p class="range-field">
-                <label for="range_element">Razão de Refluxo:</label>
+                <label id = "range_label" for="range_element">Razão de Refluxo:</label>
                 <input type="range" id="range_element" max="100" value="50" step="0.1" oninput="change_chart()" />
               </p>
 

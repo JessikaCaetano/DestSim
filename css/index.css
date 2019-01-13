@@ -7,6 +7,7 @@ body {
 }
 
 /* Cor das abas */
+
 #aba_1 {
   background-color: #00acc197 !important;
 }
@@ -24,6 +25,11 @@ body {
 }
 
 /* Especificações dos textos das telas secundárias e labels */
+
+.brand-logo{
+  padding: 0% 2% !important;
+}
+
 hr {
   border: 0;
   clear: both;
@@ -56,6 +62,10 @@ label {
   text-align: justify;
   color: #757575;
   font-size: 0.8rem;
+}
+
+#range_label{
+  padding-left: 2%;
 }
 
 .aux_label {
@@ -128,15 +138,28 @@ input[type='number'] {
 .range_container {
   margin-left: 2%;
   margin-right: 1%;
+  border-radius: 3 ,px;
 }
 
 #range_element {
   margin-bottom: 2%;
+  padding-left: 2%;
+  padding-right: 2%;
 }
 
 .Disabled_Range {
   pointer-events: none;
   opacity: 0.2;
+}
+
+.alerta {
+  -webkit-box-shadow: 0 6px 10px 0 #00606435, 0 1px 18px 0 #00606435, 0 3px 5px -1px #00606435;
+  box-shadow: 0 6px 10px 0 #00606435, 0 1px 18px 0 #00606435, 0 3px 5px -1px #00606435;
+}
+
+.alerta2 {
+  -webkit-box-shadow: 0 2px 2px 0 #00606435, 0 1px 5px 0 #00606435, 0 3px 1px -2px #00606435;
+  box-shadow: 0 2px 2px 0 #00606435, 0 1px 5px 0 #00606435, 0 3px 1px -2px #00606435;
 }
 
 input[type="range"] {
@@ -246,7 +269,6 @@ i.material-icons.left {
   vertical-align: top !important;
 }
 
-
 /* Especificações de forms */
 
 .rb_form.col.m6.s12 {
@@ -296,6 +318,15 @@ canvas {
 }
 
 /* Especificações do Toast */
+
+.taxa_refluxo {
+  z-index: 1000;
+  display: none;
+  position: absolute;
+  margin-top: 35%;
+  color: #006064;
+  font-weight: bold;
+}
 
 @media only screen and (min-width: 601px) and (max-width: 1260px) {
   .toast {

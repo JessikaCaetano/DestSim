@@ -922,10 +922,10 @@ function Soave_Redlich_Kwong(Tc_aux, T3, w_aux) {
   epsilon = 0;
   omega = 0.08664;
   psi = 0.42748;
-    var Tr_aux =T3 / Tc_aux;
+  var Tr_aux = T3 / Tc_aux;
   var aux = 0.48 + 1.574 * w_aux - 0.176 * Math.pow(w_aux, 2);
   alfa_Tr = Math.pow(1 + aux * (1 - Math.sqrt(T3 / Tc_aux)), 2);
-  der_Tr = Tr_aux*(psi / omega)*(Math.pow(1 + aux * (1 - Math.sqrt(Tr_aux)),2)/Tr_aux)*(((1 + aux * (1 - Math.sqrt(Tr_aux)))*(-aux))/Math.pow(Tr_aux, 3/2)-(Math.pow(1 + aux * (1 - Math.sqrt(Tr_aux)),2))/Math.pow(Tr_aux, 2));
+  der_Tr = Tr_aux * (psi / omega) * (Math.pow(1 + aux * (1 - Math.sqrt(Tr_aux)), 2) / Tr_aux) * (((1 + aux * (1 - Math.sqrt(Tr_aux))) * (-aux)) / Math.pow(Tr_aux, 3 / 2) - (Math.pow(1 + aux * (1 - Math.sqrt(Tr_aux)), 2)) / Math.pow(Tr_aux, 2));
 
 }
 
@@ -936,10 +936,10 @@ function Peng_Robinson(Tc_aux, T3, w_aux) {
   epsilon = 1 - Math.sqrt(2);
   omega = 0.07780;
   psi = 0.45724;
-  var Tr_aux =T3 / Tc_aux;
+  var Tr_aux = T3 / Tc_aux;
   var aux = 0.37464 + 1.54226 * w_aux - 0.26992 * Math.pow(w_aux, 2);
   alfa_Tr = Math.pow(1 + aux * (1 - Math.sqrt(T3 / Tc_aux)), 2);
-  der_Tr = Tr_aux*(psi / omega)*(Math.pow(1 + aux * (1 - Math.sqrt(Tr_aux)),2)/Tr_aux)*(((1 + aux * (1 - Math.sqrt(Tr_aux)))*(-aux))/Math.pow(Tr_aux, 3/2)-(Math.pow(1 + aux * (1 - Math.sqrt(Tr_aux)),2))/Math.pow(Tr_aux, 2));
+  der_Tr = Tr_aux * (psi / omega) * (Math.pow(1 + aux * (1 - Math.sqrt(Tr_aux)), 2) / Tr_aux) * (((1 + aux * (1 - Math.sqrt(Tr_aux))) * (-aux)) / Math.pow(Tr_aux, 3 / 2) - (Math.pow(1 + aux * (1 - Math.sqrt(Tr_aux)), 2)) / Math.pow(Tr_aux, 2));
 
 }
 
@@ -1491,43 +1491,44 @@ function Ponchon_Savarit() {
 // Muda o chart de acordo com mudança no slider
 function change_chart() {
 
-if(verificar_range == true){
-  Rd = null;
-  Rd = parseFloat(document.getElementById("range_element").value);
+  if (verificar_range == true) {
+    Rd = null;
+    Rd = parseFloat(document.getElementById("range_element").value);
 
-  if (metodo_grafico == "McCabe-Thiele") {
+    if (metodo_grafico == "McCabe-Thiele") {
 
-    if (tipo_mistura == "Mistura Ideal") {
+      if (tipo_mistura == "Mistura Ideal") {
 
-      McCabe_Ideal();
+        McCabe_Ideal();
 
-    } else if (tipo_mistura == "Mistura Não Ideal") {
+      } else if (tipo_mistura == "Mistura Não Ideal") {
 
-      McCabe_nao_ideal();
+        McCabe_nao_ideal();
+
+      }
+
+      // Desabilitar animação do chart e gerar resultados do número de pratos, prato de alimentação e composição de cada estágio
+      separar_resultados();
+      composicao_estagios();
+      gerar_grafico_McCabe(0);
+      alterar_label();
+
+    } else if (metodo_grafico == "Ponchon-Savarit") {
+
+      Ponchon_Savarit();
+      // Desabilitar animação do chart e gerar resultados do número de pratos, prato de alimentação e composição de cada estágio
+      separar_resultados();
+      composicao_estagios();
+      gerar_grafico_Ponchon(0);
+      alterar_label();
 
     }
+  } else {
 
-    // Desabilitar animação do chart e gerar resultados do número de pratos, prato de alimentação e composição de cada estágio
-    separar_resultados();
-    composicao_estagios();
-    gerar_grafico_McCabe(0);
-    alterar_label();
-
-  } else if (metodo_grafico == "Ponchon-Savarit") {
-
-    Ponchon_Savarit();
-    // Desabilitar animação do chart e gerar resultados do número de pratos, prato de alimentação e composição de cada estágio
-    separar_resultados();
-    composicao_estagios();
-    gerar_grafico_Ponchon(0);
-    alterar_label();
+    botao_calcular();
+    verificar_range = true;
+    $(".taxa_refluxo").css("display", "none");
 
   }
-}else{
-
-  botao_calcular();
-  verificar_range = true;
-
-}
 
 }

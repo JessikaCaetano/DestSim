@@ -783,15 +783,26 @@ function mostrar_label_2() {
 }
 
 // Função que direciona para o botão da razão de refluxo
+var timer = null;
+
 function rodar_calculo() {
 
   document.getElementById("range_element").className = "";
   document.getElementById("range_element").disabled = "";
   document.getElementById("range_element").value = 50;
-  Materialize.toast("Por favor, escolha uma razão de refluxo.", 1500, "cyan darken-4 justify-center");
+  $(".taxa_refluxo").css("display", "block");
+  $("#range_container").addClass("alerta");
+  if (timer == null) {
+    timer = setInterval(ontime, 500);
+  }
+
+  location.href = "#card_resultados";
 
 }
 
+function ontime() {
+  $("#range_container").toggleClass("alerta2")
+}
 // Função que retorna ao início da simulação caso algum input esteja incoerente
 function bloquear_calculo() {
 
