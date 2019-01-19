@@ -1,3 +1,7 @@
+// Destsim - Software de auxílio ao ensino da modelagem de colunas de destilação pelos métodos de McCabe-Thiele e Ponchon_Savarit
+// Desenvolvedora: Jessika Nunes Caetano
+// Data da última modificação: 19/01/2019
+
 // Função de cálculo das temperaturas saturadas e vetor de temperaturas
 function Antoine() {
 

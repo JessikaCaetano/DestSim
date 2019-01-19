@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+
+<!-- Destsim - Software de auxílio ao ensino da modelagem de colunas de destilação pelos métodos de McCabe-Thiele e Ponchon_Savarit-->
+<!-- Desenvolvedora: Jessika Nunes Caetano -->
+<!-- Data da última modificação: 19/01/2019 -->
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Destilação Binária</title>
+  <link href="fonts/material_icons.css" rel="stylesheet">
+  <!--Importar materialize.css-->
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+  <link type="text/css" rel="stylesheet" href="css/index.css" />
+  <!--Comunicar ao browser compatibilidade com celular-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+</head>
+
+<body>
+
+  <!-- Barra de navegação -->
+  <nav class="cyan darken-4">
+
+    <div class="nav-wrapper">
+
+      <a class="brand-logo">DestSim</a>
+      <a data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+
+      <ul class="right hide-on-med-and-down">
+        <li id="aba_1"><a href="inicio.html">Início</a></li>
+        <li id="aba_2"><a class="active" href="index.html">Simulação</a></li>
+        <li id="aba_3"><a href="manual.html">Manual</a></li>
+        <li id="aba_4"><a href="sobre_metodos.html">Sobre os Métodos</a></li>
+      </ul>
+
+      <ul class="side-nav" id="mobile-demo">
+        <li id="aba_1"><a href="inicio.html">Início</a></li>
+        <li id="aba_2"><a class="active" href="index.html">Simulação</a></li>
+        <li id="aba_3"><a href="manual.html">Manual</a></li>
+        <li id="aba_4"><a href="sobre_metodos.html">Sobre os Métodos</a></li>
+      </ul>
+
+    </div>
+
+  </nav>
+
+  <!-- Conteúdo da página -->
+  <div class="row">
+
+    <div class="col m1 s12 center">
+
+      <img class="responsive-img" src="Marca_UFG_cor_vertical-03.png">
+
+    </div>
+
+    <!-- Card da esquerda -->
+    <div class="col m5 s12">
+
+      <div class="card grey lighten-4">
+
+        <div class="row card-content">
+
+          <span class="center-align card-title">Entrada de Dados</span>
+
+          <div class="separator col m12 s12">
+
+            <label class="informativo col m12 s12">Não sabe por onde começar? Escolha sua mistura ou utilize os botões de exemplo no final desta seção.</label>
+
+          </div>
+
+          <!-- Caixa de Rolagem 1 -->
+          <div class="input-field col s12" id="div_componentes">
+
+            <select onchange="add_comp_1()" id="select_componentes_1"></select>
+            <label class="aux_label">Componente 1</label>
+
+          </div>
+
+          <!-- Caixa de Rolagem 2 -->
+          <div class="input-field col s12" id="div_componentes_2">
+
+            <select onchange="add_comp_2()" id="select_componentes_2"></select>
+            <label class="aux_label">Componente 2</label>
+
+          </div>
+
+          <!-- Seleção de unidade de composição (mássica ou molar) -->
+          <div id="div_label_switch" class="row  m12 s12">
+
+            <label id="label_composicao" class="col m6 s12">Composição (fração do componente mais volátil):</label>
+
+            <div id="div_switch" class="switch col m6 s12 disabledDiv" onchange="converter()">
+
+              <label>
+                Molar
+                <input id = "switch" type="checkbox">
+                <span class="lever grey"></span>
+                Mássica
+              </label>
+
+            </div>
+
+          </div>
+
+          <div class="col m12 s12 disabledDiv" id="div_composicoes">
+
+            <!-- Inputs das composições de alimentação, topo e fundo -->
+            <div class="input-field col m4 s12">
+
+              <input placeholder="Ex. 0.42" id="input_alimentacao" type="number" step="any" class="validate" value="" onchange="bloquear_respostas()">
+              <label class="aux_label" for="input_alimentacao">Alimentação</label>
+
+            </div>
+
+            <div class="input-field col m4 s6">
+
+              <input placeholder="Ex. 0.42" id="input_topo" type="number" step="any" class="validate" value="" onchange="bloquear_respostas()">
+              <label class="aux_label" for="input_topo">Topo</label>
+
+            </div>
+
+            <div class="input-field col m4 s6">
+
+              <input placeholder="Ex. 0.42" id="input_fundo" type="number" step="any" class="validate" value="" onchange="bloquear_respostas()">
+              <label class="aux_label" for="input_fundo">Fundo</label>
+
+            </div>
+
+          </div>
+
+          <div id="div_metodo_mistura" class="col m12">
+
+            <!-- Botões de seleção do método gráfico -->
+            <form class="rb_form col m6 s12" action="#">
+
+              <label>Método gráfico:</label>
+
+              <p>
+                <input name="grupo_2" type="radio" id="metodo_1" value="McCabe-Thiele" onclick='disableSelect()' />
+                <label for="metodo_1">McCabe-Thiele</label>
+              </p>
+
+              <p>
+                <input name="grupo_2" type="radio" id="metodo_2" value="Ponchon-Savarit" onclick='disableSelect()' />
+                <label for="metodo_2">Ponchon-Savarit</label>
+              </p>
+
+            </form>
+
+            <!-- Botões de seleção do tipo de mistura-->
+            <form class="rb_form col m6 s12" action="#">
+
+              <label>Tipo de mistura:</label>
+
+              <p>
+                <input name="grupo_1" type="radio" value="Mistura Ideal" id="tipo_mistura1" onclick='disableSelect()' />
+                <label for="tipo_mistura1">Mistura Ideal</label>
+              </p>
+
+              <p>
+                <input name="grupo_1" type="radio" value="Mistura Não Ideal" id="tipo_mistura2" onclick='disableSelect()' />
+                <label for="tipo_mistura2">Mistura Não Ideal</label>
+              </p>
+
+            </form>
+
+          </div>
+
+          <div id="div_atividade" class="col m12 s12">
+
+            <!-- Caixas de rolagem do método de cálculo de atividade-->
+            <div class="disabledDiv input-field col m6 s12" id="div_select">
+
+              <select id="select_atividade" onchange="add_metodo()"></select>
+              <label>Método de cálculo da atividade:</label>
+
+            </div>
+
+            <!-- Caixas de rolagem do método de cálculo de entalpia residual da fase vapor-->
+            <div class="disabledDiv input-field col m6 s12" id=div_select_2>
+
+              <select id="select_entalpia" onchange="bloquear_respostas()"></select>
+              <label>Método de cálculo da entalpia residual:</label>
+
+            </div>
+
+            <script>
+              // Função para desabilitar caixa de rolagem do método de atividade caso a mistura seja ideal
+              function disableSelect() {
+
+                // Desabilitação dos campos de resultados e da razão de refluxo
+                document.getElementById("range_element").value = "50";
+                document.getElementById("range_element").disabled = "disabled";
+                document.getElementById("div_chart").classList.add("Disabled_Range");
+                document.getElementById("range_element").classList.add("Disabled_Range");
+                document.getElementById("div_resultados").classList.add("Disabled_Range");
+                verificar_range = false;
+
+                tipo_mistura = valor_radio("grupo_1");
+
+                metodo_grafico = valor_radio("grupo_2");
+
+                if (tipo_mistura == "Mistura Ideal") {
+
+                  document.getElementById("div_select").classList.add("disabledDiv");
+                  document.getElementById("div_select_2").classList.add("disabledDiv");
+                  document.getElementById("div_select").setAttribute('hidden', 'hidden');
+                  document.getElementById("div_select_2").setAttribute('hidden', 'hidden');
+
+                } else if (tipo_mistura == "Mistura Não Ideal" && metodo_grafico == "McCabe-Thiele") {
+
+                  document.getElementById("div_select").className = "input-field col m12 s12";
+                  document.getElementById("div_select").removeAttribute('hidden');
+                  document.getElementById("div_select_2").setAttribute('hidden', 'hidden');
+
+                } else if (tipo_mistura == "Mistura Não Ideal" && metodo_grafico == "Ponchon-Savarit") {
+
+                  document.getElementById("div_select").className = "input-field col m6 s12";
+                  document.getElementById("div_select_2").className = "input-field col m6 s12";
+                  document.getElementById("div_select").removeAttribute('hidden');
+                  document.getElementById("div_select_2").removeAttribute('hidden');
+
+                }
+
+              }
+            </script>
+
+          </div>
+
+          <div class="col m12 s12 center">
+            <!-- Botão para calcular -->
+            <a class="btn-small waves-effect white-text cyan darken-4" onclick=razao_refluxo()>Calcular</a>
+
+          </div>
+
+          <div class="row">
+
+            <div class="separator col m12 s12">
+
+              <div class="col m5 s5">
+                <hr>
+              </div><label class="center col m2 s2">ou</label>
+
+              <div class="col m5 s5">
+                <hr>
+              </div>
+
+            </div>
+
+            <div class="col m7 s12">
+
+              <div class="col m12 s12">
+
+                <label>Exemplos McCabe-Thiele</label>
+
+              </div>
+
+              <!-- Botões de exemplo Mccabe-Thiele-->
+              <div class="col m5 s6 left">
+
+                <a class="waves-effect white-text waves-light btn-small cyan darken-4" onclick=exemplo_mc_ideal()>Ideal</a>
+
+              </div>
+
+              <div class="col m5 s6 left">
+
+                <a class="waves-effect white-text waves-light btn-small cyan darken-4" onclick=exemplo_mc_nao_ideal()>Não Ideal</a>
+
+              </div>
+
+            </div>
+
+            <div class="col m5 s12 left">
+
+              <div class="col m12 s12">
+
+                <label>Exemplos Ponchon-Savarit</label>
+
+              </div>
+
+              <!-- Botões de exemplo Ponchon-Savarit-->
+              <div class="col m5 s6 left">
+
+                <a class="waves-effect white-text waves-light btn-small cyan darken-4" onclick=exemplo_ps_ideal()>Ideal</a>
+
+              </div>
+
+              <div class="col m5 s6 left">
+
+                <a class="waves-effect  white-text waves-light btn-small cyan darken-4" onclick=exemplo_ps_nao_ideal()>Não Ideal</a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Card da direita -->
+    <div class="col m5 s12">
+
+      <div class="card grey lighten-4">
+
+        <div id = "card_resultados" class="row card-content">
+          <!-- Título do card da direit
+          a -->
+          <span class="center-align card-title">Resultados da Simulação</span>
+
+          <div id = "div_taxa_refluxo" class="col s11 taxa_refluxo">
+            <p class="center-align">Por favor, escolha uma razão de refluxo.</p>
+          </div>
+
+          <!-- canvas que contém o gráfico -->
+          <div id="div_chart" class="chart-container">
+
+            <canvas id="grafico_metodo" height="250px"></canvas>
+
+          </div>
+
+          <div>
+
+            <!-- Slider da razão de refluxo -->
+            <form id="range_container" class="range_container " action="#">
+
+              <p class="range-field">
+                <label id = "range_label" for="range_element">Razão de Refluxo:</label>
+                <input type="range" id="range_element" max="100" value="50" step="0.1" oninput="change_chart()" />
+              </p>
+
+            </form>
+
+            <div class="row-informativos col m12 s12">
+
+              <!-- Botão para visualizar mais informações -->
+              <div id="btn_info_1" class="col m12 s12">
+                <a class="btn-floating pulse grey lighten-4" onclick="mostrar_label_1()"><i class="material-icons left">info_outline</i></a><label id="duvidas_1" class="botoes_informacao">Quer saber mais?</label>
+              </div>
+
+              <label id="label_info_6" class="col m10 s10" hidden>Os pratos são enumerados no gráfico de cima para baixo.</label>
+              <label id="label_info_7" class="col m11 s12" hidden>Considera-se que a mistura entra na coluna como líquido saturado.</label>
+              <label id="label_info_1" class="col m11 s12" hidden>Quando a razão de refluxo tende ao seu valor mínimo, o número de estágios tende ao infinito.</label>
+              <label id="label_info_2" class="col m12 s12" hidden>Quando a razão de refluxo tende a um valor alto, obtém-se o número mínimo de pratos.</label>
+              <label id="label_info_3" class="col m12 s12" hidden>Uma razão de refluxo mínima ou um número mínimo de pratos muito altos podem significar que a sua mistura é difícil de destilar.</label>
+
+            </div>
+
+            <!-- Resultados princpais -->
+            <div id="div_resultados">
+
+              <p class="h6 col m6 s12">Número de estágios ideais: <span id="num_estagios"></span></p>
+              <p class="h6 col m6 s12">Prato de alimentação: <span id="prato_alimentacao"></span></p>
+
+              <p class="h6 col m6 s12">Razão de refluxo mínima: <span id="Rd_min"></span></p>
+              <p class="h6 col m6 s12">Número mínimo de estágios: <span id="Num_min"></span></p>
+
+            </div>
+
+            <!-- Label que direciona para a tabela -->
+            <div class="separator col m12 s12">
+
+              <label class="informativo col m12 s12">Quer saber a composição de cada estágio? Estão em uma tabela logo abaixo.</label>
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="row">
+
+    <div class="col offset-m1 m10 s12">
+
+      <div class="card grey lighten-4">
+
+        <div class="row card-content">
+
+          <!-- Resultados da composição de cada estágio -->
+          <span class="center-align card-title">Composição dos Estágios</span>
+
+          <div class="row-informativos col m12 s12">
+
+            <!-- Botão com mais informações -->
+            <div id="btn_info_2" class="col m12 s12">
+              <a class="btn-floating pulse grey lighten-4" onclick="mostrar_label_2()"><i class="material-icons left">info_outline</i></a><label id="duvidas_2" class="botoes_informacao">Dúvidas?</label>
+            </div>
+
+            <label id="label_info_4" class="col m11 s10" hidden>As composições das correntes de saída dos estágios são dadas em relação ao componente mais volátil.</label>
+            <label id="label_info_5" class="col m11 s12" hidden>Para o método de McCabe-Thiele, as composições dos estágios correspondem aos pontos onde os degraus tocam a curva de equilíbrio. Já para o método de Ponchon-Savarit, tais composições podem ser obtidas pelas coordenadas das extremidades das retas de amarração de cada estágio.</label>
+
+          </div>
+
+          <div class="col m6 s12">
+
+            <!-- Tabela com as composições -->
+            <table id="tabela_composicoes_1">
+
+              <thead id="tabela_1_head">
+
+                <tr>
+                  <th>Estágio</th>
+                  <th>x (fração molar)</th>
+                  <th>y (fração molar)</th>
+                </tr>
+
+              </thead>
+
+              <tbody id="tabela_1_body">
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+          <div class="col m6 s12">
+
+            <table id="tabela_composicoes_2">
+
+              <thead id="tabela_2_head">
+
+                <tr>
+                  <th>Estágio</th>
+                  <th>x (fração molar)</th>
+                  <th>y (fração molar)</th>
+                </tr>
+
+              </thead>
+
+              <tbody id="tabela_2_body">
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- link do jquery -->
+  <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+  <!-- link do materialize (estilização) -->
+  <script type="text/javascript" src="js/materialize.min.js"></script>
+  <!-- link do banco de dados -->
+  <script type="text/javascript" src="json/bancodedados.json"></script>
+  <!-- link das funções que são chamadas no código principal -->
+  <script src="js/funcoes_auxiliares.js"></script>
+  <script src="js/funcoes_principais.js"></script>
+  <!-- link do  arquivo de controle do chart -->
+  <script src="js/chart_control.js"></script>
+  <!-- link do código principal -->
+  <script src="js/destilacao.js"></script>
+  <!-- link da biblioteca do chart -->
+  <script src="js/Chart.bundle.min.js"></script>
+
+</body>
+
+</html>
