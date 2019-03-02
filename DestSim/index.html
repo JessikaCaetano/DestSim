@@ -30,17 +30,17 @@
       <a data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
       <ul class="right hide-on-med-and-down">
-        <li id="aba_1"><a href="inicio.html">Início</a></li>
-        <li id="aba_2"><a class="active" href="index.html">Simulação</a></li>
-        <li id="aba_3"><a href="manual.html">Manual</a></li>
-        <li id="aba_4"><a href="sobre_metodos.html">Sobre os Métodos</a></li>
+        <li><a id="aba_1" href="inicio.html">Início</a></li>
+        <li><a id="aba_2" class="active" href="index.html">Simulação</a></li>
+        <li><a id="aba_3" href="manual.html">Manual</a></li>
+        <li><a id="aba_4" href="sobre_metodos.html">Sobre os Métodos</a></li>
       </ul>
 
       <ul class="side-nav" id="mobile-demo">
-        <li id="aba_1"><a href="inicio.html">Início</a></li>
-        <li id="aba_2"><a class="active" href="index.html">Simulação</a></li>
-        <li id="aba_3"><a href="manual.html">Manual</a></li>
-        <li id="aba_4"><a href="sobre_metodos.html">Sobre os Métodos</a></li>
+        <li><a id="aba_1" href="inicio.html">Início</a></li>
+        <li><a id="aba_2" class="active" href="index.html">Simulação</a></li>
+        <li><a id="aba_3" href="manual.html">Manual</a></li>
+        <li><a id="aba_4" href="sobre_metodos.html">Sobre os Métodos</a></li>
       </ul>
 
     </div>
@@ -63,11 +63,11 @@
 
         <div class="row card-content">
 
-          <span class="center-align card-title">Entrada de Dados</span>
+          <span id="nome_card_1" class="center-align card-title">Entrada de Dados</span>
 
           <div class="separator col m12 s12">
 
-            <label class="informativo col m12 s12">Não sabe por onde começar? Escolha sua mistura ou utilize os botões de exemplo no final desta seção.</label>
+            <label id="informativo_1" class="informativo col m12 s12">Não sabe por onde começar? Escolha sua mistura ou utilize os botões de exemplo no final desta seção.</label>
 
           </div>
 
@@ -75,7 +75,7 @@
           <div class="input-field col s12" id="div_componentes">
 
             <select onchange="add_comp_1()" id="select_componentes_1"></select>
-            <label class="aux_label">Componente 1</label>
+            <label id="componente_1" class="aux_label">Componente 1</label>
 
           </div>
 
@@ -83,7 +83,7 @@
           <div class="input-field col s12" id="div_componentes_2">
 
             <select onchange="add_comp_2()" id="select_componentes_2"></select>
-            <label class="aux_label">Componente 2</label>
+            <label id="componente_2" class="aux_label">Componente 2</label>
 
           </div>
 
@@ -94,11 +94,11 @@
 
             <div id="div_switch" class="switch col m6 s12 disabledDiv" onchange="converter()">
 
-              <label>
-                Molar
+              <label id="tipo_composicao">
+                <span id="tipo_composicao_1">Molar</span>
                 <input id = "switch" type="checkbox">
                 <span class="lever grey"></span>
-                Mássica
+                <span id="tipo_composicao_2">Mássico</span>
               </label>
 
             </div>
@@ -111,21 +111,21 @@
             <div class="input-field col m4 s12">
 
               <input placeholder="Ex. 0.42" id="input_alimentacao" type="number" step="any" class="validate" value="" onchange="bloquear_respostas()">
-              <label class="aux_label" for="input_alimentacao">Alimentação</label>
+              <label id="campo_alimentacao" class="aux_label" for="input_alimentacao">Alimentação</label>
 
             </div>
 
             <div class="input-field col m4 s6">
 
               <input placeholder="Ex. 0.42" id="input_topo" type="number" step="any" class="validate" value="" onchange="bloquear_respostas()">
-              <label class="aux_label" for="input_topo">Topo</label>
+              <label  id="campo_topo" class="aux_label" for="input_topo">Topo</label>
 
             </div>
 
             <div class="input-field col m4 s6">
 
               <input placeholder="Ex. 0.42" id="input_fundo" type="number" step="any" class="validate" value="" onchange="bloquear_respostas()">
-              <label class="aux_label" for="input_fundo">Fundo</label>
+              <label  id="campo_fundo" class="aux_label" for="input_fundo">Fundo</label>
 
             </div>
 
@@ -136,7 +136,7 @@
             <!-- Botões de seleção do método gráfico -->
             <form class="rb_form col m6 s12" action="#">
 
-              <label>Método gráfico:</label>
+              <label id="metodo">Método gráfico:</label>
 
               <p>
                 <input name="grupo_2" type="radio" id="metodo_1" value="McCabe-Thiele" onclick='disableSelect()' />
@@ -153,16 +153,16 @@
             <!-- Botões de seleção do tipo de mistura-->
             <form class="rb_form col m6 s12" action="#">
 
-              <label>Tipo de mistura:</label>
+              <label id="mistura">Tipo de mistura:</label>
 
               <p>
                 <input name="grupo_1" type="radio" value="Mistura Ideal" id="tipo_mistura1" onclick='disableSelect()' />
-                <label for="tipo_mistura1">Mistura Ideal</label>
+                <label id="mistura_ideal" for="tipo_mistura1">Mistura Ideal</label>
               </p>
 
               <p>
                 <input name="grupo_1" type="radio" value="Mistura Não Ideal" id="tipo_mistura2" onclick='disableSelect()' />
-                <label for="tipo_mistura2">Mistura Não Ideal</label>
+                <label id="mistura_nao_ideal" for="tipo_mistura2">Mistura Não Ideal</label>
               </p>
 
             </form>
@@ -175,7 +175,7 @@
             <div class="disabledDiv input-field col m6 s12" id="div_select">
 
               <select id="select_atividade" onchange="add_metodo()"></select>
-              <label>Método de cálculo da atividade:</label>
+              <label id="metodo_atividade">Método de cálculo da atividade:</label>
 
             </div>
 
@@ -183,7 +183,7 @@
             <div class="disabledDiv input-field col m6 s12" id=div_select_2>
 
               <select id="select_entalpia" onchange="bloquear_respostas()"></select>
-              <label>Método de cálculo da entalpia residual:</label>
+              <label id="metodo_residual">Método de cálculo da entalpia residual:</label>
 
             </div>
 
@@ -232,7 +232,7 @@
 
           <div class="col m12 s12 center">
             <!-- Botão para calcular -->
-            <a class="btn-small waves-effect white-text cyan darken-4" onclick=razao_refluxo()>Calcular</a>
+            <a id="simulacao_calcular" class="btn-small waves-effect white-text cyan darken-4" onclick=razao_refluxo()>Calcular</a>
 
           </div>
 
@@ -242,7 +242,7 @@
 
               <div class="col m5 s5">
                 <hr>
-              </div><label class="center col m2 s2">ou</label>
+              </div><label id="ou" class="center col m2 s2">ou</label>
 
               <div class="col m5 s5">
                 <hr>
@@ -254,20 +254,20 @@
 
               <div class="col m12 s12">
 
-                <label>Exemplos McCabe-Thiele</label>
+                <label id="exemplo_1">Exemplos McCabe-Thiele</label>
 
               </div>
 
               <!-- Botões de exemplo Mccabe-Thiele-->
               <div class="col m5 s6 left">
 
-                <a class="waves-effect white-text waves-light btn-small cyan darken-4" onclick=exemplo_mc_ideal()>Ideal</a>
+                <a id="ideal_1" class="waves-effect white-text waves-light btn-small cyan darken-4" onclick=exemplo_mc_ideal()>Ideal</a>
 
               </div>
 
               <div class="col m5 s6 left">
 
-                <a class="waves-effect white-text waves-light btn-small cyan darken-4" onclick=exemplo_mc_nao_ideal()>Não Ideal</a>
+                <a id="nao_ideal_1" class="waves-effect white-text waves-light btn-small cyan darken-4" onclick=exemplo_mc_nao_ideal()>Não Ideal</a>
 
               </div>
 
@@ -277,20 +277,20 @@
 
               <div class="col m12 s12">
 
-                <label>Exemplos Ponchon-Savarit</label>
+                <label id="exemplo_2">Exemplos Ponchon-Savarit</label>
 
               </div>
 
               <!-- Botões de exemplo Ponchon-Savarit-->
               <div class="col m5 s6 left">
 
-                <a class="waves-effect white-text waves-light btn-small cyan darken-4" onclick=exemplo_ps_ideal()>Ideal</a>
+                <a id="ideal_2" class="waves-effect white-text waves-light btn-small cyan darken-4" onclick=exemplo_ps_ideal()>Ideal</a>
 
               </div>
 
               <div class="col m5 s6 left">
 
-                <a class="waves-effect  white-text waves-light btn-small cyan darken-4" onclick=exemplo_ps_nao_ideal()>Não Ideal</a>
+                <a id="nao_ideal_2" class="waves-effect  white-text waves-light btn-small cyan darken-4" onclick=exemplo_ps_nao_ideal()>Não Ideal</a>
 
               </div>
 
@@ -312,10 +312,10 @@
         <div id = "card_resultados" class="row card-content">
           <!-- Título do card da direit
           a -->
-          <span class="center-align card-title">Resultados da Simulação</span>
+          <span id="nome_card_2" class="center-align card-title">Resultados da Simulação</span>
 
           <div id = "div_taxa_refluxo" class="col s11 taxa_refluxo">
-            <p class="center-align">Por favor, escolha uma razão de refluxo.</p>
+            <p id="escolha_razao" class="center-align">Por favor, escolha uma razão de refluxo.</p>
           </div>
 
           <!-- canvas que contém o gráfico -->
@@ -355,18 +355,18 @@
             <!-- Resultados princpais -->
             <div id="div_resultados">
 
-              <p class="h6 col m6 s12">Número de estágios ideais: <span id="num_estagios"></span></p>
-              <p class="h6 col m6 s12">Prato de alimentação: <span id="prato_alimentacao"></span></p>
+              <p id="resposta_1" class="h6 col m6 s12">Número de estágios ideais: <span id="num_estagios"></span></p>
+              <p id="resposta_2" class="h6 col m6 s12">Prato de alimentação: <span id="prato_alimentacao"></span></p>
 
-              <p class="h6 col m6 s12">Razão de refluxo mínima: <span id="Rd_min"></span></p>
-              <p class="h6 col m6 s12">Número mínimo de estágios: <span id="Num_min"></span></p>
+              <p id="resposta_3" class="h6 col m6 s12">Razão de refluxo mínima: <span id="Rd_min"></span></p>
+              <p id="resposta_4" class="h6 col m6 s12">Número mínimo de estágios: <span id="Num_min"></span></p>
 
             </div>
 
             <!-- Label que direciona para a tabela -->
             <div class="separator col m12 s12">
 
-              <label class="informativo col m12 s12">Quer saber a composição de cada estágio? Estão em uma tabela logo abaixo.</label>
+              <label id="informativo_2" class="informativo col m12 s12">Quer saber a composição de cada estágio? Estão em uma tabela logo abaixo.</label>
 
             </div>
 
@@ -390,7 +390,7 @@
         <div class="row card-content">
 
           <!-- Resultados da composição de cada estágio -->
-          <span class="center-align card-title">Composição dos Estágios</span>
+          <span id="nome_card_3" class="center-align card-title">Composição dos Estágios</span>
 
           <div class="row-informativos col m12 s12">
 
@@ -412,9 +412,9 @@
               <thead id="tabela_1_head">
 
                 <tr>
-                  <th>Estágio</th>
-                  <th>x (fração molar)</th>
-                  <th>y (fração molar)</th>
+                  <th id="coluna_1">Estágio</th>
+                  <th id="coluna_2">x (fração molar)</th>
+                  <th id="coluna_3">y (fração molar)</th>
                 </tr>
 
               </thead>
@@ -434,9 +434,9 @@
               <thead id="tabela_2_head">
 
                 <tr>
-                  <th>Estágio</th>
-                  <th>x (fração molar)</th>
-                  <th>y (fração molar)</th>
+                  <th id="coluna_4">Estágio</th>
+                  <th id="coluna_5">x (fração molar)</th>
+                  <th id="coluna_6">y (fração molar)</th>
                 </tr>
 
               </thead>
@@ -463,6 +463,7 @@
   <script type="text/javascript" src="js/materialize.min.js"></script>
   <!-- link do banco de dados -->
   <script type="text/javascript" src="json/bancodedados.json"></script>
+  <script type="text/javascript" src="json/trocadelinguagens.js"></script>
   <!-- link das funções que são chamadas no código principal -->
   <script src="js/funcoes_auxiliares.js"></script>
   <script src="js/funcoes_principais.js"></script>

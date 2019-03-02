@@ -21,7 +21,11 @@ function Antoine() {
 
     if (metodo_grafico == "McCabe-Thiele") {
 
-      Materialize.toast("O método de McCabe-Thiele não se adequa a essa mistura. Sugere-se o uso do método de Ponchon-Savarit.", 3000, "red darken-4 justify-center");
+      if (linguagem == ptBR) {
+        Materialize.toast("O método de McCabe-Thiele não se adequa a essa mistura. Sugere-se o uso do método de Ponchon-Savarit.", 3000, "red darken-4 justify-center");
+      } else {
+        Materialize.toast("The McCabe-Thiele method does not suit this mixture. The use of the Ponchon-Savarit method is suggested.", 2500, "red darken-4 justify-center");
+      }
 
     }
 

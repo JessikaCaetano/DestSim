@@ -19,9 +19,15 @@ function criar_select(select, dados, opt_selected) {
   select = document.getElementById(select);
   var opt = document.createElement("option");
   opt.value = 0;
-  opt.text = "Escolha uma opção";
+  if (linguagem == ptBR) {
+    opt.text = "Escolha uma opção";
+  } else {
+    opt.text = "Choose an option";
+  }
   opt.selected = "selected";
   opt.disabled = "disabled";
+  opt.id = "opt_0";
+
 
   if (opt.text == opt_selected) {
     opt.selected = "selected";
@@ -31,7 +37,9 @@ function criar_select(select, dados, opt_selected) {
   for (i = 0; i < dados.length; i++) {
     var opt = document.createElement("option");
     opt.value = i + 1;
+    opt.id = "opt_" + (i + 1);
     opt.text = dados[i];
+
 
     if (opt.text == opt_selected) {
       opt.selected = "selected";
@@ -223,6 +231,16 @@ function calcular_comp_volatil() {
 
   }
 
+  for (var i = 0; i < data.componentes.length; i++) {
+
+    if (data.componentes[i] == compvolatil) {
+
+      compvolatil = linguagem[91][1][i];
+
+    }
+
+  }
+
 }
 
 // Função que calcula o número mínimo de prayos
@@ -351,10 +369,17 @@ function composicao_estagios() {
   $("#tabela_composicoes_1 tr").remove();
   $("#tabela_composicoes_2 tr").remove();
 
-  tabela_1_head = document.getElementById("tabela_1_head");
-  tabela_1_head.innerHTML = tabela_1_head.innerHTML + "<tr> <th>" + "Estágio" + "</th> <th>" + "x (fração molar)" + "</th> <th>" + "y (fração molar)" + "</th> </tr>";
-  tabela_2_head = document.getElementById("tabela_2_head");
-  tabela_2_head.innerHTML = tabela_2_head.innerHTML + "<tr> <th>" + "Estágio" + "</th> <th>" + "x (fração molar)" + "</th> <th>" + "y (fração molar)" + "</th> </tr>";
+  if (linguagem == ptBR) {
+    tabela_1_head = document.getElementById("tabela_1_head");
+    tabela_1_head.innerHTML = tabela_1_head.innerHTML + "<tr> <th>" + "Estágio" + "</th> <th>" + "x (fração molar)" + "</th> <th>" + "y (fração molar)" + "</th> </tr>";
+    tabela_2_head = document.getElementById("tabela_2_head");
+    tabela_2_head.innerHTML = tabela_2_head.innerHTML + "<tr> <th>" + "Estágio" + "</th> <th>" + "x (fração molar)" + "</th> <th>" + "y (fração molar)" + "</th> </tr>";
+  } else {
+    tabela_1_head = document.getElementById("tabela_1_head");
+    tabela_1_head.innerHTML = tabela_1_head.innerHTML + "<tr> <th>" + "Stage" + "</th> <th>" + "x (molar fraction)" + "</th> <th>" + "y (molar fraction)" + "</th> </tr>";
+    tabela_2_head = document.getElementById("tabela_2_head");
+    tabela_2_head.innerHTML = tabela_2_head.innerHTML + "<tr> <th>" + "Stage" + "</th> <th>" + "x (molar fraction)" + "</th> <th>" + "y (molar fraction)" + "</th> </tr>";
+  }
 
   tabela_1_body = document.getElementById("tabela_1_body");
   for (var i = 1; i <= Math.round(x_estagio.length / 2); i++) {
@@ -647,7 +672,11 @@ function add_atividade(componente) {
   mudar_select("div_select", componente, "novo_select", metodos_atividade, "add_metodo()");
 
   // Adição da label à div
-  $("#div_select").append('<label>Método de cálculo da atividade:</label>');
+  if (linguagem == ptBR) {
+    $("#div_select").append('<label>Método de cálculo da atividade:</label>');
+  } else {
+    $("#div_select").append('<label>Activity calculation method:</label>');
+  }
 
   $('select').material_select();
 }
@@ -675,10 +704,22 @@ function add_comp_1() {
   if (componente2) {
 
     c_added_2 == true;
-    add_atividade("Escolha uma opção");
+
+    if (linguagem == ptBR) {
+      add_atividade("Escolha uma opção");
+    } else {
+      add_atividade("Choose an option");
+    }
+
     calcular_comp_volatil();
-    document.getElementById("label_composicao").innerHTML = "Composição (fração <b>" + fracao + "</b> de <b>" + compvolatil + "</b>):";
-    document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
+
+    if (linguagem == ptBR) {
+      document.getElementById("label_composicao").innerHTML = "Composição (fração <b>" + fracao + "</b> de <b>" + compvolatil + "</b>):";
+      document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
+    } else {
+      document.getElementById("label_composicao").innerHTML = "Composition (<b>" + fracao + "</b> fraction of <b>" + compvolatil + "</b>):";
+      document.getElementById("label_info_4").innerHTML = "The compositions refer to the most volatile component (" + compvolatil + "):";
+    }
 
   }
 
@@ -709,8 +750,14 @@ function add_comp_2() {
     c_added_1 == true;
     add_atividade("Escolha uma opção");
     calcular_comp_volatil();
-    document.getElementById("label_composicao").innerHTML = "Composição (fração <b>" + fracao + "</b> de <b>" + compvolatil + "</b>):";
-    document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
+
+    if (linguagem == ptBR) {
+      document.getElementById("label_composicao").innerHTML = "Composição (fração <b>" + fracao + "</b> de <b>" + compvolatil + "</b>):";
+      document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
+    } else {
+      document.getElementById("label_composicao").innerHTML = "Composition (<b>" + fracao + "</b> fraction of <b>" + compvolatil + "</b>):";
+      document.getElementById("label_info_4").innerHTML = "The compositions refer to the most volatile component (" + compvolatil + "):";
+    }
 
   }
 
@@ -780,7 +827,11 @@ function mostrar_label_2() {
   }
   if (compvolatil) {
 
-    document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
+    if (linguagem == ptBR) {
+      document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
+    } else {
+      document.getElementById("label_info_4").innerHTML = "The compositions refer to the most volatile component (" + compvolatil + "):";
+    }
 
   }
 
@@ -871,7 +922,11 @@ function razao_refluxo() {
     //Alerta caso o usuário insira dois componentes idênticos
     if (componente1 == componente2) {
 
-      Materialize.toast("Por favor, escolha dois componentes distintos.", 2500, "red darken-4 justify-center");
+      if (linguagem == ptBR) {
+        Materialize.toast("Por favor, escolha dois componentes distintos.", 2500, "red darken-4 justify-center");
+      } else {
+        Materialize.toast("Please choose two different components.", 2500, "red darken-4 justify-center");
+      }
       bloquear_calculo();
 
     } else {
@@ -938,7 +993,12 @@ function razao_refluxo() {
               } else {
 
                 // Notificação e bloqueio do cálculo
-                Materialize.toast("Esta mistura não pode ser destilada até concentrações molares maiores que " + xmax.toFixed(2) + " devido à formação de azeótropo.", 3000, "red darken-4 justify-center");
+                if (linguagem == ptBR) {
+                  Materialize.toast("Esta mistura não pode ser destilada até concentrações molares maiores que " + xmax.toFixed(2) + " devido à formação de azeótropo.", 3000, "red darken-4 justify-center");
+                } else {
+                  Materialize.toast("This mixture can not be distilled to molar concentrates greater than " + xmax.toFixed(2) + " due to the formation of azeotrope.", 3000, "red darken-4 justify-center");
+                }
+
                 bloquear_calculo();
 
               }
@@ -946,7 +1006,11 @@ function razao_refluxo() {
             } else {
 
               // Notificação e bloqueio do cálculo
-              Materialize.toast("Por favor, defina o método de cálculo dos coeficientes de atividade.", 2500, "red darken-4 justify-center");
+              if (linguagem == ptBR) {
+                Materialize.toast("Por favor, defina o método de cálculo dos coeficientes de atividade.", 2500, "red darken-4 justify-center");
+              } else {
+                Materialize.toast("Please define the activity coefficients calculation method.", 2500, "red darken-4 justify-center");
+              }
               bloquear_calculo();
 
             }
@@ -954,7 +1018,11 @@ function razao_refluxo() {
           } else {
 
             // Notificação e bloqueio do cálculo
-            Materialize.toast("Por favor, defina o tipo da mistura escolhida.", 2500, "red darken-4 justify-center");
+            if (linguagem == ptBR) {
+              Materialize.toast("Por favor, defina o tipo da mistura escolhida.", 2500, "red darken-4 justify-center");
+            } else {
+              Materialize.toast("Please define the of type the chosen mixture.", 2500, "red darken-4 justify-center");
+            }
             bloquear_calculo();
 
           }
@@ -991,7 +1059,11 @@ function razao_refluxo() {
               } else {
 
                 // Notificação e bloqueio do cálculo
-                Materialize.toast("Esta mistura não pode ser destilada até concentrações molares maiores que " + xmax.toFixed(2) + " devido à formação de azeótropo.", 3000, "red darken-4 justify-center");
+                if (linguagem == ptBR) {
+                  Materialize.toast("Esta mistura não pode ser destilada até concentrações molares maiores que " + xmax.toFixed(2) + " devido à formação de azeótropo.", 3000, "red darken-4 justify-center");
+                } else {
+                  Materialize.toast("This mixture can not be distilled to molar concentrates greater than " + xmax.toFixed(2) + " due to the formation of azeotrope.", 3000, "red darken-4 justify-center");
+                }
                 bloquear_calculo();
 
               }
@@ -999,7 +1071,11 @@ function razao_refluxo() {
             } else {
 
               // Notificação e bloqueio do cálculo
-              Materialize.toast("Por favor, defina o método de cálculo dos coeficientes de atividade e da entalpia residual.", 2500, "red darken-4 justify-center");
+              if (linguagem == ptBR) {
+                Materialize.toast("Por favor, defina o método de cálculo dos coeficientes de atividade.", 2500, "red darken-4 justify-center");
+              } else {
+                Materialize.toast("Please define the activity coefficients and residual enthalpy calculation methods.", 2500, "red darken-4 justify-center");
+              }
               bloquear_calculo();
 
             }
@@ -1007,7 +1083,11 @@ function razao_refluxo() {
           } else {
 
             // Notificação e bloqueio do cálculo
-            Materialize.toast("Por favor, defina o tipo da mistura escolhida.", 2500, "red darken-4 justify-center");
+            if (linguagem == ptBR) {
+              Materialize.toast("Por favor, defina o tipo da mistura escolhida.", 2500, "red darken-4 justify-center");
+            } else {
+              Materialize.toast("Please define the type of the chosen mixture.", 2500, "red darken-4 justify-center");
+            }
             bloquear_calculo();
 
           }
@@ -1015,7 +1095,11 @@ function razao_refluxo() {
         } else {
 
           // Notificação e bloqueio do cálculo
-          Materialize.toast("Por favor, defina o método gráfico escolhido.", 2500, "red darken-4 justify-center");
+          if (linguagem == ptBR) {
+            Materialize.toast("Por favor, insira o método gráfico escolhido.", 2500, "red darken-4 justify-center");
+          } else {
+            Materialize.toast("Please insert the chosen graphic method.", 2500, "red darken-4 justify-center");
+          }
           bloquear_calculo();
 
         }
@@ -1023,7 +1107,11 @@ function razao_refluxo() {
       } else {
 
         // Notificação e bloqueio do cálculo
-        Materialize.toast("Por favor, defina valores coerentes para as composições de alimentação, topo e fundo.", 3000, "red darken-4 justify-center");
+        if (linguagem == ptBR) {
+          Materialize.toast("Por favor, defina valores coerentes para as composições de alimentação, topo e fundo.", 3000, "red darken-4 justify-center");
+        } else {
+          Materialize.toast("Please define consistent values to the compositions of the feed, top and bottom.", 3000, "red darken-4 justify-center");
+        }
         bloquear_calculo();
 
       }
@@ -1033,7 +1121,11 @@ function razao_refluxo() {
   } else {
 
     // Notificação e bloqueio do cálculo
-    Materialize.toast("Por favor, defina todos os componentes da mistura.", 2500, "red darken-4 justify-center");
+    if (linguagem == ptBR) {
+      Materialize.toast("Por favor, defina todos os componentes da mistura.", 2500, "red darken-4 justify-center");
+    } else {
+      Materialize.toast("Please define all the components of the mixture.", 2500, "red darken-4 justify-center");
+    }
     bloquear_calculo();
 
   }
@@ -1051,4 +1143,24 @@ function bloquear_respostas() {
   document.getElementById("div_resultados").classList.add("Disabled_Range");
   verificar_range = false;
 
+}
+
+function mudar_linguagem(ind, linguagem) {
+
+  if (linguagem[ind]) {
+
+    if (linguagem[ind][0].includes("manual") || linguagem[ind][0].includes("sobre_metodos") || linguagem[ind][0].includes("resposta")) {
+      $("#" + linguagem[ind][0] + "").html(linguagem[ind][1]);
+    } else {
+      $("#" + linguagem[ind][0] + "").text(linguagem[ind][1]);
+    }
+
+  }
+
+}
+
+var linguagem = enUS;
+
+for (var i = 0; i < ptBR.length; i++) {
+  mudar_linguagem(i, linguagem);
 }

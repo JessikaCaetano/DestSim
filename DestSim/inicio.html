@@ -29,17 +29,17 @@
       <a data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
       <ul class="right hide-on-med-and-down">
-        <li id="aba_1"><a class="active" href="inicio.html">Início</a></li>
-        <li id="aba_2"><a href="index.html">Simulação</a></li>
-        <li id="aba_3"><a href="manual.html">Manual</a></li>
-        <li id="aba_4"><a href="sobre_metodos.html">Sobre os Métodos</a></li>
+        <li><a id="aba_1" class="active" href="inicio.html">Início</a></li>
+        <li><a id="aba_2" href="index.html">Simulação</a></li>
+        <li><a id="aba_3" href="manual.html">Manual</a></li>
+        <li><a id="aba_4" href="sobre_metodos.html">Sobre os Métodos</a></li>
       </ul>
 
       <ul class="side-nav" id="mobile-demo">
-        <li id="aba_1"><a class="active" href="inicio.html">Início</a></li>
-        <li id="aba_2"><a href="index.html">Simulação</a></li>
-        <li id="aba_3"><a href="manual.html">Manual</a></li>
-        <li id="aba_4"><a href="sobre_metodos.html">Sobre os Métodos</a></li>
+        <li><a id="aba_1" class="active" href="inicio.html">Início</a></li>
+        <li><a id="aba_2" href="index.html">Simulação</a></li>
+        <li><a id="aba_3" href="manual.html">Manual</a></li>
+        <li><a id="aba_4" href="sobre_metodos.html">Sobre os Métodos</a></li>
       </ul>
 
     </div>
@@ -56,6 +56,7 @@
     </div>
 
     <!-- Card contendo o texto -->
+    <!-- Card contendo o texto -->
     <div class="col m10 s12">
 
       <div class="card grey lighten-4">
@@ -65,7 +66,7 @@
           <!-- Título -->
           <div class="col m12">
 
-            <span class="center-align card-title">DestSim - Software para Modelagem da Separação de Misturas Binárias em Colunas de Destilação</span>
+            <span id="inicio_titulo" class="center-align card-title">DestSim - Software para Modelagem da Separação de Misturas Binárias em Colunas de Destilação</span>
 
           </div>
 
@@ -73,24 +74,24 @@
           <div class="col m12">
 
             <br>
-            <p class="aux_p">Olá! Seja bem vindo ao DestSim!</p>
+            <p id="inicio_1" class="aux_p">Olá! Seja bem vindo ao DestSim!</p>
             <br>
-            <p class="aux_p">Este software foi desenvolvido com o intuito de facilitar a vizualização dos dois principais métodos gráficos ensinados nos cursos de Engenharia Química para modelagem de operações em colunas de destilação: McCabe-Thiele e Ponchon-Savarit.
+            <p id="inicio_2" class="aux_p">Este software foi desenvolvido com o intuito de facilitar a vizualização dos dois principais métodos gráficos ensinados nos cursos de Engenharia Química para modelagem de operações em colunas de destilação: McCabe-Thiele e Ponchon-Savarit.
               Nele, considera-se um sistema de destilação contínua com refluxo, no qual são separados os componentes de uma mistura binária alimentada na coluna como líquido saturado. No topo da coluna é conectado um condensador total, enquanto na base
               da coluna há um refervedor parcial. </p>
-            <p class="aux_p">Ao utilizar o software, o usuário pode simular a aplicação destes dois métodos em exemplos pré-definidos aplicados a misturas ideais e não ideais ou especificar os componentes da mistura, suas composições e como ela deve ser tratada.</p>
-            <p class="aux_p">O programa gera o gráfico de aplicação do método escolhido, retornando o número de pratos necessários para obter a separação especificada e o prato de alimentação da mistura na coluna. Fornece também ao usuário as composições das fases líquida
+            <p id="inicio_3" class="aux_p">Ao utilizar o software, o usuário pode simular a aplicação destes dois métodos em exemplos pré-definidos aplicados a misturas ideais e não ideais ou especificar os componentes da mistura, suas composições e como ela deve ser tratada.</p>
+            <p id="inicio_4" class="aux_p">O programa gera o gráfico de aplicação do método escolhido, retornando o número de pratos necessários para obter a separação especificada e o prato de alimentação da mistura na coluna. Fornece também ao usuário as composições das fases líquida
               e vapor em cada estágio da destilação. É possível alterar a taxa de refluxo e observar em tempo real a influência da mesma nos resultados.</p>
-            <p class="aux_p">Espera-se que a ferramenta sirva de apoio aos professores e alunos no estudo de operações de destilação.</p>
+            <p id="inicio_5" class="aux_p">Espera-se que a ferramenta sirva de apoio aos professores e alunos no estudo de operações de destilação.</p>
             <br>
-            <p class="aux_p">Obrigada pelo apoio e tenha uma ótima experiência!</p><br>
+            <p id="inicio_6" class="aux_p">Obrigada pelo apoio e tenha uma ótima experiência!</p><br>
 
           </div>
 
           <!-- Botão que direciona para a página de simulação -->
           <div class="col m2 right">
 
-            <a class="waves-effect  white-text waves-light btn-small cyan darken-4" href="index.html">Começar<i class="tiny material-icons right">send</i></a>
+            <a id="inicio_comecar" class="waves-effect white-text waves-light btn-small cyan darken-4" href="index.html">Começar<i class="tiny material-icons right">send</i></a>
 
           </div>
 
@@ -106,6 +107,13 @@
   <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
   <!-- link do materialize (estilização) -->
   <script type="text/javascript" src="js/materialize.min.js"></script>
+  <!-- link do banco de dados -->
+  <script type="text/javascript" src="json/bancodedados.json"></script>
+  <script type="text/javascript" src="json/trocadelinguagens.js"></script>
+  <!-- link das funções que são chamadas no código principal -->
+  <script src="js/funcoes_auxiliares.js"></script>
+  <!-- link do código principal -->
+  <!-- <script src="js/destilacao.js"></script> -->
 
 </body>
 

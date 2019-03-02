@@ -97,7 +97,7 @@
 
      data: {
        datasets: [{
-           label: 'Curva de Equilíbrio',
+           label: linguagem[95][1],
            backgroundColor: '#546e7a',
            showLine: true,
            fill: false,
@@ -117,7 +117,7 @@
            pointRadius: 0.1
          },
          {
-           label: "Reta de Retificação",
+           label: linguagem[96][1],
            backgroundColor: '#26a69a',
            showLine: true,
            fill: false,
@@ -127,7 +127,7 @@
            pointRadius: 0.1
          },
          {
-           label: "Reta de Esgotamento",
+           label: linguagem[97][1],
            backgroundColor: '#ffab0090',
            showLine: true,
            fill: false,
@@ -137,7 +137,7 @@
            pointRadius: 0.1
          },
          {
-           label: "Reta de Alimentação",
+           label: linguagem[98][1],
            backgroundColor: '#00838f',
            showLine: true,
            fill: false,
@@ -147,7 +147,7 @@
            pointRadius: 0.1
          },
          {
-           label: "Estágios",
+           label: linguagem[99][1],
            backgroundColor: '#0097a785',
            showLine: true,
            fill: false,
@@ -177,7 +177,7 @@
          yAxes: [{
            scaleLabel: {
              display: true,
-             labelString: 'y (fração molar)'
+             labelString: linguagem[100][1],
            },
            ticks: {
              max: 1,
@@ -187,7 +187,7 @@
          xAxes: [{
            scaleLabel: {
              display: true,
-             labelString: 'x (fração molar)'
+             labelString: linguagem[101][1],
            },
            ticks: {
              max: 1,
@@ -336,7 +336,7 @@
 
      data: {
        datasets: [{
-           label: 'Entalpia Vapor',
+           label: linguagem[102][1],
            backgroundColor: '#546e7a',
            showLine: true,
            fill: false,
@@ -346,7 +346,7 @@
            pointRadius: 0.1
          },
          {
-           label: "Entalpia Líquido",
+           label: linguagem[103][1],
            backgroundColor: '#90a4ae',
            showLine: true,
            fill: false,
@@ -355,7 +355,7 @@
            borderWidth: 2,
            pointRadius: 0.1
          }, {
-           label: "Reta de Retificação",
+           label: linguagem[104][1],
            backgroundColor: '#00bfa5',
            showLine: true,
            fill: false,
@@ -365,7 +365,7 @@
            pointRadius: 0.1
          },
          {
-           label: "Reta de Esgotamento",
+           label: linguagem[105][1],
            backgroundColor: '#00838f',
            showLine: true,
            fill: false,
@@ -375,7 +375,7 @@
            pointRadius: 0.1
          },
          {
-           label: "Reta de Alimentação",
+           label: linguagem[106][1],
            backgroundColor: '#ffab0090',
            showLine: true,
            fill: false,
@@ -385,7 +385,7 @@
            pointRadius: 0.1
          },
          {
-           label: "Estágios",
+           label: linguagem[107][1],
            backgroundColor: '#0097a785',
            showLine: true,
            fill: false,
@@ -403,7 +403,7 @@
            borderWidth: 2,
            pointRadius: 0.1
          },{
-           label: "Linhas de Amarração",
+           label: linguagem[108][1],
            backgroundColor: '#e0e0e0',
            showLine: true,
            fill: false,
@@ -434,13 +434,13 @@
          yAxes: [{
            scaleLabel: {
              display: true,
-             labelString: 'Entalpia (kJ/mol)'
+             labelString: linguagem[109][1]
            }
          }],
          xAxes: [{
            scaleLabel: {
              display: true,
-             labelString: 'x e y (fração molar)'
+             labelString: linguagem[110][1]
            },
            ticks: {
              max: 1,
