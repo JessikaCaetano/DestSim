@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!-- Destsim - Software de auxílio ao ensino da modelagem de colunas de destilação pelos métodos de McCabe-Thiele e Ponchon_Savarit-->
 <!-- Desenvolvedora: Jessika Nunes Caetano -->
-<!-- Data da última modificação: 19/01/2019 -->
+<!-- Data da última modificação: 10/03/2019 -->
 
 <html lang="en">
 
@@ -48,16 +48,35 @@
 
   <div class="row">
 
-    <!-- Logo UFG -->
-    <div class="col m1 s12 center">
+    <div class="col m12">
+      <!-- Logo UFG -->
+      <div class="col m1 s12 center">
 
-      <img class="responsive-img" src="Marca_UFG_cor_vertical-03.png">
+        <img class="responsive-img" src="Marca_UFG_cor_vertical-03.png">
+
+      </div>
+
+      <div class="col m11 s12">
+
+        <!-- Select linguagem-->
+        <div class="input-field col m2 s12 right" id="div_linguagem_2">
+
+          <select id="select_linguagem_2"></select>
+
+          <label id="linguagem_2" class="aux_label">Idioma:</label>
+
+          <script>
+            index_pagina = 2;
+          </script>
+
+        </div>
+
+      </div>
 
     </div>
 
     <!-- Card contendo o texto -->
-    <!-- Card contendo o texto -->
-    <div class="col m10 s12">
+    <div class="col m10 s12 offset-m1">
 
       <div class="card grey lighten-4">
 
@@ -112,6 +131,8 @@
   <script type="text/javascript" src="json/trocadelinguagens.js"></script>
   <!-- link das funções que são chamadas no código principal -->
   <script src="js/funcoes_auxiliares.js"></script>
+  <!-- link do código para alterar a linguagem -->
+  <script src="js/linguagens.js"></script>
   <!-- link do código principal -->
   <!-- <script src="js/destilacao.js"></script> -->
 

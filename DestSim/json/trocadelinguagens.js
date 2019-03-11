@@ -11,8 +11,8 @@ var enUS = [["aba_1", "Introduction"],[
       "inicio_6", "Thank you for the support and have a nice experience!"],[
       "inicio_comecar", "Start"],[
       "manual_titulo", "Instructions"],[
-      "manual_1", "hello! Follow the next steps to use DestSim:"],[
-      "manual_2", "<strong>1º</strong> If you don't have enough data to perform a specific simulation, click the <em> Ideal Example </em> or <em> Not Ideal Example </em> buttons at the bottom of the <Data Input> card, which make it possible to observe some predefined simulations, and skip to step 9. If not, continue with the steps below."],[
+      "manual_1", "Hello! Follow the next steps to use DestSim:"],[
+      "manual_2", "<strong>1º</strong> If you don't have enough data to perform a specific simulation, click the <em> Ideal Example </em> or <em> Not Ideal Example </em> buttons at the bottom of the <em>Data Input</em> card, which make it possible to observe some predefined simulations, and skip to step 9. If not, continue with the steps below."],[
       "manual_3", "<strong>2º</strong> Choose two substances to be the components of the mixture in the sections <em> Component 1 </em> and <em> Component 2 </em>. After this step, the composition fields will be unlocked."],[
       "manual_4", "<strong>3º</strong> Select, in the <em> Composition </em> section, the base (mass or molar) in which the data you fill in the composition fields is in."],[
       "manual_5", "<strong>4º</strong> Fill in the <em> Composition </em> section with the data for the composition of the mixture in the feed, top and bottom of the column. If you want to convert the filled data from the molar base to mass base and vice versa, simply change the selected base."],[
@@ -89,7 +89,7 @@ var enUS = [["aba_1", "Introduction"],[
       "coluna_4", "Stages"],[
       "coluna_5", "x (molar fraction)"],[
       "coluna_6", "y (molar fraction)"],[
-      "bd_componentes", ["Acetonitrile", "Methyl Acetate", "Acetic Acid", "Water", "Benzene", "Chloroform", "Cyclopentane", "Cyclohexane", "Dichloromethane", "Ethanol", "Ethylene Glycol", "Methanol", " n-Hexane ", " Nitromethane ", " n-Pentane ", " o-Xylene ", " 2-Propanol ", " Propanone ", " Carbon tetrachloride ", " Toluene ", " n-Octane "]],[
+      "bd_componentes", ["Acetonitrile", "Methyl Acetate", "Acetic Acid", "Water", "Benzene", "Chloroform", "Cyclopentane", "Cyclohexane", "Dichloromethane", "Ethanol", "Ethylene Glycol", "Methanol", "n-Hexane", "Nitromethane", "n-Pentane", "o-Xylene", "2-Propanol", "Propanone", "Carbon tetrachloride", "Toluene", "n-Octane"]],[
       "bd_misturas_vl", ["Acetonitrile and Water", "Methanol and Acetonitrile", "Ethanol and Acetonitrile", "Acetonitrile and Toluene", "Water and Acetic Acid", "Methanol and Acetic Acid", "Ethanol and Acetic Acid", "Ethanol and Water", "Methanol and Water", "2-Propanol and Water", "Propanone and Benzene", "Carbon Tetrachloride and Benzene", "Methanol and Benzene", "Chloroform and Benzene", "Ethanol and Benzene", "Benzene and Toluene", "Chloroform and Methanol", "Chloroform and Ethanol", "Chloroform and Toluene", "Methanol and Cyclohexane", "Ethanol and Cyclohexane", "Propanone and Ethanol", "Methanol and Ethanol", "Ethanol and Water", " Dichloromethane and Ethanol ", "Propanone and Ethanol", "Ethanol and 2-Propanol ", "n-Pentane and Ethanol", "n-Hexane and Ethanol", "Ethanol and Toluene", "Propanone and Methanol", "Dichloromethane and Methanol", "Methanol and Toluene", "Methanol and n-Hexane", "Propanone and Carbon Tetrachloride", "Methyl Acetate and Methanol", "Methyl Acetate and Ethanol"]],
       ["bd_misturas_NRTL", ["Methanol and Acetonitrile", "Ethanol and Acetonitrile", "Acetonitrile and Toluene", "Methyl Acetate and Methanol", "Methyl Acetate and Ethanol", "Methanol and Acetic Acid", "Ethanol and Acetic Acid", "Methanol and Water", "Propanone and Water", "Ethanol and Water", "Methanol and Benzene", "Ethanol and Benzene", "Propanone and Benzene", "Chloroform and Benzene", "Benzene and Toluene", "Chloroform and Methanol", "Chloroform and Ethanol", "Propanone and Chloroform", "Chloroform and Toluene", "Methanol and Cyclohexane", "Ethanol and Cyclohexane", "Propanone and Cyclohexane", "Propanone and Ethanol", , "Ethanol and 2-Propanol", "n-Pentane and Ethanol", "n-Hexane and Ethanol", "Ethanol and Toluene", "Methanol and Ethanol", "Dichloromethane and Methanol", " Methanol and n-Hexane ", " Methanol and Toluene ", " Propanone and Toluene "]],
       ["bd_misturas_Wilson", ["Acetonitrile and Water", "Methanol and Acetonitrile", "Ethanol and Acetonitrile", "Acetonitrile and Toluene", "Methyl Acetate and Water", "Methyl Acetate and Methanol", "Methyl Acetate and Ethanol", "Methyl Acetate and Chloroform", "Water and Acetic Acid", "Ethanol and Acetic Acid", "Methanol and Acetic Acid", "Propanone and Water", "Ethanol and Water", "Methanol and Water", " -Propanol and Water", "Carbon Tetrachloride and Benzene", "Ethanol and Benzene", "Propanone and Benzene", "Chloroform and Benzene", "Methanol and Benzene", "Benzene and Nitromethane", "Benzene and Toluene", "Chloroform and Methanol", "Chloroform and Ethanol", "Chloroform and Toluene", "Methanol and Cyclohexane", "Propanone and Cyclohexane", "Ethanol and Cyclohexane", "Methanol and Ethanol", "Propanone and Ethanol", "Ethanol and 2-Propanol", "Pentane and Ethanol", "Hexane and Ethanol", "Ethanol and Toluene", "Propanone and Methanol", "Methanol and Hexane", "Methanol and Toluene", "Dichloromethane and Methanol", "Propanone and Carbon Tetrachloride"]],
@@ -108,7 +108,12 @@ var enUS = [["aba_1", "Introduction"],[
       "grafico_legenda_11", "Stages"],[
       "grafico_legenda_12", "Tie Lines"],[
       "grafico_eixo_1", "Enthalpy (kJ/mol)"],[
-      "grafico_eixo_2", "x e y (molar fraction)"
+      "grafico_eixo_2", "x e y (molar fraction)"],[
+      "linguagem_1", "Language:"],[
+      "linguagem_2", "Language:"],[
+      "linguagem_3", "Language:"],[
+      "linguagem_4", "Language:"],[
+      "linguagem_5", "Language:"
     ]];
     var ptBR = [
       ["aba_1", "Início"],
@@ -221,4 +226,10 @@ var enUS = [["aba_1", "Introduction"],[
         "grafico_legenda_11", "Estágios"],[
         "grafico_legenda_12", "Linhas de Amarração"],[
         "grafico_eixo_1", "Entalpia (kJ/mol)"],[
-        "grafico_eixo_2", "x e y (fração molar)"]]
+        "grafico_eixo_2", "x e y (fração molar)"],[
+        "linguagem_1", "Idioma:"],[
+        "linguagem_2", "Idioma:"],[
+        "linguagem_3", "Idioma:"],[
+        "linguagem_4", "Idioma:"],[
+        "linguagem_5", "Idioma:"
+      ]];

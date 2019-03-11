@@ -1,6 +1,6 @@
 // Destsim - Software de auxílio ao ensino da modelagem de colunas de destilação pelos métodos de McCabe-Thiele e Ponchon_Savarit
 // Desenvolvedora: Jessika Nunes Caetano
-// Data da última modificação: 19/01/2019
+// Data da última modificação: 10/03/2019
 
 // Bibliotecas
 $(document).ready(function() {
@@ -15,16 +15,26 @@ var info_on_2 = false;
 
 //Inserção dos dados na caixa de rolagem do componentes 1 e 2 e dos metodos de entalpia e atividade
 if (linguagem == ptBR) {
-  criar_select("select_componentes_1", linguagem[91][1], "Escolha uma opção");
-  criar_select("select_componentes_2", linguagem[91][1], "Escolha uma opção");
-  criar_select("select_atividade", data.metodos_atividade, "Escolha uma opção");
-  criar_select("select_entalpia", data.metodos_entalpia, "Escolha uma opção");
+
+  var componente1 = "Escolha uma opção";
+  var componente2 = "Escolha uma opção";
+  var metodo_atividade = "Escolha uma opção";
+  var metodo_entalpia = "Escolha uma opção";
+
 } else {
-  criar_select("select_componentes_1", linguagem[91][1], "Choose an option");
-  criar_select("select_componentes_2", linguagem[91][1], "Choose an option");
-  criar_select("select_atividade", data.metodos_atividade, "Choose an option");
-  criar_select("select_entalpia", data.metodos_entalpia, "Choose an option");
+
+  var componente1 = "Choose an option";
+  var componente2 = "Choose an option";
+  var metodo_atividade = "Choose an option";
+  var metodo_entalpia = "Choose an option";
+
 }
+
+criar_select("select_componentes_1", linguagem[91][1], componente1);
+criar_select("select_componentes_2", linguagem[91][1], componente2);
+criar_select("select_atividade", data.metodos_atividade, metodo_atividade);
+criar_select("select_entalpia", data.metodos_entalpia, metodo_entalpia);
+
 
 // Desabilitação dos resultados enquanto não houverem dados inseridos
 bloquear_respostas();
@@ -53,11 +63,11 @@ var x_degrau = [],
   x_estagio = [],
   y_estagio = [],
   reta_amarracao,
-  fracao = "molar";
+  fracao;
 var entalpia_liquido = [],
   entalpia_vapor = [];
 var A1, A2, B1, B2, C1, C2, T1sat, T2sat, T1, T3, P1sat, P2sat, atividade_1, atividade_2, x1, x2, qk1_total, qk2_total, rk1_total, rk2_total, entalpia_excesso;
-var tipo_mistura, metodo_atividade, metodo_grafico, metodo_entalpia, componente1, componente2, estagio_alimentacao, y_qc_min, y_qr_min, Rd_min, num_minimo_pratos;
+var tipo_mistura, metodo_grafico, estagio_alimentacao, y_qc_min, y_qr_min, Rd_min, num_minimo_pratos;
 var xF, xD, xB, Rd_min, Rd, yF, yB, hB, hF, hD, qcD, qcB, x_aux, y_aux, indice_comp, compvolatil, delta_vaporizacao_1, delta_vaporizacao_2;
 var sigma, epsilon, psi, omega, alfa_Tr, der_Tr;
 var T1_aux = [];
@@ -277,7 +287,7 @@ function exemplo_mc_nao_ideal() {
     $("#div_componentes_2").append("<label class='aux_label'>Componente 2:</label>");
     document.getElementById("label_composicao").innerHTML = "Composição (fração <b>molar</b> de <b>Etanol</b>):";
     document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Etanol):";
-  mudar_select("div_componentes", "Etanol", "select_componentes_1", linguagem[91][1], "add_comp_1()");
+    mudar_select("div_componentes", "Etanol", "select_componentes_1", linguagem[91][1], "add_comp_1()");
     mudar_select("div_componentes_2", "Água", "select_componentes_2", linguagem[91][1], "add_comp_2()");
 
   } else {
@@ -470,7 +480,7 @@ function exemplo_ps_nao_ideal() {
     document.getElementById("label_info_4").innerHTML = "The compositions refer to the most volatile component (Ethanol):";
     mudar_select("div_componentes", "Ethanol", "select_componentes_1", linguagem[91][1], "add_comp_1()");
     mudar_select("div_componentes_2", "Water", "select_componentes_2", linguagem[91][1], "add_comp_2()");
-    
+
   }
 
   // Liberação dos campos de adição de composições

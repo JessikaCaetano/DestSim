@@ -2,7 +2,7 @@
 
 <!-- Destsim - Software de auxílio ao ensino da modelagem de colunas de destilação pelos métodos de McCabe-Thiele e Ponchon_Savarit-->
 <!-- Desenvolvedora: Jessika Nunes Caetano -->
-<!-- Data da última modificação: 19/01/2019 -->
+<!-- Data da última modificação: 10/03/2019 -->
 
 <html lang="en">
 
@@ -50,14 +50,35 @@
   <!-- Conteúdo da página -->
   <div class="row">
 
-    <div class="col m1 s12 center">
+    <div class="col m12">
+      <!-- Logo UFG -->
+      <div class="col m1 s12 center">
 
-      <img class="responsive-img" src="Marca_UFG_cor_vertical-03.png">
+        <img class="responsive-img" src="Marca_UFG_cor_vertical-03.png">
+
+      </div>
+
+      <div class="col m11 s12">
+
+        <!-- Select linguagem-->
+        <div class="input-field col m2 s12 right" id="div_linguagem_5">
+
+          <select id="select_linguagem_5"></select>
+
+          <label id="linguagem_5" class="aux_label">Idioma:</label>
+
+          <script>
+            index_pagina = 5;
+          </script>
+
+        </div>
+
+      </div>
 
     </div>
 
     <!-- Card da esquerda -->
-    <div class="col m5 s12">
+    <div class="col m5 s12 offset-m1">
 
       <div class="card grey lighten-4">
 
@@ -118,14 +139,14 @@
             <div class="input-field col m4 s6">
 
               <input placeholder="Ex. 0.42" id="input_topo" type="number" step="any" class="validate" value="" onchange="bloquear_respostas()">
-              <label  id="campo_topo" class="aux_label" for="input_topo">Topo</label>
+              <label id="campo_topo" class="aux_label" for="input_topo">Topo</label>
 
             </div>
 
             <div class="input-field col m4 s6">
 
               <input placeholder="Ex. 0.42" id="input_fundo" type="number" step="any" class="validate" value="" onchange="bloquear_respostas()">
-              <label  id="campo_fundo" class="aux_label" for="input_fundo">Fundo</label>
+              <label id="campo_fundo" class="aux_label" for="input_fundo">Fundo</label>
 
             </div>
 
@@ -309,12 +330,12 @@
 
       <div class="card grey lighten-4">
 
-        <div id = "card_resultados" class="row card-content">
+        <div id="card_resultados" class="row card-content">
           <!-- Título do card da direit
           a -->
           <span id="nome_card_2" class="center-align card-title">Resultados da Simulação</span>
 
-          <div id = "div_taxa_refluxo" class="col s11 taxa_refluxo">
+          <div id="div_taxa_refluxo" class="col s11 taxa_refluxo">
             <p id="escolha_razao" class="center-align">Por favor, escolha uma razão de refluxo.</p>
           </div>
 
@@ -331,7 +352,7 @@
             <form id="range_container" class="range_container " action="#">
 
               <p class="range-field">
-                <label id = "range_label" for="range_element">Razão de Refluxo:</label>
+                <label id="range_label" for="range_element">Razão de Refluxo:</label>
                 <input type="range" id="range_element" max="100" value="50" step="0.1" oninput="change_chart()" />
               </p>
 
@@ -471,6 +492,8 @@
   <script src="js/chart_control.js"></script>
   <!-- link do código principal -->
   <script src="js/destilacao.js"></script>
+  <!-- link do código para alterar a linguagem -->
+  <script src="js/linguagens.js"></script>
   <!-- link da biblioteca do chart -->
   <script src="js/Chart.bundle.min.js"></script>
 

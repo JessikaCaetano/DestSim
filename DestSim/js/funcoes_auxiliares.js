@@ -1,6 +1,13 @@
 // Destsim - Software de auxílio ao ensino da modelagem de colunas de destilação pelos métodos de McCabe-Thiele e Ponchon_Savarit
 // Desenvolvedora: Jessika Nunes Caetano
-// Data da última modificação: 19/01/2019
+// Data da última modificação: 10/03/2019
+
+// Bibliotecas
+$(document).ready(function() {
+  $(".button-collapse").sideNav();
+  $('select').material_select();
+});
+
 
 // Função para limpar as checkboxes
 function limpar_checkboxes() {
@@ -106,7 +113,11 @@ function converter() {
   // Chamada das funções de conversão caso necessário
   if (tipo_composicao == true) {
 
-    fracao = "mássica";
+    if (linguagem == ptBR) {
+      fracao = "mássica";
+    } else {
+      fracao = "mass";
+    }
 
     if (xF) {
       mol_to_mass(parseFloat(xF));
@@ -140,7 +151,21 @@ function converter() {
 
   }
 
-  document.getElementById("label_composicao").innerHTML = "Composição (fração <b>" + fracao + "</b> de <b>" + compvolatil + "</b>):";
+  for (var i = 0; i < data.componentes.length; i++) {
+
+    if (data.componentes[i] == compvolatil) {
+
+      var compvolatil_aux = linguagem[91][1][i];
+
+    }
+
+  }
+
+  if (linguagem == ptBR) {
+    document.getElementById("label_composicao").innerHTML = "Composição (fração <b>" + fracao + "</b> de <b>" + compvolatil_aux + "</b>):";
+  } else {
+    document.getElementById("label_composicao").innerHTML = "Composition (<b>" + fracao + "</b> fraction of <b>" + compvolatil_aux + "</b>):";
+  }
 
 }
 
@@ -713,6 +738,20 @@ function add_comp_1() {
 
     calcular_comp_volatil();
 
+    tipo_composicao = document.getElementById("switch").checked;
+
+    if (tipo_composicao == true) {
+
+      if (linguagem == ptBR) {
+        fracao = "mássica";
+      } else {
+        fracao = "mass";
+      }
+
+    } else {
+      fracao = "molar";
+    }
+
     if (linguagem == ptBR) {
       document.getElementById("label_composicao").innerHTML = "Composição (fração <b>" + fracao + "</b> de <b>" + compvolatil + "</b>):";
       document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
@@ -767,7 +806,6 @@ function add_comp_2() {
 function mudar_select(div_mudar, componente, select, dados, funcao) {
 
   $("#" + div_mudar).empty();
-
   select_1 = document.createElement("select");
   document.getElementById(div_mudar).appendChild(select_1);
   select_1.setAttribute("id", select);
@@ -825,6 +863,7 @@ function mostrar_label_2() {
     info_on_2 = false;
 
   }
+
   if (compvolatil) {
 
     if (linguagem == ptBR) {
@@ -1145,22 +1184,8 @@ function bloquear_respostas() {
 
 }
 
-function mudar_linguagem(ind, linguagem) {
-
-  if (linguagem[ind]) {
-
-    if (linguagem[ind][0].includes("manual") || linguagem[ind][0].includes("sobre_metodos") || linguagem[ind][0].includes("resposta")) {
-      $("#" + linguagem[ind][0] + "").html(linguagem[ind][1]);
-    } else {
-      $("#" + linguagem[ind][0] + "").text(linguagem[ind][1]);
-    }
-
-  }
-
-}
-
-var linguagem = enUS;
-
-for (var i = 0; i < ptBR.length; i++) {
-  mudar_linguagem(i, linguagem);
-}
+// Definição da linguagem de acordo com o navegador ou com o default estabelecido em outra página
+var index_pagina;
+var userLang = navigator.language || navigator.userLanguage;
+var linguagem = ptBR; //rESOLVER ESSE PROBLEMA AQUI
+var opcao_texto = "Portuguese (BR)"; //rESOLVER ESSE PROBLEMA AQUI
