@@ -105,12 +105,12 @@ function referencia_abas(ind, linguagem_usuario, botao) {
   var url_aux = new URL(document.getElementById("aba_" + ind).href)
   document.getElementById("aba_" + ind).href = url_aux.href.split("?")[0] + "?l=" + linguagem_usuario;
 
-if (index_pagina == 1 || index_pagina == 2 || index_pagina == 3) {
+  if (index_pagina == 1 || index_pagina == 2 || index_pagina == 3) {
 
-  var url_aux_2 = new URL(document.getElementById(botao).href);
-  document.getElementById(botao).href = url_aux_2.href.split("?")[0] + "?l=" + linguagem_usuario;
+    var url_aux_2 = new URL(document.getElementById(botao).href);
+    document.getElementById(botao).href = url_aux_2.href.split("?")[0] + "?l=" + linguagem_usuario;
 
-}
+  }
 
 }
 
@@ -126,7 +126,6 @@ function escolher_linguagem(valor_select) {
     var botao = "manual_comecar";
 
   }
-
 
   if (valor_select == "1") {
 

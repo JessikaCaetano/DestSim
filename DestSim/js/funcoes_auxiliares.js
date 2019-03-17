@@ -880,12 +880,22 @@ function mostrar_label_2() {
 
   }
 
+  for (var i = 0; i < data.componentes.length; i++) {
+
+    if (data.componentes[i] == compvolatil) {
+
+      var compvolatil_aux = linguagem[91][1][i];
+
+    }
+
+  }
+
   if (compvolatil) {
 
     if (linguagem == ptBR) {
-      document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
+      document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil_aux + "):";
     } else {
-      document.getElementById("label_info_4").innerHTML = "The compositions refer to the most volatile component (" + compvolatil + "):";
+      document.getElementById("label_info_4").innerHTML = "The compositions refer to the most volatile component (" + compvolatil_aux + "):";
     }
 
   }
