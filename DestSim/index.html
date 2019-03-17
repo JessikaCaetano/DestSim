@@ -2,7 +2,7 @@
 
 <!-- Destsim - Software de auxílio ao ensino da modelagem de colunas de destilação pelos métodos de McCabe-Thiele e Ponchon_Savarit-->
 <!-- Desenvolvedora: Jessika Nunes Caetano -->
-<!-- Data da última modificação: 10/03/2019 -->
+<!-- Data da última modificação: 17/03/2019 -->
 
 <html lang="en">
 
@@ -30,22 +30,41 @@
       <a data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
       <ul class="right hide-on-med-and-down">
-        <li><a id="aba_1" href="inicio.html">Início</a></li>
-        <li><a id="aba_2" class="active" href="index.html">Simulação</a></li>
-        <li><a id="aba_3" href="manual.html">Manual</a></li>
-        <li><a id="aba_4" href="sobre_metodos.html">Sobre os Métodos</a></li>
+        <li><a id="aba_1">Início</a></li>
+        <li><a id="aba_2" class="active">Simulação</a></li>
+        <li><a id="aba_3">Manual</a></li>
+        <li><a id="aba_4">Sobre os Métodos</a></li>
       </ul>
 
       <ul class="side-nav" id="mobile-demo">
-        <li><a id="aba_1" href="inicio.html">Início</a></li>
-        <li><a id="aba_2" class="active" href="index.html">Simulação</a></li>
-        <li><a id="aba_3" href="manual.html">Manual</a></li>
-        <li><a id="aba_4" href="sobre_metodos.html">Sobre os Métodos</a></li>
+        <li><a id="aba_1">Início</a></li>
+        <li><a id="aba_2" class="active">Simulação</a></li>
+        <li><a id="aba_3">Manual</a></li>
+        <li><a id="aba_4">Sobre os Métodos</a></li>
       </ul>
+
 
     </div>
 
   </nav>
+
+<!-- Adicionar referência às abas caso elas não tenham referência definida a partir de outras abas -->
+  <script>
+
+  if (!document.getElementById("aba_1").href) {
+    document.getElementById("aba_1").href = "inicio.html";
+  }
+  if (!document.getElementById("aba_2").href) {
+    document.getElementById("aba_2").href = "index.html";
+  }
+  if (!document.getElementById("aba_3").href) {
+    document.getElementById("aba_3").href = "manual.html";
+  }
+  if (!document.getElementById("aba_4").href) {
+    document.getElementById("aba_4").href = "sobre_metodos.html";
+  }
+
+  </script>
 
   <!-- Conteúdo da página -->
   <div class="row">

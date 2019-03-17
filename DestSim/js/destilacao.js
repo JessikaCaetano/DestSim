@@ -76,6 +76,7 @@ var c_added_1 = false,
   metodo_added = false,
   metodo_entalpia_added = false,
   verificar_range = false;
+var aux_toast = 0;
 
 // Desabilitar scroll nos inputs das composições
 $(document).on("wheel", "input[type=number]", function(e) {

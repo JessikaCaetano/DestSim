@@ -1,6 +1,6 @@
 // Destsim - Software de auxílio ao ensino da modelagem de colunas de destilação pelos métodos de McCabe-Thiele e Ponchon_Savarit
 // Desenvolvedora: Jessika Nunes Caetano
-// Data da última modificação: 10/03/2019
+// Data da última modificação: 17/03/2019
 
 // Função que atualiza os selects e outros componentes quando a linguagem é mudada no meio de uma simulação
 function atualizar_selects(linguagem) {
@@ -99,18 +99,59 @@ function mudar_linguagem(ind, linguagem) {
 
 }
 
+//Função para alterar a referência das abas de acordo com a linguagem escolhida em outras abas
+function referencia_abas(ind, linguagem_usuario, botao) {
+
+  var url_aux = new URL(document.getElementById("aba_" + ind).href)
+  document.getElementById("aba_" + ind).href = url_aux.href.split("?")[0] + "?l=" + linguagem_usuario;
+
+if (index_pagina == 1 || index_pagina == 2 || index_pagina == 3) {
+
+  var url_aux_2 = new URL(document.getElementById(botao).href);
+  document.getElementById(botao).href = url_aux_2.href.split("?")[0] + "?l=" + linguagem_usuario;
+
+}
+
+}
+
 // Função que chama a mudança de linguagem de acordo com o idioma escolhido
 function escolher_linguagem(valor_select) {
+
+  if (index_pagina == 1 || index_pagina == 2) {
+
+    var botao = "inicio_comecar";
+
+  } else if (index_pagina == 3) {
+
+    var botao = "manual_comecar";
+
+  }
+
 
   if (valor_select == "1") {
 
     linguagem = ptBR;
     opcao_texto = "Portuguese (BR)";
+    document.getElementById("linguagem_" + index_pagina).value = "Idioma:";
 
-  } else {
+    for (var i = 1; i < 5; i++) {
+
+      referencia_abas(i, "ptbr", botao)
+
+    }
+
+
+  } else if (valor_select == "2") {
 
     linguagem = enUS;
     opcao_texto = "English (US)";
+    document.getElementById("linguagem_" + index_pagina).value = "Language:";
+
+    for (var i = 1; i < 5; i++) {
+
+      referencia_abas(i, "enus", botao)
+
+    }
 
   }
 
@@ -122,53 +163,86 @@ function escolher_linguagem(valor_select) {
 
 }
 
+
 // Inicialização dos selects de linguagem de acordo com a página atual e o idioma definido em outras páginas
-if (linguagem && opcao_texto) {
+var url = new URL(window.location);
 
-  if (index_pagina <= 4) {
+if (!url.searchParams.get("l")) {
 
-    mudar_select("div_linguagem_" + index_pagina, opcao_texto, "select_linguagem_" + index_pagina, ['Portuguese (BR)', 'English (US)'], "escolher_linguagem(document.getElementById('select_linguagem_" + index_pagina + "').value)");
+  var linguagem_usuario = navigator.language || navigator.userLanguage;
+
+  if (linguagem_usuario = "pt-BR") {
+
+    linguagem_usuario = "ptbr";
 
   } else {
 
-    if (document.getElementById("select_linguagem_" + index_pagina)) {
-
-      mudar_select("div_linguagem_" + index_pagina, opcao_texto, "select_linguagem_" + index_pagina, ['Portuguese (BR)', 'English (US)'], "escolher_linguagem(document.getElementById('select_linguagem_" + index_pagina + "').value); atualizar_selects(linguagem);");
-
-    }
+    linguagem_usuario = "enus";
 
   }
 
-  for (var i = 0; i < ptBR.length; i++) {
 
-    mudar_linguagem(i, linguagem);
+} else {
+
+  if (url.searchParams.get("l") == "ptbr") {
+
+    linguagem_usuario = "ptbr";
+
+  } else {
+
+    linguagem_usuario = "enus";
+
+  }
+
+}
+
+if (index_pagina == 1 || index_pagina == 2) {
+
+  var botao = "inicio_comecar";
+
+} else if (index_pagina == 3) {
+
+  var botao = "manual_comecar";
+
+}
+
+if (linguagem_usuario == "ptbr") {
+
+  linguagem = ptBR;
+  opcao_texto = "Portuguese (BR)";
+
+  for (var i = 1; i < 5; i++) {
+
+    referencia_abas(i, "ptbr", botao)
 
   }
 
 } else {
 
-  linguagem = ptBR; //RESOLVER ISSO AQUI
-  opcao_texto = "Portuguese (BR)"; //RESOLVER ISSO AQUI, ver o negócio do escolha uma opção
+  linguagem = enUS;
+  opcao_texto = "English (US)"
 
-  if (index_pagina <= 4) {
+  for (var i = 1; i < 5; i++) {
 
-    mudar_select("div_linguagem_" + index_pagina, opcao_texto, "select_linguagem_" + index_pagina, ['Portuguese (BR)', 'English (US)'], "escolher_linguagem(document.getElementById('select_linguagem_" + index_pagina + "').value)");
-
-  } else {
-
-    if (document.getElementById("select_linguagem_" + index_pagina)) {
-
-      mudar_select("div_linguagem_" + index_pagina, opcao_texto, "select_linguagem_" + index_pagina, ['Portuguese (BR)', 'English (US)'], "escolher_linguagem(document.getElementById('select_linguagem_" + index_pagina + "').value); atualizar_selects(linguagem);");
-
-    }
+    referencia_abas(i, "enus", botao)
 
   }
 
-  for (var i = 0; i < ptBR.length; i++) {
+}
 
-    mudar_linguagem(i, linguagem);
+if (index_pagina <= 4) {
+
+  mudar_select("div_linguagem_" + index_pagina, opcao_texto, "select_linguagem_" + index_pagina, ['Portuguese (BR)', 'English (US)'], "escolher_linguagem(document.getElementById('select_linguagem_" + index_pagina + "').value)");
+
+} else {
+
+  if (document.getElementById("select_linguagem_" + index_pagina)) {
+
+    mudar_select("div_linguagem_" + index_pagina, opcao_texto, "select_linguagem_" + index_pagina, ['Portuguese (BR)', 'English (US)'], "escolher_linguagem(document.getElementById('select_linguagem_" + index_pagina + "').value); atualizar_selects(linguagem);");
 
   }
+
+  atualizar_selects(linguagem);
 
 }
 
@@ -179,5 +253,11 @@ if (linguagem == ptBR) {
 } else {
 
   $("#div_linguagem_" + index_pagina).append("<label id='linguagem_" + index_pagina + "'class='aux_label'>Language:</label>");
+
+}
+
+for (var i = 0; i < ptBR.length; i++) {
+
+  mudar_linguagem(i, linguagem);
 
 }

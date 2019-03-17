@@ -1,6 +1,6 @@
 // Destsim - Software de auxílio ao ensino da modelagem de colunas de destilação pelos métodos de McCabe-Thiele e Ponchon_Savarit
 // Desenvolvedora: Jessika Nunes Caetano
-// Data da última modificação: 10/03/2019
+// Data da última modificação: 17/03/2019
 
 // Bibliotecas
 $(document).ready(function() {
@@ -163,8 +163,10 @@ function converter() {
 
   if (linguagem == ptBR) {
     document.getElementById("label_composicao").innerHTML = "Composição (fração <b>" + fracao + "</b> de <b>" + compvolatil_aux + "</b>):";
+    document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil_aux + "):";
   } else {
     document.getElementById("label_composicao").innerHTML = "Composition (<b>" + fracao + "</b> fraction of <b>" + compvolatil_aux + "</b>):";
+    document.getElementById("label_info_4").innerHTML = "The compositions refer to the most volatile component (" + compvolatil_aux + "):";
   }
 
 }
@@ -253,16 +255,6 @@ function calcular_comp_volatil() {
   } else {
 
     compvolatil = componente1;
-
-  }
-
-  for (var i = 0; i < data.componentes.length; i++) {
-
-    if (data.componentes[i] == compvolatil) {
-
-      compvolatil = linguagem[91][1][i];
-
-    }
 
   }
 
@@ -709,6 +701,8 @@ function add_atividade(componente) {
 // Função de adição dos componentes à caixa de rolagem do componete 1
 function add_comp_1() {
 
+  aux_toast = 0;
+
   document.getElementById("range_element").value = "50";
   document.getElementById("range_element").disabled = "disabled";
   document.getElementById("div_chart").classList.add("Disabled_Range");
@@ -752,12 +746,22 @@ function add_comp_1() {
       fracao = "molar";
     }
 
+    for (var i = 0; i < data.componentes.length; i++) {
+
+      if (data.componentes[i] == compvolatil) {
+
+        var compvolatil_aux = linguagem[91][1][i];
+
+      }
+
+    }
+
     if (linguagem == ptBR) {
-      document.getElementById("label_composicao").innerHTML = "Composição (fração <b>" + fracao + "</b> de <b>" + compvolatil + "</b>):";
-      document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
+      document.getElementById("label_composicao").innerHTML = "Composição (fração <b>" + fracao + "</b> de <b>" + compvolatil_aux + "</b>):";
+      document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil_aux + "):";
     } else {
-      document.getElementById("label_composicao").innerHTML = "Composition (<b>" + fracao + "</b> fraction of <b>" + compvolatil + "</b>):";
-      document.getElementById("label_info_4").innerHTML = "The compositions refer to the most volatile component (" + compvolatil + "):";
+      document.getElementById("label_composicao").innerHTML = "Composition (<b>" + fracao + "</b> fraction of <b>" + compvolatil_aux + "</b>):";
+      document.getElementById("label_info_4").innerHTML = "The compositions refer to the most volatile component (" + compvolatil_aux + "):";
     }
 
   }
@@ -766,6 +770,8 @@ function add_comp_1() {
 
 // Função de adição dos componentes à caixa de rolagem do componete 2
 function add_comp_2() {
+
+  aux_toast = 0;
 
   document.getElementById("range_element").value = "50";
   document.getElementById("range_element").disabled = "disabled";
@@ -790,12 +796,22 @@ function add_comp_2() {
     add_atividade("Escolha uma opção");
     calcular_comp_volatil();
 
+    for (var i = 0; i < data.componentes.length; i++) {
+
+      if (data.componentes[i] == compvolatil) {
+
+        var compvolatil_aux = linguagem[91][1][i];
+
+      }
+
+    }
+
     if (linguagem == ptBR) {
-      document.getElementById("label_composicao").innerHTML = "Composição (fração <b>" + fracao + "</b> de <b>" + compvolatil + "</b>):";
-      document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil + "):";
+      document.getElementById("label_composicao").innerHTML = "Composição (fração <b>" + fracao + "</b> de <b>" + compvolatil_aux + "</b>):";
+      document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (" + compvolatil_aux + "):";
     } else {
-      document.getElementById("label_composicao").innerHTML = "Composition (<b>" + fracao + "</b> fraction of <b>" + compvolatil + "</b>):";
-      document.getElementById("label_info_4").innerHTML = "The compositions refer to the most volatile component (" + compvolatil + "):";
+      document.getElementById("label_composicao").innerHTML = "Composition (<b>" + fracao + "</b> fraction of <b>" + compvolatil_aux + "</b>):";
+      document.getElementById("label_info_4").innerHTML = "The compositions refer to the most volatile component (" + compvolatil_aux + "):";
     }
 
   }
@@ -927,6 +943,8 @@ function bloquear_calculo() {
 
 // Função que verifica os inputs
 function razao_refluxo() {
+
+  aux_toast = 0;
 
   // Limpeza de variáveis
   componente1 = null;
@@ -1186,6 +1204,4 @@ function bloquear_respostas() {
 
 // Definição da linguagem de acordo com o navegador ou com o default estabelecido em outra página
 var index_pagina;
-var userLang = navigator.language || navigator.userLanguage;
-var linguagem = ptBR; //rESOLVER ESSE PROBLEMA AQUI
-var opcao_texto = "Portuguese (BR)"; //rESOLVER ESSE PROBLEMA AQUI
+var linguagem = ptBR;
