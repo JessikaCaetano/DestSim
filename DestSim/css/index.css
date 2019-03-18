@@ -46,6 +46,13 @@ p {
   text-align: justify;
 }
 
+li a.active{
+  border-bottom-width: 1px !important;
+  border-bottom-color: white;
+  border-bottom-style: solid;
+  height: 63px !important;
+}
+
 .informativo {
   color: #75757585 !important;
   padding-top: 2% !important;
