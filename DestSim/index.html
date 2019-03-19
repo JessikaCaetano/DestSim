@@ -37,10 +37,10 @@
       </ul>
 
       <ul class="side-nav" id="mobile-demo">
-        <li><a id="aba_1">Início</a></li>
-        <li><a id="aba_2" class="active">Simulação</a></li>
-        <li><a id="aba_3">Manual</a></li>
-        <li><a id="aba_4">Sobre os Métodos</a></li>
+        <li><a id="aba_5">Início</a></li>
+        <li><a id="aba_6" class="active">Simulação</a></li>
+        <li><a id="aba_7">Manual</a></li>
+        <li><a id="aba_8">Sobre os Métodos</a></li>
       </ul>
 
 
@@ -51,17 +51,21 @@
 <!-- Adicionar referência às abas caso elas não tenham referência definida a partir de outras abas -->
   <script>
 
-  if (!document.getElementById("aba_1").href) {
+  if (!document.getElementById("aba_1").href || !document.getElementById("aba_5").href) {
     document.getElementById("aba_1").href = "inicio.html";
+    document.getElementById("aba_5").href = "inicio.html";
   }
-  if (!document.getElementById("aba_2").href) {
+  if (!document.getElementById("aba_2").href || !document.getElementById("aba_6").href) {
     document.getElementById("aba_2").href = "index.html";
+    document.getElementById("aba_6").href = "index.html";
   }
-  if (!document.getElementById("aba_3").href) {
+  if (!document.getElementById("aba_3").href || !document.getElementById("aba_7").href) {
     document.getElementById("aba_3").href = "manual.html";
+    document.getElementById("aba_7").href = "manual.html";
   }
-  if (!document.getElementById("aba_4").href) {
+  if (!document.getElementById("aba_4").href || !document.getElementById("aba_8").href) {
     document.getElementById("aba_4").href = "sobre_metodos.html";
+    document.getElementById("aba_8").href = "sobre_metodos.html";
   }
 
   </script>

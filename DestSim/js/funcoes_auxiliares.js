@@ -155,7 +155,7 @@ function converter() {
 
     if (data.componentes[i] == compvolatil) {
 
-      var compvolatil_aux = linguagem[91][1][i];
+      var compvolatil_aux = linguagem[95][1][i];
 
     }
 
@@ -750,7 +750,7 @@ function add_comp_1() {
 
       if (data.componentes[i] == compvolatil) {
 
-        var compvolatil_aux = linguagem[91][1][i];
+        var compvolatil_aux = linguagem[95][1][i];
 
       }
 
@@ -800,7 +800,7 @@ function add_comp_2() {
 
       if (data.componentes[i] == compvolatil) {
 
-        var compvolatil_aux = linguagem[91][1][i];
+        var compvolatil_aux = linguagem[95][1][i];
 
       }
 
@@ -884,7 +884,7 @@ function mostrar_label_2() {
 
     if (data.componentes[i] == compvolatil) {
 
-      var compvolatil_aux = linguagem[91][1][i];
+      var compvolatil_aux = linguagem[95][1][i];
 
     }
 

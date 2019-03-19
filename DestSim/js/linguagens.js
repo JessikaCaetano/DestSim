@@ -9,20 +9,20 @@ function atualizar_selects(linguagem) {
 
     if (componente1 == data.componentes[i]) {
 
-      var componente1_aux = linguagem[91][1][i];
+      var componente1_aux = linguagem[95][1][i];
 
     }
 
     if (componente2 == data.componentes[i]) {
 
-      var componente2_aux = linguagem[91][1][i];
+      var componente2_aux = linguagem[95][1][i];
 
     }
 
   }
 
-  mudar_select("div_componentes", componente1_aux, "select_componentes_1", linguagem[91][1], "add_comp_1()");
-  mudar_select("div_componentes_2", componente2_aux, "select_componentes_2", linguagem[91][1], "add_comp_2()");
+  mudar_select("div_componentes", componente1_aux, "select_componentes_1", linguagem[95][1], "add_comp_1()");
+  mudar_select("div_componentes_2", componente2_aux, "select_componentes_2", linguagem[95][1], "add_comp_2()");
   mudar_select("div_select", metodo_atividade, "select_atividade", data.metodos_atividade, "add_metodo()");
   mudar_select("div_select_2", metodo_entalpia, "select_entalpia", data.metodos_entalpia, "bloquear_respostas()");
 
@@ -52,7 +52,7 @@ function atualizar_selects(linguagem) {
 
       if (data.componentes[i] == compvolatil) {
 
-        var compvolatil_aux = linguagem[91][1][i];
+        var compvolatil_aux = linguagem[95][1][i];
 
       }
 
@@ -102,13 +102,17 @@ function mudar_linguagem(ind, linguagem) {
 //Função para alterar a referência das abas de acordo com a linguagem escolhida em outras abas
 function referencia_abas(ind, linguagem_usuario, botao) {
 
-  var url_aux = new URL(document.getElementById("aba_" + ind).href)
-  document.getElementById("aba_" + ind).href = url_aux.href.split("?")[0] + "?l=" + linguagem_usuario;
+  if (document.getElementById("aba_" + ind).href) {
 
-  if (index_pagina == 1 || index_pagina == 2 || index_pagina == 3) {
+    var url_aux = new URL(document.getElementById("aba_" + ind).href)
+    document.getElementById("aba_" + ind).href = url_aux.href.split("?")[0] + "?l=" + linguagem_usuario;
 
-    var url_aux_2 = new URL(document.getElementById(botao).href);
-    document.getElementById(botao).href = url_aux_2.href.split("?")[0] + "?l=" + linguagem_usuario;
+    if (index_pagina == 1 || index_pagina == 2 || index_pagina == 3) {
+
+      var url_aux_2 = new URL(document.getElementById(botao).href);
+      document.getElementById(botao).href = url_aux_2.href.split("?")[0] + "?l=" + linguagem_usuario;
+
+    }
 
   }
 
@@ -133,7 +137,7 @@ function escolher_linguagem(valor_select) {
     opcao_texto = "Portuguese (BR)";
     document.getElementById("linguagem_" + index_pagina).value = "Idioma:";
 
-    for (var i = 1; i < 5; i++) {
+    for (var i = 1; i < 9; i++) {
 
       referencia_abas(i, "ptbr", botao)
 
@@ -146,7 +150,7 @@ function escolher_linguagem(valor_select) {
     opcao_texto = "English (US)";
     document.getElementById("linguagem_" + index_pagina).value = "Language:";
 
-    for (var i = 1; i < 5; i++) {
+    for (var i = 1; i < 9; i++) {
 
       referencia_abas(i, "enus", botao)
 
@@ -210,7 +214,7 @@ if (linguagem_usuario == "ptbr") {
   linguagem = ptBR;
   opcao_texto = "Portuguese (BR)";
 
-  for (var i = 1; i < 5; i++) {
+  for (var i = 1; i < 9; i++) {
 
     referencia_abas(i, "ptbr", botao)
 
@@ -221,7 +225,7 @@ if (linguagem_usuario == "ptbr") {
   linguagem = enUS;
   opcao_texto = "English (US)"
 
-  for (var i = 1; i < 5; i++) {
+  for (var i = 1; i < 9; i++) {
 
     referencia_abas(i, "enus", botao)
 

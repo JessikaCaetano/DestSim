@@ -2,6 +2,10 @@ var enUS = [["aba_1", "Introduction"],[
       "aba_2", "Simulation"],[
       "aba_3", "Instructions"],[
       "aba_4", "About the Methods"],[
+      "aba_5", "Introduction"],[
+      "aba_6", "Simulation"],[
+      "aba_7", "Instructions"],[
+      "aba_8", "About the Methods"],[
       "inicio_titulo", "DestSim - Software for Modeling the Separation of Binary Mixtures in Distillation Columns"],[
       "inicio_1", "Hello! Welcome to DestSim!"],[
       "inicio_2", "This software was developed aiming to facilitate the visualization of the two main graphic methods taught in Chemical Engineering courses for modeling operations in distillation columns, McCabe-Thiele's and Ponchon-Savarit's. In it, a continuous reflux system is considered], in which the components of a binary mixture, fed into the column as saturated liquid, are separated. At the top of the column a total condenser is connected, while at the base of the column there is a partial boiler."],[
@@ -120,6 +124,10 @@ var enUS = [["aba_1", "Introduction"],[
       ["aba_2", "Simulação"],[
         "aba_3", "Manual"],[
         "aba_4", "Sobre os Métodos"],[
+        "aba_5", "Início"],[
+        "aba_6", "Simulação"],[
+        "aba_7", "Manual"],[
+        "aba_8", "Sobre os Métodos"],[
         "inicio_titulo", "DestSim - Software para Modelagem da Separação de Misturas Binárias em Colunas de Destilação"],[
         "inicio_1", "Olá! Seja bem vindo ao DestSim!"],[
         "inicio_2", "Este software foi desenvolvido com o intuito de facilitar a vizualização dos dois principais métodos gráficos ensinados nos cursos de Engenharia Química para modelagem de operações em colunas de destilação, McCabe-Thiele e Ponchon-Savarit. Nele, considera-se um sistema de destilação contínua com refluxo, no qual são separados os componentes de uma mistura binária alimentada na coluna como líquido saturado.No topo da coluna é conectado um condensador total, enquanto na base da coluna há um refervedor parcial."],[

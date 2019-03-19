@@ -30,8 +30,8 @@ if (linguagem == ptBR) {
 
 }
 
-criar_select("select_componentes_1", linguagem[91][1], componente1);
-criar_select("select_componentes_2", linguagem[91][1], componente2);
+criar_select("select_componentes_1", linguagem[95][1], componente1);
+criar_select("select_componentes_2", linguagem[95][1], componente2);
 criar_select("select_atividade", data.metodos_atividade, metodo_atividade);
 criar_select("select_entalpia", data.metodos_entalpia, metodo_entalpia);
 
@@ -193,8 +193,8 @@ function exemplo_mc_ideal() {
     $("#div_componentes_2").append("<label class='aux_label'>Componente 2:</label>");
     document.getElementById("label_composicao").innerHTML = "Composição (fração <b>mássica</b> de <b>Benzeno</b>):";
     document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Benzeno):";
-    mudar_select("div_componentes", "Benzeno", "select_componentes_1", linguagem[91][1], "add_comp_1()");
-    mudar_select("div_componentes_2", "Tolueno", "select_componentes_2", linguagem[91][1], "add_comp_2()");
+    mudar_select("div_componentes", "Benzeno", "select_componentes_1", linguagem[95][1], "add_comp_1()");
+    mudar_select("div_componentes_2", "Tolueno", "select_componentes_2", linguagem[95][1], "add_comp_2()");
 
   } else {
 
@@ -202,8 +202,8 @@ function exemplo_mc_ideal() {
     $("#div_componentes_2").append("<label class='aux_label'>Component 2:</label>");
     document.getElementById("label_composicao").innerHTML = "Composition (<b>mass</b> fraction of <b>Benzene</b>):";
     document.getElementById("label_info_4").innerHTML = "The compositions refer to the most volatile component (Benzene):";
-    mudar_select("div_componentes", "Benzene", "select_componentes_1", linguagem[91][1], "add_comp_1()");
-    mudar_select("div_componentes_2", "Toluene", "select_componentes_2", linguagem[91][1], "add_comp_2()");
+    mudar_select("div_componentes", "Benzene", "select_componentes_1", linguagem[95][1], "add_comp_1()");
+    mudar_select("div_componentes_2", "Toluene", "select_componentes_2", linguagem[95][1], "add_comp_2()");
 
   }
 
@@ -288,8 +288,8 @@ function exemplo_mc_nao_ideal() {
     $("#div_componentes_2").append("<label class='aux_label'>Componente 2:</label>");
     document.getElementById("label_composicao").innerHTML = "Composição (fração <b>molar</b> de <b>Etanol</b>):";
     document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Etanol):";
-    mudar_select("div_componentes", "Etanol", "select_componentes_1", linguagem[91][1], "add_comp_1()");
-    mudar_select("div_componentes_2", "Água", "select_componentes_2", linguagem[91][1], "add_comp_2()");
+    mudar_select("div_componentes", "Etanol", "select_componentes_1", linguagem[95][1], "add_comp_1()");
+    mudar_select("div_componentes_2", "Água", "select_componentes_2", linguagem[95][1], "add_comp_2()");
 
   } else {
 
@@ -297,8 +297,8 @@ function exemplo_mc_nao_ideal() {
     $("#div_componentes_2").append("<label class='aux_label'>Component 2:</label>");
     document.getElementById("label_composicao").innerHTML = "Composition (<b>molar</b> fraction of <b>Ethanol</b>):";
     document.getElementById("label_info_4").innerHTML = "The compositions refer to the most volatile component (Ethanol):";
-    mudar_select("div_componentes", "Ethanol", "select_componentes_1", linguagem[91][1], "add_comp_1()");
-    mudar_select("div_componentes_2", "Water", "select_componentes_2", linguagem[91][1], "add_comp_2()");
+    mudar_select("div_componentes", "Ethanol", "select_componentes_1", linguagem[95][1], "add_comp_1()");
+    mudar_select("div_componentes_2", "Water", "select_componentes_2", linguagem[95][1], "add_comp_2()");
 
   }
 
@@ -376,8 +376,8 @@ function exemplo_ps_ideal() {
     $("#div_componentes_2").append("<label class='aux_label'>Componente 2:</label>");
     document.getElementById("label_composicao").innerHTML = "Composição (fração <b>mássica</b> de <b>Benzeno</b>):";
     document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Benzeno):";
-    mudar_select("div_componentes", "Benzeno", "select_componentes_1", linguagem[91][1], "add_comp_1()");
-    mudar_select("div_componentes_2", "Tolueno", "select_componentes_2", linguagem[91][1], "add_comp_2()");
+    mudar_select("div_componentes", "Benzeno", "select_componentes_1", linguagem[95][1], "add_comp_1()");
+    mudar_select("div_componentes_2", "Tolueno", "select_componentes_2", linguagem[95][1], "add_comp_2()");
 
   } else {
 
@@ -385,8 +385,8 @@ function exemplo_ps_ideal() {
     $("#div_componentes_2").append("<label class='aux_label'>Component 2:</label>");
     document.getElementById("label_composicao").innerHTML = "Composition (<b>mass</b> fraction of <b>Benzene</b>):";
     document.getElementById("label_info_4").innerHTML = "The compositions refer to the most volatile component (Benzene):";
-    mudar_select("div_componentes", "Benzene", "select_componentes_1", linguagem[91][1], "add_comp_1()");
-    mudar_select("div_componentes_2", "Toluene", "select_componentes_2", linguagem[91][1], "add_comp_2()");
+    mudar_select("div_componentes", "Benzene", "select_componentes_1", linguagem[95][1], "add_comp_1()");
+    mudar_select("div_componentes_2", "Toluene", "select_componentes_2", linguagem[95][1], "add_comp_2()");
 
   }
 
@@ -470,8 +470,8 @@ function exemplo_ps_nao_ideal() {
     $("#div_componentes_2").append("<label class='aux_label'>Componente 2:</label>");
     document.getElementById("label_composicao").innerHTML = "Composição (fração <b>molar</b> de <b>Etanol</b>):";
     document.getElementById("label_info_4").innerHTML = "As composições são dadas em relação ao componente mais volátil (Etanol):";
-    mudar_select("div_componentes", "Etanol", "select_componentes_1", linguagem[91][1], "add_comp_1()");
-    mudar_select("div_componentes_2", "Água", "select_componentes_2", linguagem[91][1], "add_comp_2()");
+    mudar_select("div_componentes", "Etanol", "select_componentes_1", linguagem[95][1], "add_comp_1()");
+    mudar_select("div_componentes_2", "Água", "select_componentes_2", linguagem[95][1], "add_comp_2()");
 
   } else {
 
@@ -479,8 +479,8 @@ function exemplo_ps_nao_ideal() {
     $("#div_componentes_2").append("<label class='aux_label'>Component 2:</label>");
     document.getElementById("label_composicao").innerHTML = "Composition (<b>molar</b> fraction of <b>Ethanol</b>):";
     document.getElementById("label_info_4").innerHTML = "The compositions refer to the most volatile component (Ethanol):";
-    mudar_select("div_componentes", "Ethanol", "select_componentes_1", linguagem[91][1], "add_comp_1()");
-    mudar_select("div_componentes_2", "Water", "select_componentes_2", linguagem[91][1], "add_comp_2()");
+    mudar_select("div_componentes", "Ethanol", "select_componentes_1", linguagem[95][1], "add_comp_1()");
+    mudar_select("div_componentes_2", "Water", "select_componentes_2", linguagem[95][1], "add_comp_2()");
 
   }
 

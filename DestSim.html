@@ -36,10 +36,10 @@ Data da última modificação: 17/03/2019 -->
       </ul>
 
       <ul class="side-nav" id="mobile-demo">
-        <li><a id="aba_1" class="active">Início</a></li>
-        <li><a id="aba_2">Simulação</a></li>
-        <li><a id="aba_3">Manual</a></li>
-        <li><a id="aba_4">Sobre os Métodos</a></li>
+        <li><a id="aba_5" class="active">Início</a></li>
+        <li><a id="aba_6">Simulação</a></li>
+        <li><a id="aba_7">Manual</a></li>
+        <li><a id="aba_8">Sobre os Métodos</a></li>
       </ul>
 
     </div>
@@ -47,22 +47,26 @@ Data da última modificação: 17/03/2019 -->
   </nav>
 
 <!-- Adicionar referência às abas caso elas não tenham referência definida a partir de outras abas -->
-  <script>
+<script>
 
-  if (!document.getElementById("aba_1").href) {
-    document.getElementById("aba_1").href = "DestSim/inicio.html";
-  }
-  if (!document.getElementById("aba_2").href) {
-    document.getElementById("aba_2").href = "DestSim/index.html";
-  }
-  if (!document.getElementById("aba_3").href) {
-    document.getElementById("aba_3").href = "DestSim/manual.html";
-  }
-  if (!document.getElementById("aba_4").href) {
-    document.getElementById("aba_4").href = "DestSim/sobre_metodos.html";
-  }
+    if (!document.getElementById("aba_1").href || !document.getElementById("aba_5").href) {
+      document.getElementById("aba_1").href = "DestSim/inicio.html";
+      document.getElementById("aba_5").href = "DestSim/inicio.html";
+    }
+    if (!document.getElementById("aba_2").href || !document.getElementById("aba_6").href) {
+      document.getElementById("aba_2").href = "DestSim/index.html";
+      document.getElementById("aba_6").href = "DestSim/index.html";
+    }
+    if (!document.getElementById("aba_3").href || !document.getElementById("aba_7").href) {
+      document.getElementById("aba_3").href = "DestSim/manual.html";
+      document.getElementById("aba_7").href = "DestSim/manual.html";
+    }
+    if (!document.getElementById("aba_4").href || !document.getElementById("aba_8").href) {
+      document.getElementById("aba_4").href = "DestSim/sobre_metodos.html";
+      document.getElementById("aba_8").href = "DestSim/sobre_metodos.html";
+    }
 
-  </script>
+</script>
 
   <div class="row">
 
