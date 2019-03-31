@@ -1,0 +1,22 @@
+{
+  "short_name": "DestSim",
+  "name": "DestSim - Simulador de Destilação",
+  "icons": [
+    {
+      "src": "DestSim/Marca_UFG_cor_vertical-03.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "DestSim/Marca_UFG_cor_vertical-03.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "DestSim/Marca_UFG_cor_vertical-03.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "inicio.html?launcher=true"
+}
